@@ -1638,6 +1638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   growthSpd: 0
+  contactPointPrefab: {fileID: 4595738685518240922, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
 --- !u!135 &1745996874
 SphereCollider:
   m_ObjectHideFlags: 0
