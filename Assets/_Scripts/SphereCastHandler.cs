@@ -1,3 +1,4 @@
+using Meta.XR.MRUtilityKit;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class SphereCastHandler : MonoBehaviour
 {
     private float growthSpd;
-    public GameObject contactPointPrefab;
+    public AudioPin audioPinPrefab;
     private SphereCollider m_sphere;
 
     private void Awake()
@@ -36,8 +37,14 @@ public class SphereCastHandler : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var contactPoint = other.ClosestPointOnBounds(this.transform.position);
-        var point = Instantiate(contactPointPrefab, contactPoint, Quaternion.identity);
-        Destroy(point, 3);
+        var anchor = other.GetComponentInParent<MRUKAnchor>();
+        AudioPin pin = Instantiate(audioPinPrefab, contactPoint, Quaternion.identity);
+        Destroy(pin.gameObject, 3);
+
+        if (anchor!= null)
+        {
+            pin.Initialize(anchor.GetLabelsAsEnum());
+        }
     }
 
     [ContextMenu("StartSphereGrow")]
