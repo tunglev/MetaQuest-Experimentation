@@ -98,7 +98,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 3
   Loop: 0
   Mute: 0
   Spatialize: 1
@@ -194,6 +194,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
-  map:
+  labelMap:
   - label: 4
     audioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
+  - label: 65531
+    audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
+  distancePitchMap:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1.0051703
+      inSlope: 0.1961824
+      outSlope: 0.1961824
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 9.939627
+      value: 2.9551501
+      inSlope: 0.1961824
+      outSlope: 0.1961824
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

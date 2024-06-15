@@ -6,23 +6,43 @@ using UnityEngine;
 public class AudioPin : MonoBehaviour
 {
     public AudioClip defaultClip;
-    public List<LabelAudioMap> map;
-    public void Initialize(MRUKAnchor.SceneLabels label)
+    public List<LabelAudioMap> labelMap;
+    public AnimationCurve distancePitchMap;
+
+    private AudioSource m_src;
+
+    private void OnValidate()
     {
-        var src = GetComponent<AudioSource>();
-        var target = map.Find(e => e.label == label);
+        foreach(var key in distancePitchMap.keys)
+        {
+            if (Mathf.Abs(key.value) > 3) Debug.LogWarning("key value should be in range -3 to 3 (for unity AudioSource pitch)");
+            if (key.time < 0) Debug.LogWarning("key time (distance) doesn't have negative meaning");
+        }
+    }
+
+    private void Awake()
+    {
+        m_src = GetComponent<AudioSource>();
+    }
+    public void InitializeLabel(MRUKAnchor.SceneLabels label)
+    {
+        var target = labelMap.Find(e => e.label == label);
         if (target != null)
         {
-            src.clip = target.audioClip;
+            m_src.clip = target.audioClip;
         }
         else
         {
-            src.clip = defaultClip;
+            m_src.clip = defaultClip;
         }
-        src.Play();
+        m_src.Play();
+    }
+    public void InitializeDistance(float distance)
+    {
+        m_src.pitch = distancePitchMap.Evaluate(distance);
     }
 }
-
+//
 [System.Serializable]
 public class LabelAudioMap {
     public MRUKAnchor.SceneLabels label;

@@ -39,12 +39,14 @@ public class SphereCastHandler : MonoBehaviour
         var contactPoint = other.ClosestPointOnBounds(this.transform.position);
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(audioPinPrefab, contactPoint, Quaternion.identity);
-        Destroy(pin.gameObject, 3);
-
+        var distance = (contactPoint - this.transform.position).magnitude;
+        pin.InitializeDistance(distance);
         if (anchor!= null)
         {
-            pin.Initialize(anchor.GetLabelsAsEnum());
+            pin.InitializeLabel(anchor.GetLabelsAsEnum());
         }
+
+        Destroy(pin.gameObject, 3);
     }
 
     [ContextMenu("StartSphereGrow")]
