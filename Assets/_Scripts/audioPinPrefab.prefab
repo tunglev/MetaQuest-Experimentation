@@ -199,23 +199,47 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
   - label: 65531
     audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
-  distancePitchMap:
+  distance_frequencyMap:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.0051703
-      inSlope: 0.1961824
-      outSlope: 0.1961824
+      value: 1.0013856
+      inSlope: 0.19946638
+      outSlope: 0.19946638
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 9.939627
-      value: 2.9551501
-      inSlope: 0.1961824
-      outSlope: 0.1961824
+      time: 9.955256
+      value: 2.9871244
+      inSlope: 0.19946638
+      outSlope: 0.19946638
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  frequency_intensityMap:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.99812967
+      inSlope: -0.32678935
+      outSlope: -0.32678935
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 3.0096443
+      value: 0.014609933
+      inSlope: -0.32678935
+      outSlope: -0.32678935
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334

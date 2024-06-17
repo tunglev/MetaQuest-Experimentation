@@ -7,13 +7,14 @@ public class AudioPin : MonoBehaviour
 {
     public AudioClip defaultClip;
     public List<LabelAudioMap> labelMap;
-    public AnimationCurve distancePitchMap;
+    public AnimationCurve distance_frequencyMap;
+    public AnimationCurve frequency_intensityMap;
 
     private AudioSource m_src;
 
     private void OnValidate()
     {
-        foreach(var key in distancePitchMap.keys)
+        foreach(var key in distance_frequencyMap.keys)
         {
             if (Mathf.Abs(key.value) > 3) Debug.LogWarning("key value should be in range -3 to 3 (for unity AudioSource pitch)");
             if (key.time < 0) Debug.LogWarning("key time (distance) doesn't have negative meaning");
@@ -39,7 +40,8 @@ public class AudioPin : MonoBehaviour
     }
     public void InitializeDistance(float distance)
     {
-        m_src.pitch = distancePitchMap.Evaluate(distance);
+        m_src.pitch = distance_frequencyMap.Evaluate(distance);
+        m_src.volume = frequency_intensityMap.Evaluate(m_src.pitch);
     }
 }
 //
