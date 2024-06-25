@@ -196,7 +196,7 @@ MonoBehaviour:
   defaultClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
   labelMap:
   - label: 4
-    audioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
+    audioClip: {fileID: 8300000, guid: e814bc2402ba9524eaeafdb23a418ab7, type: 3}
   - label: 65531
     audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
   distance_frequencyMap:
