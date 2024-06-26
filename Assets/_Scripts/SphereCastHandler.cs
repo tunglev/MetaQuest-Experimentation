@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(SphereCollider), typeof(Rigidbody))]
 public class SphereCastHandler : MonoBehaviour
 {
     private float growthSpd;
