@@ -8,8 +8,6 @@ public class AudioPin : MonoBehaviour
     public AudioClip defaultClip;
     public List<LabelAudioMap> labelMap;
     public AnimationCurve distance_frequencyMap;
-    public AnimationCurve frequency_intensityMap;
-
     private AudioSource m_src;
 
     private void OnValidate()
@@ -41,7 +39,6 @@ public class AudioPin : MonoBehaviour
     public void InitializeDistance(float distance)
     {
         m_src.pitch = distance_frequencyMap.Evaluate(distance);
-        m_src.volume = frequency_intensityMap.Evaluate(m_src.pitch);
     }
 }
 //

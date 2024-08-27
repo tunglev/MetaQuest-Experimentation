@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3085554436403612383}
   - component: {fileID: 3089789749908069058}
   m_Layer: 0
-  m_Name: audioPinPrefab
+  m_Name: pin1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 3
+  m_Pitch: 0
   Loop: 0
   Mute: 0
   Spatialize: 1
@@ -204,45 +204,21 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.0013856
-      inSlope: 0.19946638
-      outSlope: 0.19946638
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 9.955256
-      value: 2.9871244
-      inSlope: 0.19946638
-      outSlope: 0.19946638
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
       outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  frequency_intensityMap:
-    serializedVersion: 2
-    m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0.99812967
-      inSlope: -0.32678935
-      outSlope: -0.32678935
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 3.0096443
-      value: 0.014609933
-      inSlope: -0.32678935
-      outSlope: -0.32678935
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
