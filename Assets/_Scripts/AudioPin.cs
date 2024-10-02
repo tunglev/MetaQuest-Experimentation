@@ -7,6 +7,8 @@ public class AudioPin : MonoBehaviour
 {
     public AudioClip defaultClip;
     public List<LabelAudioMap> labelMap;
+    public enum EncodingMode { None , Distance, Elevation};
+    public EncodingMode mode;
     public AnimationCurve distance_frequencyMap;
     private AudioSource m_src;
 
@@ -39,7 +41,19 @@ public class AudioPin : MonoBehaviour
     }
     public void InitializeDistance(float distance)
     {
-        m_src.pitch = distance_frequencyMap.Evaluate(distance);
+        switch (mode)
+        {
+            case EncodingMode.Distance:
+                m_src.pitch = distance_frequencyMap.Evaluate(distance);
+                break;
+            case EncodingMode.Elevation:
+                m_src.pitch = distance_frequencyMap.Evaluate(transform.position.y);
+                break;
+            default:
+                //No change
+                m_src.pitch = 1;
+                break;
+        }
     }
 }
 //
