@@ -51,7 +51,7 @@ public class AudioPin : MonoBehaviour
                 break;
             default:
                 //No change
-                m_src.pitch = 1;
+                m_src.pitch = 1; // NOTE THAT PITCH = 0 WILL NOT MAKE ANY SOUND FOR SOME REASON
                 break;
         }
     }
