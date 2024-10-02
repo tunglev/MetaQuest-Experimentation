@@ -197,8 +197,10 @@ MonoBehaviour:
   labelMap:
   - label: 4
     audioClip: {fileID: 8300000, guid: e814bc2402ba9524eaeafdb23a418ab7, type: 3}
+    volume: 0.05
   - label: 65531
     audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
+    volume: 1
   distance_frequencyMap:
     serializedVersion: 2
     m_Curve:

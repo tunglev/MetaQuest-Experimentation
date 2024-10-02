@@ -13,24 +13,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
+      propertyPath: distance_frequencyMap.m_Curve.Array.data[1].time
+      value: 8.028954
+      objectReference: {fileID: 0}
+    - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[0].value
-      value: -3.0039196
+      value: 2.8757496
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[1].value
-      value: 2.720765
+      value: -2.9091177
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[0].inSlope
-      value: 5.7246847
+      value: -0.72050077
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[1].inSlope
-      value: 5.7246847
+      value: -0.72050077
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[0].outSlope
-      value: 5.7246847
+      value: -0.72050077
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[1].inWeight
@@ -38,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[1].outSlope
-      value: 5.7246847
+      value: -0.72050077
       objectReference: {fileID: 0}
     - target: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
       propertyPath: distance_frequencyMap.m_Curve.Array.data[0].outWeight

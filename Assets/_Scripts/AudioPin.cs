@@ -29,6 +29,7 @@ public class AudioPin : MonoBehaviour
         if (target != null)
         {
             m_src.clip = target.audioClip;
+            m_src.volume = target.volume;
         }
         else
         {
@@ -46,5 +47,6 @@ public class AudioPin : MonoBehaviour
 public class LabelAudioMap {
     public MRUKAnchor.SceneLabels label;
     public AudioClip audioClip;
+    [Range(0, 1)] public float volume =1f;
 }
 
