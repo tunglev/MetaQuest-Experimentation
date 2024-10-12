@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samples/Meta MR Utility Kit/65.0.0/Basic/MRUKBase.unity
-    guid: 21549dbcb1294de4fafd68fca195dda5
-  - enabled: 1
     path: Assets/Scenes/Home.unity
     guid: 53bbcaa0264869a4bab201ce5e944ba5
   - enabled: 1
