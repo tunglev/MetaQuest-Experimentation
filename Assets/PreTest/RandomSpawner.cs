@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -20,9 +21,20 @@ public class RandomSpawner : MonoBehaviour
     private void Start()
     {
         _cam = Camera.main;
-        StartCoroutine(Spawner());
+        /*StartCoroutine(Spawner());*/
     }
 
+    private void Update()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+        {
+            Spawn();
+        }
+        if (OVRInput.GetDown(OVRInput.Button.Three))
+        {
+            SpawnMultiple();
+        }
+    }
     IEnumerator Spawner()
     {
         while (gameObject.activeInHierarchy)
@@ -32,12 +44,39 @@ public class RandomSpawner : MonoBehaviour
 
         }
     }
-    
 
+    public AudioClip curClip;
+    private AudioSource curAudio;
+    [ContextMenu("Spawn")]
     public void Spawn()
     {
+        DestroyAllSrcs();
         Vector3 pos = _cam.transform.position + new Vector3(Random.Range(xRange.min, xRange.max), 0, Random.Range(zRange.min, zRange.max));
-        var temp = Instantiate(prefab, pos, Quaternion.identity);
-        Destroy(temp.gameObject, 2);
+        curAudio = Instantiate(prefab, pos, Quaternion.identity, transform);
+        curAudio.clip = curClip;//
+    }
+
+    private List<AudioSource> sources = new();
+    const float COUNT = 2;
+    public void SpawnMultiple()
+    {
+        DestroyAllSrcs();   
+        for (int i = 1; i <= COUNT; i++)
+        {
+            Vector3 pos = _cam.transform.position + new Vector3(Random.Range(xRange.min, xRange.max), 0, Random.Range(zRange.min, zRange.max));
+            var src = Instantiate(prefab, pos, Quaternion.identity, transform);
+            src.clip = curClip;
+            sources.Add(src);
+        }
+    }
+
+    private void DestroyAllSrcs()
+    {
+        if (curAudio) Destroy(curAudio.gameObject);
+        foreach (var source in sources)
+        {
+            sources.Remove(source);
+            Destroy(source.gameObject);
+        }
     }
 }

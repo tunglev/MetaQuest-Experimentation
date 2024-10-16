@@ -15,6 +15,19 @@ public class ContextHandler : MonoBehaviour
         {
             Next();
         }
+        ShowRenderers(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger));
+    }
+
+    private bool isVisible = false;
+    public void ShowRenderers(bool value)
+    {
+        if (value == isVisible) return;
+        var renderers = FindObjectsOfType<Renderer>();
+        foreach(Renderer renderer in renderers)
+        {
+            renderer.enabled = value;
+        }
+        isVisible = value;
     }
     public GameObject[] contexts;
     private int i = 0;
@@ -26,5 +39,16 @@ public class ContextHandler : MonoBehaviour
             context.SetActive(false);
         }
         contexts[i++ % contexts.Length].SetActive(true);
+    }
+
+    public void SetAudioClip(AudioClip clip)
+    {
+        var sources = FindObjectsOfType<AudioSource>(includeInactive: true);
+        foreach(var source in sources)
+        {
+            source.clip = clip;
+            source.Play();
+        }
+        FindObjectOfType<RandomSpawner>().curClip = clip;
     }
 }
