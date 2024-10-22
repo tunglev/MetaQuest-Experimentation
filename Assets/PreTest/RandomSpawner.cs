@@ -32,7 +32,7 @@ public class RandomSpawner : MonoBehaviour
         }
         if (OVRInput.GetDown(OVRInput.Button.Three))
         {
-            SpawnMultiple();
+            Spawn5();
         }
     }
     IEnumerator Spawner()
@@ -45,26 +45,34 @@ public class RandomSpawner : MonoBehaviour
         }
     }
 
+
     public AudioClip curClip;
-    private AudioSource curAudio;
-    [ContextMenu("Spawn")]
+    private List<AudioSource> sources = new();
+    [ContextMenu("SpawnXZ")]
+    public void SpawnXZ()
+    {
+        SpawnMultiple(() => new SphericalCoord(r: Random.Range(0.2f, 3), theta: 0f, phi: Random.Range(0f, 2f * Mathf.PI)), count: 10);//
+    }
+    [ContextMenu("SpawnSingle")]
     public void Spawn()
     {
-        DestroyAllSrcs();
-        Vector3 pos = _cam.transform.position + new Vector3(Random.Range(xRange.min, xRange.max), 0, Random.Range(zRange.min, zRange.max));
-        curAudio = Instantiate(prefab, pos, Quaternion.identity, transform);
-        curAudio.clip = curClip;//
+        SpawnMultiple(()=> new SphericalCoord(r: Random.Range(0.2f, 3), theta: Random.Range(0f, Mathf.PI), phi: Random.Range(0f, Mathf.PI * 2)), count:1);
     }
 
-    private List<AudioSource> sources = new();
-    const float COUNT = 2;
-    public void SpawnMultiple()
+    [ContextMenu("SpawnMultiple")]
+    public void Spawn5()
+    {
+        SpawnMultiple(()=> new SphericalCoord(r: Random.Range(0.2f, 3), theta: Random.Range(0f, Mathf.PI), phi: Random.Range(0f, Mathf.PI * 2)), count:5);
+    }
+    public void SpawnMultiple(Func<SphericalCoord> getSpherePos ,int count = 5)
     {
         DestroyAllSrcs();   
-        for (int i = 1; i <= COUNT; i++)
+        for (int i = 1; i <= count; i++)
         {
-            Vector3 pos = _cam.transform.position + new Vector3(Random.Range(xRange.min, xRange.max), 0, Random.Range(zRange.min, zRange.max));
-            var src = Instantiate(prefab, pos, Quaternion.identity, transform);
+            var pos = getSpherePos();
+            //SphericalCoord pos = new SphericalCoord(r: Random.Range(0.2f, 3), theta: Random.Range(0f, Mathf.PI), phi: Random.Range(0f, Mathf.PI * 2));
+            print(pos);
+            var src = Instantiate(prefab, _cam.transform.position + pos.ToCartesian(), Quaternion.identity, transform);
             src.clip = curClip;
             sources.Add(src);
         }
@@ -72,11 +80,10 @@ public class RandomSpawner : MonoBehaviour
 
     private void DestroyAllSrcs()
     {
-        if (curAudio) Destroy(curAudio.gameObject);
         foreach (var source in sources)
         {
-            sources.Remove(source);
             Destroy(source.gameObject);
         }
+        sources.Clear();
     }
 }
