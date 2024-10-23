@@ -27,11 +27,11 @@ public class RandomSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.Two))
+        if (OVRInput.GetDown(OVRInput.Button.Three))
         {
             Spawn();
         }
-        if (OVRInput.GetDown(OVRInput.Button.Three))
+        if (OVRInput.GetDown(OVRInput.Button.Four))
         {
             Spawn5();
         }
@@ -72,9 +72,10 @@ public class RandomSpawner : MonoBehaviour
         {
             var pos = getSpherePos();
             //SphericalCoord pos = new SphericalCoord(r: Random.Range(0.2f, 3), theta: Random.Range(0f, Mathf.PI), phi: Random.Range(0f, Mathf.PI * 2));
-            print(pos);
+            Debug.LogWarning(pos);
             var src = Instantiate(prefab, _cam.transform.position + pos.ToCartesian(), Quaternion.identity, transform);
             src.clip = curClip;
+            src.Play();
             sources.Add(src);
         }
     }

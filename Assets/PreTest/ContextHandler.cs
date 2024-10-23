@@ -18,10 +18,10 @@ public class ContextHandler : MonoBehaviour
             Next();
             
         }
-        ShowRenderers(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger));
+        //ShowRenderers(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger));
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
-            
+            fire();
         }
     }
 
@@ -30,7 +30,7 @@ public class ContextHandler : MonoBehaviour
     public void fire()
     {
         var handToAudio = RandomSpawner.sources[0].transform.position - rightHandRay.position;
-        Debug.Log(Vector3.Angle(rightHandRay.forward, handToAudio));
+        Debug.LogWarning(Vector3.Angle(rightHandRay.forward, handToAudio));
     }
 
     private bool isVisible = false;
