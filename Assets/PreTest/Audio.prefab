@@ -115,14 +115,14 @@ GameObject:
   m_Component:
   - component: {fileID: 3140333676579788306}
   - component: {fileID: 4049809675962703261}
-  - component: {fileID: 8071864201154988088}
+  - component: {fileID: 6284822994784199}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3140333676579788306
 Transform:
   m_ObjectHideFlags: 0
@@ -235,7 +235,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8071864201154988088
+--- !u!114 &6284822994784199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -248,6 +248,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpatialization: 1
-  gainBoostDb: 0
+  gainBoostDb: 10
   enableAcoustics: 1
   reverbSendDb: 0

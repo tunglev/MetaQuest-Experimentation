@@ -1,3 +1,5 @@
+using Meta.XR.MRUtilityKit;
+using Oculus.Interaction;
 using UnityEngine;
 
 public class ContextHandler : MonoBehaviour
@@ -14,8 +16,21 @@ public class ContextHandler : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
             Next();
+            
         }
         ShowRenderers(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger));
+        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        {
+            
+        }
+    }
+
+    public Transform rightHandRay;
+    [ContextMenu("fire")]
+    public void fire()
+    {
+        var handToAudio = RandomSpawner.sources[0].transform.position - rightHandRay.position;
+        Debug.Log(Vector3.Angle(rightHandRay.forward, handToAudio));
     }
 
     private bool isVisible = false;

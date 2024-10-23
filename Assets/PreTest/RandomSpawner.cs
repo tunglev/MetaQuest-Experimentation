@@ -1,3 +1,4 @@
+using Meta.XR.MRUtilityKit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,7 +48,7 @@ public class RandomSpawner : MonoBehaviour
 
 
     public AudioClip curClip;
-    private List<AudioSource> sources = new();
+    public static List<AudioSource> sources = new();
     [ContextMenu("SpawnXZ")]
     public void SpawnXZ()
     {
