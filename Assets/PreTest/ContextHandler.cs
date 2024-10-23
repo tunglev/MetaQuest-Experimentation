@@ -1,21 +1,24 @@
-using Meta.XR.MRUtilityKit;
-using Oculus.Interaction;
 using UnityEngine;
 
 public class ContextHandler : MonoBehaviour
 {
     public Transform orbit;
     public float orbitSpeed;
+    public OVRInput.Controller controller;
+    private Transform controllerTransform;
     private void Start()
     {
         Next();
+        controllerTransform = controller == OVRInput.Controller.RTouch ?
+            GameObject.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform :
+            GameObject.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
     }
     private void Update()
     {
         orbit.transform.Rotate(orbit.transform.up, Time.deltaTime * orbitSpeed);
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
-            Next();
+            //Next();
             
         }
         //ShowRenderers(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger));
@@ -25,12 +28,12 @@ public class ContextHandler : MonoBehaviour
         }
     }
 
-    public Transform rightHandRay;
     [ContextMenu("fire")]
     public void fire()
     {
-        var handToAudio = RandomSpawner.sources[0].transform.position - rightHandRay.position;
-        Debug.LogWarning(Vector3.Angle(rightHandRay.forward, handToAudio));
+        OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
+        var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
+        Debug.LogWarning(Vector3.Angle(controllerTransform.forward, handToAudio));
     }
 
     private bool isVisible = false;
@@ -54,6 +57,14 @@ public class ContextHandler : MonoBehaviour
             context.SetActive(false);
         }
         contexts[i++ % contexts.Length].SetActive(true);
+    }
+    public void SelectContext(int index)
+    {
+        foreach (var context in contexts)
+        {
+            context.SetActive(false);
+        }
+        contexts[index].SetActive(true);
     }
 
     public void SetAudioClip(AudioClip clip)
