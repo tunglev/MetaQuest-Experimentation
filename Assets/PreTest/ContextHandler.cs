@@ -28,9 +28,12 @@ public class ContextHandler : MonoBehaviour
         }
     }
 
+    private Data data;
     [ContextMenu("fire")]
     public void fire()
     {
+        print(data);
+        data = new Data().IsVisible(true).SetAngle(29);
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
         var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
         Debug.LogWarning(Vector3.Angle(controllerTransform.forward, handToAudio));
