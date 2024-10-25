@@ -41,6 +41,6 @@ public class SphericalCoord
 
     public override string ToString()
     {
-        return $"({r}, {theta * Mathf.Rad2Deg}, {phi * Mathf.Rad2Deg})";
+        return $"(r: {r}m, theta: {theta * Mathf.Rad2Deg}deg, phi: {phi * Mathf.Rad2Deg}deg)";
     }
 }

@@ -77,8 +77,6 @@ public class RandomSpawner : MonoBehaviour
         for (int i = 1; i <= count; i++)
         {
             var pos = getSpherePos();
-            //SphericalCoord pos = new SphericalCoord(r: Random.Range(0.2f, 3), theta: Random.Range(0f, Mathf.PI), phi: Random.Range(0f, Mathf.PI * 2));
-            Debug.LogWarning(pos);
             var src = Instantiate(prefab, _cam.transform.position + pos.ToCartesian(), Quaternion.identity, transform);
             src.clip = curClip;
             src.Play();

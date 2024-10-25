@@ -17,6 +17,7 @@ public class SphereCastHandler : MonoBehaviour
         m_sphere.isTrigger= true;
         resetSphere();
     }
+
     private void Update()
     {
         if(OVRInput.GetDown(OVRInput.Button.One))

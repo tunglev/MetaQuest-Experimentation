@@ -1,3 +1,7 @@
+using System;
+using System.IO;
+using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 public class ContextHandler : MonoBehaviour
@@ -28,12 +32,27 @@ public class ContextHandler : MonoBehaviour
         }
     }
 
+    [ContextMenu("ExportCSV")]
+    public void ExportCSV()
+    {
+        var sb = new StringBuilder(Data.COLUMNS);
+        for (int i=0; i<5;i++)
+        {
+            var content = sb.Append('\n').Append(new Data().SetErrorAngle(34).ToString()).ToString();
+            var folder = Application.persistentDataPath;
+            var filePath = Path.Combine(folder, $"{DateTime.Now:y-M-d HH_mm_ss} export.csv");
+            File.WriteAllText(filePath, content);
+            AssetDatabase.Refresh();
+            Debug.Log($"CSV file written to \"{filePath}\"");
+        }
+    }
+
     private Data data;
     [ContextMenu("fire")]
     public void fire()
     {
         print(data);
-        data = new Data().IsVisible(true).SetAngle(29);
+        data = new Data().IsVisible(true).SetErrorAngle(29);
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
         var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
         Debug.LogWarning(Vector3.Angle(controllerTransform.forward, handToAudio));
@@ -50,24 +69,20 @@ public class ContextHandler : MonoBehaviour
         }
         isVisible = value;
     }
-    public GameObject[] contexts;
+    public GameObject[] scenarios;
     private int i = 0;
     [ContextMenu("Next")]
     public void Next()
     {
-        foreach (var context in contexts)
-        {
-            context.SetActive(false);
-        }
-        contexts[i++ % contexts.Length].SetActive(true);
+        SelectScenario(i++ % scenarios.Length);
     }
-    public void SelectContext(int index)
+    public void SelectScenario(int index)
     {
-        foreach (var context in contexts)
+        foreach (var scenario in scenarios)
         {
-            context.SetActive(false);
+            scenario.SetActive(false);
         }
-        contexts[index].SetActive(true);
+        scenarios[index].SetActive(true);
     }
 
     public void SetAudioClip(AudioClip clip)
