@@ -78,6 +78,7 @@ public class RandomSpawner : MonoBehaviour
         {
             var pos = getSpherePos();
             var src = Instantiate(prefab, _cam.transform.position + pos.ToCartesian(), Quaternion.identity, transform);
+            DataCollector.DataList.Add(new Data().SetPos(pos).SetAudioFileName(curClip.name).Start());
             src.clip = curClip;
             src.Play();
             sources.Add(src);

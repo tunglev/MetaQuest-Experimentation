@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using System.Text;
-using UnityEditor;
 using UnityEngine;
 
 public class ContextHandler : MonoBehaviour
@@ -35,27 +31,17 @@ public class ContextHandler : MonoBehaviour
     [ContextMenu("ExportCSV")]
     public void ExportCSV()
     {
-        var sb = new StringBuilder(Data.COLUMNS);
-        for (int i=0; i<5;i++)
-        {
-            var content = sb.Append('\n').Append(new Data().SetErrorAngle(34).ToString()).ToString();
-            var folder = Application.persistentDataPath;
-            var filePath = Path.Combine(folder, $"{DateTime.Now:y-M-d HH_mm_ss} export.csv");
-            File.WriteAllText(filePath, content);
-            AssetDatabase.Refresh();
-            Debug.Log($"CSV file written to \"{filePath}\"");
-        }
+        DataCollector.ExportCSV();//
     }
 
-    private Data data;
     [ContextMenu("fire")]
     public void fire()
     {
-        print(data);
-        data = new Data().IsVisible(true).SetErrorAngle(29);
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
         var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
-        Debug.LogWarning(Vector3.Angle(controllerTransform.forward, handToAudio));
+        float errorAngle = Vector3.Angle(controllerTransform.forward, handToAudio);
+        Debug.LogWarning(errorAngle);
+        DataCollector.DataList[^1].End().SetErrorAngle(errorAngle); //^1 means last index
     }
 
     private bool isVisible = false;
