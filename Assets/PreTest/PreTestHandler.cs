@@ -1,27 +1,47 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
-public class ContextHandler : MonoBehaviour
+public class PreTestHandler : MonoBehaviour
 {
+    public static SessionConfig SessionConfig;
+    public SessionConfig initConfig;
+    public TextMeshProUGUI frontText;
     public Transform orbit;
     public float orbitSpeed;
     public OVRInput.Controller controller;
     private Transform controllerTransform;
+    public RandomSpawner randomSpawner;
     private void Start()
     {
-        Next();
+        SessionConfig = initConfig;
         controllerTransform = controller == OVRInput.Controller.RTouch ?
             GameObject.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform :
             GameObject.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
+
+        StartCoroutine(TestRoundsHandler());
+    }
+
+    private bool clicked = false;
+    private bool hasClicked()
+    {
+        return clicked;
+    }
+    IEnumerator TestRoundsHandler()
+    {
+        for (int i = 1; i<= SessionConfig.roundCount.audio_n_visual; i++)
+        {
+            frontText.text = "";
+            randomSpawner.Spawn();
+            clicked = false;
+            yield return new WaitUntil(hasClicked);
+            randomSpawner.EnableAudio(false);
+            frontText.text = "Data registered. Spawning new audio source...";
+            yield return new WaitForSeconds(2);
+        }
     }
     private void Update()
     {
-        orbit.transform.Rotate(orbit.transform.up, Time.deltaTime * orbitSpeed);
-        if (OVRInput.GetDown(OVRInput.Button.One))
-        {
-            //Next();
-            
-        }
-        //ShowRenderers(OVRInput.Get(OVRInput.Button.PrimaryIndexTrigger));
         if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
         {
             fire();
@@ -42,6 +62,7 @@ public class ContextHandler : MonoBehaviour
         float errorAngle = Vector3.Angle(controllerTransform.forward, handToAudio);
         Debug.LogWarning(errorAngle);
         DataCollector.DataList[^1].End().SetErrorAngle(errorAngle); //^1 means last index
+        clicked = true;
     }
 
     private bool isVisible = false;
@@ -73,12 +94,13 @@ public class ContextHandler : MonoBehaviour
 
     public void SetAudioClip(AudioClip clip)
     {
-        var sources = FindObjectsOfType<AudioSource>(includeInactive: true);
+        SessionConfig.audioFile = clip;
+        /*var sources = FindObjectsOfType<AudioSource>(includeInactive: true);
         foreach(var source in sources)
         {
             source.clip = clip;
             source.Play();
         }
-        FindObjectOfType<RandomSpawner>().curClip = clip;
+        FindObjectOfType<RandomSpawner>().curClip = clip;*/
     }
 }

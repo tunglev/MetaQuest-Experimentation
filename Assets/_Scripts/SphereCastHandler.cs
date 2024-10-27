@@ -44,7 +44,7 @@ public class SphereCastHandler : MonoBehaviour
         pin.InitializeDistance(distance);
         if (anchor!= null)
         {
-            pin.InitializeLabel(anchor.GetLabelsAsEnum());
+            pin.InitializeLabel(anchor.Label);
         }
 
         Destroy(pin.gameObject, 3);
