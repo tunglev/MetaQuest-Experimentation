@@ -18,57 +18,60 @@ public class RandomSpawner : MonoBehaviour
         var radius = PreTestHandler.SessionConfig.radiusRange;
         return new SphericalCoord(r: Random.Range(radius.x, radius.y), theta: Random.Range(0f, Mathf.PI), phi: Random.Range(0f, Mathf.PI * 2));
     }
-    public void Spawn()
-    {
-        if (PreTestHandler.SessionConfig.threeD)
-        {
-            Spawn(ThreeD, count: 1);
-        }
-        else
-        {
-            Spawn(TwoD, count: 1);
-        }
-    }
+  
 
     [ContextMenu("SpawnTwoD")]
     public void SpawnTwoD()
     {
         //XZ plane
-        Spawn(TwoD, count: 1);//
+        Spawn(TwoD, count: 1, true, true);//
     }
     [ContextMenu("SpawnTwoD_Multi")]
     public void SpawnTwoD_Multi()
     {
-        Spawn(TwoD, count: 2);//
+        Spawn(TwoD, count: 2, true, true);//
     }
 
     [ContextMenu("SpawnThreeD")]
     public void SpawnThreeD()
     {
-        Spawn(ThreeD , count:1);
+        Spawn(ThreeD, count: 1, true, true);
     }
     [ContextMenu("SpawnThreeD_Multi")]
     public void SpawnThreeD_Multi()
     {
-        Spawn(ThreeD, count: 2);
+        Spawn(ThreeD, count: 2, true, true);
     }
 
     [ContextMenu("Spawn5")]
     public void Spawn5()
     {
-        Spawn(ThreeD, count:5);
+        Spawn(ThreeD, count:5, true, true);
     }
-    private void Spawn(Func<SphericalCoord> getSpherePos ,int count = 5)
+
+    public void Spawn(bool hasVisual, bool hasAudio)
+    {
+        if (PreTestHandler.SessionConfig.threeD)
+        {
+            Spawn(ThreeD, count: 1, hasVisual, hasAudio);
+        }
+        else
+        {
+            Spawn(TwoD, count: 1, hasVisual, hasAudio);
+        }
+    }
+
+    private void Spawn(Func<SphericalCoord> getSpherePos ,int count, bool hasVisual, bool hasAudio)
     {
         DestroyAllSrcs();   
         for (int i = 1; i <= count; i++)
         {
             var pos = getSpherePos();
             var src = Instantiate(prefab, Camera.main.transform.position + pos.ToCartesian(), Quaternion.identity, transform);
-            DataCollector.DataList.Add(new Data().SetPos(pos).SetAudioFileName(PreTestHandler.SessionConfig.audioFile.name).Start());
+            DataCollector.DataList.Add(new Data().IsVisible(hasVisual).HasAudio(hasAudio).SetPos(pos).SetAudioFileName(PreTestHandler.SessionConfig.audioFile.name).Start());
             src.clip = PreTestHandler.SessionConfig.audioFile;
-            print(PreTestHandler.SessionConfig.audioFile.name);
-            src.Play();
+            if (hasAudio) src.Play();
+            if (!hasVisual) src.gameObject.GetComponentInChildren<Renderer>().enabled = false;
             sources.Add(src);
         }
     }

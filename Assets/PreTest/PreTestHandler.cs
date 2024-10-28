@@ -23,6 +23,7 @@ public class PreTestHandler : MonoBehaviour
     }
 
     private bool clicked = false;
+    private bool allowClick = false;
     private bool hasClicked()
     {
         return clicked;
@@ -32,13 +33,45 @@ public class PreTestHandler : MonoBehaviour
         for (int i = 1; i<= SessionConfig.roundCount.audio_n_visual; i++)
         {
             frontText.text = "";
-            randomSpawner.Spawn();
+            randomSpawner.Spawn(hasVisual: true, hasAudio: true);
             clicked = false;
+            allowClick = true;
             yield return new WaitUntil(hasClicked);
+            allowClick = false;
             randomSpawner.EnableAudio(false);
-            frontText.text = "Data registered. Spawning new audio source...";
+            frontText.text = $"Data registered {i} / {SessionConfig.roundCount.audio_n_visual}. Spawning new audio source...";
             yield return new WaitForSeconds(2);
         }
+
+        frontText.text = "Audio Only Rounds Starting soon";
+        yield return new WaitForSeconds(3);
+        for (int i = 1; i <= SessionConfig.roundCount.audio_only; i++)
+        {
+            frontText.text = "";
+            randomSpawner.Spawn(hasVisual: false, hasAudio: true);
+            clicked = false; allowClick = true;
+            yield return new WaitUntil(hasClicked);
+            allowClick = false;
+            randomSpawner.EnableAudio(false);
+            frontText.text = $"Data registered {i} / {SessionConfig.roundCount.audio_only}. Spawning new audio source...";
+            yield return new WaitForSeconds(2);
+        }
+
+        frontText.text = "Visual Only Rounds Starting soon";
+        yield return new WaitForSeconds(3);
+        for (int i = 1; i <= SessionConfig.roundCount.visual_only; i++)
+        {
+            frontText.text = "";
+            randomSpawner.Spawn(hasVisual: true, hasAudio: false);
+            clicked = false; allowClick = true;
+            yield return new WaitUntil(hasClicked);
+            allowClick = false;
+            randomSpawner.EnableAudio(false);
+            frontText.text = $"Data registered {i} / {SessionConfig.roundCount.visual_only}. Spawning new audio source...";
+            yield return new WaitForSeconds(2);
+        }
+
+        frontText.text = $"Done! Export to {DataCollector.ExportCSV()}";
     }
     private void Update()
     {
@@ -57,6 +90,7 @@ public class PreTestHandler : MonoBehaviour
     [ContextMenu("fire")]
     public void fire()
     {
+        if (!allowClick) return;
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
         var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
         float errorAngle = Vector3.Angle(controllerTransform.forward, handToAudio);

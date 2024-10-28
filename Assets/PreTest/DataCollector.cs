@@ -10,7 +10,7 @@ public class DataCollector : MonoBehaviour
     public static List<Data> DataList = new();
 
     [ContextMenu("ExportCSV")]
-    public static void ExportCSV()
+    public static string ExportCSV()
     {
         var sb = new StringBuilder(Data.COLUMNS);
         foreach(var data in DataList) 
@@ -20,7 +20,8 @@ public class DataCollector : MonoBehaviour
         var folder = Application.persistentDataPath;
         var filePath = Path.Combine(folder, $"{DateTime.Now:y-M-d HH_mm_ss} export.csv");
         File.WriteAllText(filePath, sb.ToString());
-        AssetDatabase.Refresh();
+        //AssetDatabase.Refresh();
         Debug.Log($"CSV file written to \"{filePath}\"");
+        return filePath;
     }
 }
