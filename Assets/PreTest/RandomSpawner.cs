@@ -76,7 +76,7 @@ public class RandomSpawner : MonoBehaviour
         }
     }
 
-    public void DestroyAllSrcs()
+    private void DestroyAllSrcs()
     {
         foreach (var source in sources)
         {

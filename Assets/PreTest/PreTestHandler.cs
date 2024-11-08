@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using TMPro;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class PreTestHandler : MonoBehaviour
@@ -12,6 +15,10 @@ public class PreTestHandler : MonoBehaviour
     public OVRInput.Controller controller;
     private Transform controllerTransform;
     public RandomSpawner randomSpawner;
+    public TextMeshProUGUI instructionTMP;
+    public GameObject instructionCanvas;
+    public GameObject startRoundCanvas;
+
     private void Start()
     {
         SessionConfig = initConfig;
@@ -24,6 +31,44 @@ public class PreTestHandler : MonoBehaviour
     public void StartSession()
     {
         StartCoroutine(TestRoundsHandler());
+    }
+
+    private int index = 0;
+    public void StartRound()
+    {   
+        index++;
+        int audioNVisualIndex = SessionConfig.roundCount.audio_n_visual;
+        int audioOnlyIndex = audioNVisualIndex + SessionConfig.roundCount.audio_only;
+        int visualOnlyIndex = audioOnlyIndex + SessionConfig.roundCount.visual_only;
+
+        StartRoundManual(1, audioNVisualIndex, () => randomSpawner.Spawn(true, true), () =>
+        {
+            instructionTMP.text = "Audio: YES\nVisual: NO\n \nPoint your LEFT hand and pull the trigger in the direction where you think the sphere is. The sphere is INVISBLE and emit SOUND. The sphere will appear AFTER you pull the trigger.";
+            instructionCanvas.SetActive(true);
+        });
+        StartRoundManual(audioNVisualIndex + 1, audioOnlyIndex, () => randomSpawner.Spawn(false, true), () =>
+        {
+            instructionTMP.text = "Audio: NO\nVisual: YES\n \nPoint your LEFT hand and pull the trigger in the direction of the sphere. The sphere is VISIBLE but play NO SOUND.";
+            instructionCanvas.SetActive(true);
+        });
+        StartRoundManual(audioOnlyIndex + 1, visualOnlyIndex, () => randomSpawner.Spawn(true, false), () => frontText.text = $"Done! Export to {DataCollector.ExportCSV()}");
+    }
+    private void StartRoundManual(int min, int max, Action mainAction, Action endAction)
+    {
+        if (min <= index && index <= max)
+        {
+            mainAction();
+            StartCoroutine(Helper());
+            IEnumerator Helper()
+            {
+                clicked = false;
+                allowClick = true;
+                yield return new WaitUntil(hasClicked);
+                if (min <= index && index < max) startRoundCanvas.SetActive(true);
+                if (index == max) endAction();
+            }
+
+        }
     }
 
     private bool clicked = false;
@@ -106,6 +151,9 @@ public class PreTestHandler : MonoBehaviour
         Debug.LogWarning("Ver: " + verErr);
         DataCollector.DataList[^1].End().SetErrorAngle(errorAngle).SetHorError(horErr).SetVerError(verErr); //^1 means last index
         clicked = true;
+        allowClick = false;
+        randomSpawner.EnableAudio(false);
+        randomSpawner.EnableVisibility(true);
     }
 
     private bool isVisible = false;

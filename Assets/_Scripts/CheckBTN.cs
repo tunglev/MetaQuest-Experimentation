@@ -20,11 +20,12 @@ public class CheckBTN : MonoBehaviour
     }
 
     [ContextMenu("TestToggle")]
-    private void Toggle()
+    public void Toggle()
     {
         isChecked = !isChecked;
         checkMark.SetActive(isChecked);
         if (isChecked) onChecked?.Invoke();
         else onUnchecked?.Invoke();
     }
+
 }
