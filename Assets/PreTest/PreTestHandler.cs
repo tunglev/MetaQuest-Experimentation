@@ -18,7 +18,11 @@ public class PreTestHandler : MonoBehaviour
         controllerTransform = controller == OVRInput.Controller.RTouch ?
             GameObject.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform :
             GameObject.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;
+    }
 
+    [ContextMenu("StartSession")]
+    public void StartSession()
+    {
         StartCoroutine(TestRoundsHandler());
     }
 
@@ -30,6 +34,10 @@ public class PreTestHandler : MonoBehaviour
     }
     IEnumerator TestRoundsHandler()
     {
+        frontText.text = "Pre-test session started";
+        yield return new WaitForSeconds(2);
+        frontText.text = "Point to the sphere. Audio and visual rounds starting soon...";
+        yield return new WaitForSeconds(5);
         for (int i = 1; i<= SessionConfig.roundCount.audio_n_visual; i++)
         {
             frontText.text = "";
@@ -61,7 +69,7 @@ public class PreTestHandler : MonoBehaviour
         yield return new WaitForSeconds(3);
         for (int i = 1; i <= SessionConfig.roundCount.visual_only; i++)
         {
-            frontText.text = "";
+            frontText.text = "Find the sphere";
             randomSpawner.Spawn(hasVisual: true, hasAudio: false);
             clicked = false; allowClick = true;
             yield return new WaitUntil(hasClicked);
@@ -80,11 +88,9 @@ public class PreTestHandler : MonoBehaviour
             fire();
         }
     }
-
     [ContextMenu("ExportCSV")]
-    public void ExportCSV()
-    {
-        DataCollector.ExportCSV();//
+    public void ExportCSV() {
+        DataCollector.ExportCSV();
     }
 
     [ContextMenu("fire")]
@@ -94,8 +100,11 @@ public class PreTestHandler : MonoBehaviour
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
         var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
         float errorAngle = Vector3.Angle(controllerTransform.forward, handToAudio);
-        Debug.LogWarning(errorAngle);
-        DataCollector.DataList[^1].End().SetErrorAngle(errorAngle); //^1 means last index
+        float horErr = VectorAngleUtils.GetHorizontalAngleDifference(controllerTransform.forward, handToAudio);
+        float verErr = VectorAngleUtils.GetVerticalAngleDifference(controllerTransform.forward, handToAudio);
+        Debug.LogWarning("Hor: " + horErr);
+        Debug.LogWarning("Ver: " + verErr);
+        DataCollector.DataList[^1].End().SetErrorAngle(errorAngle).SetHorError(horErr).SetVerError(verErr); //^1 means last index
         clicked = true;
     }
 
