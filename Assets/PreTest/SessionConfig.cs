@@ -10,6 +10,10 @@ public class SessionConfig
         public int audio_n_visual;
         public int audio_only;
         public int visual_only;
+        public int total()
+        {
+            return audio_n_visual + audio_only + visual_only;
+        }
     }
     public RoundCount roundCount;
     public Vector2 radiusRange = new(2,2);

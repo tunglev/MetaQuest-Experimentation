@@ -15,9 +15,12 @@ public class PreTestHandler : MonoBehaviour
     public OVRInput.Controller controller;
     private Transform controllerTransform;
     public RandomSpawner randomSpawner;
+
+    [Header("Next round by clicking")]
     public TextMeshProUGUI instructionTMP;
     public GameObject instructionCanvas;
     public GameObject startRoundCanvas;
+    public TextMeshProUGUI progressTMP;
 
     private void Start()
     {
@@ -43,7 +46,7 @@ public class PreTestHandler : MonoBehaviour
 
         StartRoundManual(1, audioNVisualIndex, () => randomSpawner.Spawn(true, true), () =>
         {
-            instructionTMP.text = "Audio: YES\nVisual: NO\n \nPoint your LEFT hand and pull the trigger in the direction where you think the sphere is. The sphere is INVISBLE and emit SOUND. The sphere will appear AFTER you pull the trigger.";
+            instructionTMP.text = "Audio: YES\nVisual: NO\n \nPoint your LEFT hand and pull the trigger in the direction where you think the sphere is. The sphere is INVISBLE and emit SOUND. The sphere will be visible for 3 seconds AFTER you pull the trigger.";
             instructionCanvas.SetActive(true);
         });
         StartRoundManual(audioNVisualIndex + 1, audioOnlyIndex, () => randomSpawner.Spawn(false, true), () =>
@@ -64,6 +67,7 @@ public class PreTestHandler : MonoBehaviour
                 clicked = false;
                 allowClick = true;
                 yield return new WaitUntil(hasClicked);
+                progressTMP.text = $"{index} / {SessionConfig.roundCount.total()}";
                 if (min <= index && index < max) startRoundCanvas.SetActive(true);
                 if (index == max) endAction();
             }
@@ -153,7 +157,7 @@ public class PreTestHandler : MonoBehaviour
         clicked = true;
         allowClick = false;
         randomSpawner.EnableAudio(false);
-        randomSpawner.EnableVisibility(true);
+        randomSpawner.EnableVisibility(true, 3);
     }
 
     private bool isVisible = false;
@@ -182,7 +186,7 @@ public class PreTestHandler : MonoBehaviour
         }
         scenarios[index].SetActive(true);
     }
-
+    //
     public void SetAudioClip(AudioClip clip)
     {
         SessionConfig.audioFile = clip;

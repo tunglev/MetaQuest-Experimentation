@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -85,9 +86,22 @@ public class RandomSpawner : MonoBehaviour
         sources.Clear();
     }
 
-    public void EnableVisibility(bool val)
+    public void EnableVisibility(bool val, float duration = -1)
     {
-        sources.ForEach(e => e.GetComponent<Renderer>().enabled = val);
+        if (duration == -1)
+        {
+            sources.ForEach(e => e.GetComponentInChildren<Renderer>().enabled = val);
+        } 
+        else
+        {
+            StartCoroutine(temp());
+        }
+        IEnumerator temp()
+        {
+            sources.ForEach(e => e.GetComponentInChildren<Renderer>().enabled = val);
+            yield return new WaitForSeconds(duration);
+            sources.ForEach(e => e.GetComponentInChildren<Renderer>().enabled = !val);
+        }
     }
 
     public void EnableAudio(bool val)
