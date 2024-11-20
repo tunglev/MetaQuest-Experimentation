@@ -158,7 +158,7 @@ public class PreTestHandler : MonoBehaviour
         clicked = true;
         allowClick = false;
         randomSpawner.EnableAudio(false);
-        randomSpawner.EnableVisibility(true, 3);
+        randomSpawner.EnableVisibility(true, 5f);
     }
 
     private bool isVisible = false;

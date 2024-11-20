@@ -981,9 +981,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initConfig:
     roundCount:
-      audio_n_visual: 5
+      audio_n_visual: 10
       audio_only: 10
-      visual_only: 5
+      visual_only: 10
     radiusRange: {x: 2, y: 2}
     threeD: 1
     audioFile: {fileID: 8300000, guid: 753ef66c723127143845e61b12612c3f, type: 3}
