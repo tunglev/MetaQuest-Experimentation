@@ -990,7 +990,7 @@ MonoBehaviour:
   frontText: {fileID: 473990413}
   orbit: {fileID: 485162922}
   orbitSpeed: 15
-  controller: 1
+  controller: 2
   randomSpawner: {fileID: 1482055542}
   instructionTMP: {fileID: 1900549272}
   instructionCanvas: {fileID: 1900549270}

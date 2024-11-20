@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -98,9 +99,14 @@ public class RandomSpawner : MonoBehaviour
         }
         IEnumerator temp()
         {
-            sources.ForEach(e => e.GetComponentInChildren<Renderer>().enabled = val);
+            List<Renderer> components = sources.Select(e => e.GetComponentInChildren<Renderer>()).ToList();
+            List<bool> originalVal = components.Select(e => e.enabled).ToList();
+            components.ForEach(e => e.enabled = val);
             yield return new WaitForSeconds(duration);
-            sources.ForEach(e => e.GetComponentInChildren<Renderer>().enabled = !val);
+            for (int i = 0; i< components.Count; i++)
+            {
+                components[i].enabled = originalVal[i];
+            }
         }
     }
 

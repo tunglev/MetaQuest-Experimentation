@@ -37,6 +37,7 @@ public class PreTestHandler : MonoBehaviour
     }
 
     private int index = 0;
+    [ContextMenu("Next Round")]
     public void StartRound()
     {   
         index++;
@@ -44,26 +45,26 @@ public class PreTestHandler : MonoBehaviour
         int audioOnlyIndex = audioNVisualIndex + SessionConfig.roundCount.audio_only;
         int visualOnlyIndex = audioOnlyIndex + SessionConfig.roundCount.visual_only;
 
-        StartRoundManual(1, audioNVisualIndex, () => randomSpawner.Spawn(true, true), () =>
+        StartRoundManual(1, audioNVisualIndex, () => randomSpawner.Spawn(true, true), endAction: () =>
         {
             instructionTMP.text = "Audio: YES\nVisual: NO\n \nPoint your LEFT hand and pull the trigger in the direction where you think the sphere is. The sphere is INVISBLE and emit SOUND. The sphere will be visible for 3 seconds AFTER you pull the trigger.";
             instructionCanvas.SetActive(true);
         });
-        StartRoundManual(audioNVisualIndex + 1, audioOnlyIndex, () => randomSpawner.Spawn(false, true), () =>
+        StartRoundManual(audioNVisualIndex + 1, audioOnlyIndex, () => randomSpawner.Spawn(false, true), endAction: () =>
         {
             instructionTMP.text = "Audio: NO\nVisual: YES\n \nPoint your LEFT hand and pull the trigger in the direction of the sphere. The sphere is VISIBLE but play NO SOUND.";
             instructionCanvas.SetActive(true);
         });
-        StartRoundManual(audioOnlyIndex + 1, visualOnlyIndex, () => randomSpawner.Spawn(true, false), () => frontText.text = $"Done! Export to {DataCollector.ExportCSV()}");
+        StartRoundManual(audioOnlyIndex + 1, visualOnlyIndex, () => randomSpawner.Spawn(true, false), endAction: () => frontText.text = $"Done! Export to {DataCollector.ExportCSV()}");
     }
     private void StartRoundManual(int min, int max, Action mainAction, Action endAction)
     {
         if (min <= index && index <= max)
         {
-            mainAction();
             StartCoroutine(Helper());
             IEnumerator Helper()
             {
+                mainAction();
                 clicked = false;
                 allowClick = true;
                 yield return new WaitUntil(hasClicked);
@@ -132,7 +133,7 @@ public class PreTestHandler : MonoBehaviour
     }
     private void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
         {
             fire();
         }
@@ -146,7 +147,7 @@ public class PreTestHandler : MonoBehaviour
     public void fire()
     {
         if (!allowClick) return;
-        OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.LTouch);
+        OVRInput.SetControllerVibration(0.1f, 0.1f, controller);
         var handToAudio = RandomSpawner.sources[0].transform.position - controllerTransform.position;
         float errorAngle = Vector3.Angle(controllerTransform.forward, handToAudio);
         float horErr = VectorAngleUtils.GetHorizontalAngleDifference(controllerTransform.forward, handToAudio);
