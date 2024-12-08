@@ -1,14 +1,11 @@
 using System;
 using System.Collections;
-using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.XR.CoreUtils;
 using UnityEngine;
 
 public class PreTestHandler : MonoBehaviour
 {
-    public static SessionConfig SessionConfig;
-    public SessionConfig initConfig;
+    public static SessionConfig SessionConfig = new();
     public TextMeshProUGUI frontText;
     public Transform orbit;
     public float orbitSpeed;
@@ -22,9 +19,22 @@ public class PreTestHandler : MonoBehaviour
     public GameObject startRoundCanvas;
     public TextMeshProUGUI progressTMP;
 
+    [Header("Configure Session")]
+    public TMP_InputField input_audioNVisual;
+    public TMP_InputField input_audioOnly;
+    public TMP_InputField input_visualOnly;
+
+    public void FinishSessionConfig() {
+        SessionConfig = new SessionConfig();
+        SessionConfig.roundCount.audio_n_visual = int.Parse(input_audioNVisual.text);
+        SessionConfig.roundCount.audio_only = int.Parse(input_audioOnly.text);
+        SessionConfig.roundCount.visual_only = int.Parse(input_visualOnly.text);
+        Debug.Log(SessionConfig);
+    }
+
+
     private void Start()
     {
-        SessionConfig = initConfig;
         controllerTransform = controller == OVRInput.Controller.RTouch ?
             GameObject.Find("OVRCameraRig/TrackingSpace/RightHandAnchor").transform :
             GameObject.Find("OVRCameraRig/TrackingSpace/LeftHandAnchor").transform;

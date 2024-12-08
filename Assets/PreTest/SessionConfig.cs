@@ -20,4 +20,8 @@ public class SessionConfig
     public bool threeD = true;
     public AudioClip audioFile;
 
+    public override string ToString()
+    {
+        return $"config: {roundCount.audio_n_visual} - {roundCount.audio_only} - {roundCount.visual_only}";
+    }
 }
