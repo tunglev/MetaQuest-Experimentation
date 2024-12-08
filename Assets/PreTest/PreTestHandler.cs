@@ -23,12 +23,15 @@ public class PreTestHandler : MonoBehaviour
     public TMP_InputField input_audioNVisual;
     public TMP_InputField input_audioOnly;
     public TMP_InputField input_visualOnly;
+    public AudioClip audioClip;
 
     public void FinishSessionConfig() {
         SessionConfig = new SessionConfig();
         SessionConfig.roundCount.audio_n_visual = int.Parse(input_audioNVisual.text);
         SessionConfig.roundCount.audio_only = int.Parse(input_audioOnly.text);
         SessionConfig.roundCount.visual_only = int.Parse(input_visualOnly.text);
+        SessionConfig.audioFile = audioClip;
+        progressTMP.text = $"{index+1} / {SessionConfig.roundCount.total()}";
         Debug.Log(SessionConfig);
     }
 
@@ -78,7 +81,7 @@ public class PreTestHandler : MonoBehaviour
                 clicked = false;
                 allowClick = true;
                 yield return new WaitUntil(hasClicked);
-                progressTMP.text = $"{index} / {SessionConfig.roundCount.total()}";
+                progressTMP.text = $"{index+1} / {SessionConfig.roundCount.total()}";
                 if (min <= index && index < max) startRoundCanvas.SetActive(true);
                 if (index == max) endAction();
             }
@@ -143,7 +146,7 @@ public class PreTestHandler : MonoBehaviour
     }
     private void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
+        if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
         {
             fire();
         }
