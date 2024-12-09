@@ -22,6 +22,6 @@ public class SessionConfig
 
     public override string ToString()
     {
-        return $"config: {roundCount.audio_n_visual} - {roundCount.audio_only} - {roundCount.visual_only}";
+        return $"config- {roundCount.audio_n_visual} - {roundCount.audio_only} - {roundCount.visual_only}";
     }
 }

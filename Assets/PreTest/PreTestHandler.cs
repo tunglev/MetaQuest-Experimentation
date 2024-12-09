@@ -31,7 +31,7 @@ public class PreTestHandler : MonoBehaviour
         SessionConfig.roundCount.audio_only = int.Parse(input_audioOnly.text);
         SessionConfig.roundCount.visual_only = int.Parse(input_visualOnly.text);
         SessionConfig.audioFile = audioClip;
-        progressTMP.text = $"{index+1} / {SessionConfig.roundCount.total()}";
+        progressTMP.text = $"Round {index+1} / {SessionConfig.roundCount.total()}";
         Debug.Log(SessionConfig);
     }
 
@@ -60,12 +60,12 @@ public class PreTestHandler : MonoBehaviour
 
         StartRoundManual(1, audioNVisualIndex, () => randomSpawner.Spawn(true, true), endAction: () =>
         {
-            instructionTMP.text = "Audio: YES\nVisual: NO\n \nPoint your LEFT hand and pull the trigger in the direction where you think the sphere is. The sphere is INVISBLE and emit SOUND. The sphere will be visible for 3 seconds AFTER you pull the trigger.";
+            instructionTMP.text = "Audio: YES\nVisual: NO\n \nPoint your RIGHT hand in the direction of where you think the sphere is and pull the trigger on the controller. The sphere is INVISIBLE but will emit SOUND.. The sphere will be visible for 3 seconds AFTER you pull the trigger.";
             instructionCanvas.SetActive(true);
         });
         StartRoundManual(audioNVisualIndex + 1, audioOnlyIndex, () => randomSpawner.Spawn(false, true), endAction: () =>
         {
-            instructionTMP.text = "Audio: NO\nVisual: YES\n \nPoint your LEFT hand and pull the trigger in the direction of the sphere. The sphere is VISIBLE but play NO SOUND.";
+            instructionTMP.text = "Audio: NO\nVisual: YES\n \nPoint your RIGHT hand in the direction of the sphere and pull the trigger on the controller. The sphere is VISIBLE but will emit NO SOUND.";
             instructionCanvas.SetActive(true);
         });
         StartRoundManual(audioOnlyIndex + 1, visualOnlyIndex, () => randomSpawner.Spawn(true, false), endAction: () => frontText.text = $"Done! Export to {DataCollector.ExportCSV()}");
@@ -81,7 +81,7 @@ public class PreTestHandler : MonoBehaviour
                 clicked = false;
                 allowClick = true;
                 yield return new WaitUntil(hasClicked);
-                progressTMP.text = $"{index+1} / {SessionConfig.roundCount.total()}";
+                progressTMP.text = $"Round {index+1} / {SessionConfig.roundCount.total()}";
                 if (min <= index && index < max) startRoundCanvas.SetActive(true);
                 if (index == max) endAction();
             }

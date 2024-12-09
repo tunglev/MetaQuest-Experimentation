@@ -18,7 +18,7 @@ public class DataCollector : MonoBehaviour
             sb.Append('\n').Append(data.ToString());
         }
         var folder = Application.persistentDataPath;
-        var filePath = Path.Combine(folder, $"{DateTime.UtcNow:y-M-d HH_mm_ss} export.csv");
+        var filePath = Path.Combine(folder, $"{DateTime.UtcNow:y-M-d HH_mm_ss} {PreTestHandler.SessionConfig} export.csv");
         File.WriteAllText(filePath, sb.ToString());
         //AssetDatabase.Refresh();
         Debug.Log($"CSV file written to \"{filePath}\"");
