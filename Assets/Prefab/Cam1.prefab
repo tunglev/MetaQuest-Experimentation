@@ -9916,6 +9916,10 @@ PrefabInstance:
       propertyPath: requestScenePermissionOnStartup
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114473266101150724, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
+      propertyPath: resetHmdPoseByMiddleMouseButton
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -9946,13 +9950,10 @@ PrefabInstance:
       addedObject: {fileID: 411861274345268444}
     - targetCorrespondingSourceObject: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8479075522784474900}
+      addedObject: {fileID: 7625909947197451165}
     - targetCorrespondingSourceObject: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3711332540076556256}
-    - targetCorrespondingSourceObject: {fileID: 100004, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3948996970814949768}
+      addedObject: {fileID: 7178536969815664736}
   m_SourcePrefab: {fileID: 100100000, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
 --- !u!4 &6909175680999566132 stripped
 Transform:
@@ -10016,6 +10017,9 @@ MonoBehaviour:
   overridePerLayerColorScaleAndOffset: 0
   colorScale: {x: 1, y: 1, z: 1, w: 1}
   colorOffset: {x: 0, y: 0, z: 0, w: 0}
+  passthroughLayerResumed:
+    m_PersistentCalls:
+      m_Calls: []
   colorMapEditorType_: 0
   colorMapEditorGradient:
     serializedVersion: 2
@@ -10060,7 +10064,7 @@ MonoBehaviour:
   edgeRenderingEnabled_: 0
   edgeColor_: {r: 1, g: 1, b: 1, a: 1}
   colorMapType: 0
---- !u!114 &8479075522784474900
+--- !u!114 &7625909947197451165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10069,58 +10073,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 6913591956985352296}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fb88afd4711a85428a8528b49decfc9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c2387e5bac57bc428b3f074a474e328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
---- !u!135 &3711332540076556256
-SphereCollider:
+  _maxRadius: 8
+  _growSpd: 0.5
+  _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
+  _audioPinLifeTime: 3
+--- !u!114 &7178536969815664736
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6913591956985352296}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &3948996970814949768
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6913591956985352296}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7a41b06b6f3c5f43a499f7236ec3e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _encodingMethod: {fileID: 7625909947197451165}
+  _OVRButton: 1
 --- !u!4 &6916946247924485260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4484591312116288, guid: 126d619cf4daa52469682f85c1378b4a, type: 3}
