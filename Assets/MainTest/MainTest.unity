@@ -999,12 +999,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.RoomIndex
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: SceneSettings.DataSource
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
+      propertyPath: SceneSettings.RoomPrefabs.Array.size
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
+      propertyPath: SceneSettings.RoomPrefabs.Array.data[10]
+      value: 
+      objectReference: {fileID: 8478255711684906226, guid: e84a9b5ea0144284aa18e1b68e5ab5f9, type: 3}
     - target: {fileID: 8047981335285221976, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1186,6 +1194,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pointVisualize: {fileID: 2097106292441042153, guid: 243b21f4ef5ac5e4f9a064b22c7bc8a6, type: 3}
+  _data:
+    width: 3
+    length: 7
+    wallHeight: 2.5
+    wallPrefab: {fileID: 8856134967221130863, guid: c56af40a76127e042bc0ce509de4e2a0, type: 3}
 --- !u!1001 &1805702979
 PrefabInstance:
   m_ObjectHideFlags: 0
