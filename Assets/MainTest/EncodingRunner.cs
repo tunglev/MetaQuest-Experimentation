@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(EncodingMethod))]
 public class EncodingRunner : MonoBehaviour
 {
     [SerializeField] private EncodingMethod _encodingMethod;
@@ -10,7 +9,6 @@ public class EncodingRunner : MonoBehaviour
     [Header("Trigger keys")]
     [SerializeField] private OVRInput.Button _OVRButton;
 
- 
 
     private void Update() {
         if (OVRInput.GetDown(_OVRButton)) {

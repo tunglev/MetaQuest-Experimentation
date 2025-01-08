@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Meta.XR.MRUtilityKit;
 using UnityEngine;
 
+
 public class SphereGrow : EncodingMethod
 {
     public override void OnDemandTriggered()

@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/3a.unity
     guid: 22912cd8ad1c44544a6d5c0fc49195bd
   - enabled: 0
-    path: Assets/Scenes/Encoding1.unity
+    path: Assets/MainTest/MainTest.unity
     guid: 967006f02c447254e95978e33c094ed5
   - enabled: 0
     path: Assets/Scenes/Encoding2.unity
