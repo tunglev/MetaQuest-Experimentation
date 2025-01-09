@@ -1187,10 +1187,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointVisualize: {fileID: 2097106292441042153, guid: 243b21f4ef5ac5e4f9a064b22c7bc8a6, type: 3}
   _data:
-    width: 3
-    length: 17
+    roomSize:
+      width: 7
+      length: 17
     wallHeight: 2.5
     wallPrefab: {fileID: 8856134967221130863, guid: c56af40a76127e042bc0ce509de4e2a0, type: 3}
+    doorWidthGen:
+      min: 1
+      max: 1.5
 --- !u!1001 &1805702979
 PrefabInstance:
   m_ObjectHideFlags: 0
