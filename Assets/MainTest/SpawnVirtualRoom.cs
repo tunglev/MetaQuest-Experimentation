@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class SpawnVirtualRoom : MonoBehaviour
 {
+    
+
     #region Start and End Points
     [SerializeField] private GameObject _pointVisualize;
 
@@ -17,23 +19,16 @@ public class SpawnVirtualRoom : MonoBehaviour
     [ContextMenu("Spawn Start and End points")]
     void SpawnStartAndEndPoints()
     {
-        var floor = MRUK.Instance.GetCurrentRoom().FloorAnchor;
-        List<Vector2> boundaryPoints = floor.PlaneBoundary2D; // local position
-        PointGenerator generator = new PointGenerator();
-        Vector2[] pointsInside = generator.GeneratePointsInsidePolygon(boundaryPoints.ToArray(), 2);
         if (_startPoint != null) Destroy(_startPoint);
         if (_endPoint != null) Destroy(_endPoint);
 
-        Vector3 startPos =  new Vector3(pointsInside[0].x, 0, pointsInside[0].y);
-        startPos = floor.transform.TransformPoint(startPos);
-        Vector3 endPos = new Vector3(pointsInside[1].x, 0, pointsInside[1].y);
-        endPos = floor.transform.TransformPoint(endPos);
+        Vector3 startPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(1, true);
+        Vector3 endPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(1, true);
 
         _startPoint = Instantiate(_pointVisualize, startPos, Quaternion.identity);
         _endPoint = Instantiate(_pointVisualize, endPos, Quaternion.identity);
     }
     #endregion
-
 
     #region Generate Room
     [Serializable]
