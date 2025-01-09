@@ -8,7 +8,12 @@ using UnityEngine;
 
 public class SpawnVirtualRoom : MonoBehaviour
 {
-    
+    //[SerializeField] private GameObject prefab;
+    private void Start() {
+        var room = SpawnRoom();
+        MRUK.Instance.LoadSceneFromPrefab(room, true);
+        Destroy(room);
+    }
 
     #region Start and End Points
     [SerializeField] private GameObject _pointVisualize;
@@ -44,31 +49,33 @@ public class SpawnVirtualRoom : MonoBehaviour
     [ContextMenu("Spawn Room")]
     private GameObject SpawnRoom()
     {
-        var parent = new GameObject("Custom Room").transform;
-        var top = Instantiate(_data.wallPrefab, parent);
+        var room = new GameObject("Custom Room").transform;
+        var top = Instantiate(_data.wallPrefab, room);
         top.localPosition = new Vector3(_data.width / 2, 0, _data.length / 2);
         top.localEulerAngles = Vector3.zero;
         top.localScale = new Vector2(_data.width, _data.wallHeight);
 
-        var bottom = Instantiate(_data.wallPrefab, parent);
+        var bottom = Instantiate(_data.wallPrefab, room);
         bottom.localPosition = new Vector3(_data.width / 2, 0, -1 * _data.length / 2);
         bottom.localEulerAngles = new Vector3(0,180,0);
         bottom.localScale = new Vector2(_data.width, _data.wallHeight);
 
-        var left = Instantiate(_data.wallPrefab, parent);
+        var left = Instantiate(_data.wallPrefab, room);
         left.localPosition = Vector3.zero;
         left.localEulerAngles = new Vector3(0, -90, 0);
         left.localScale = new Vector2(_data.length, _data.wallHeight);
 
-        var right = Instantiate(_data.wallPrefab, parent);
+        var right = Instantiate(_data.wallPrefab, room);
         right.localPosition = new Vector3(_data.width, 0, 0);
         right.localEulerAngles = new Vector3(0, 90, 0);
         right.localScale = new Vector2(_data.length, _data.wallHeight);
 
-        for (int i=0; i<parent.childCount;i++) {
-            parent.GetChild(i).name = "WALL_FACE";
+        for (int i=0; i<room.childCount;i++) {
+            room.GetChild(i).name = "WALL_FACE";
         }
-        return parent.gameObject;
+
+        room.gameObject.SetActive(false);
+        return room.gameObject;
     }
     #endregion
 
