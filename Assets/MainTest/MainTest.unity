@@ -1192,6 +1192,7 @@ MonoBehaviour:
       length: 17
     wallHeight: 2.5
     wallPrefab: {fileID: 8856134967221130863, guid: c56af40a76127e042bc0ce509de4e2a0, type: 3}
+    doorwayCount: 2
     doorWidthGen:
       min: 1
       max: 1.5

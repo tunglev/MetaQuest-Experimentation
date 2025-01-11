@@ -59,6 +59,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         public float wallHeight;
         public Transform wallPrefab;
 
+        public int doorwayCount;
         public GenerationLimit doorWidthGen;
         internal DoorwayData[] doorwayData;
     }
@@ -75,7 +76,12 @@ public class SpawnVirtualRoom : MonoBehaviour
     {
         var room = new GameObject("Custom Room");
         GenerateFourWalls(room.transform);
-        GenerateDoorways(room.transform);
+        
+        int doorwaySpawned = 0;
+        while (doorwaySpawned < _data.doorwayCount) {
+            GenerateDoorways(room.transform);
+            doorwaySpawned++;
+        }
 
         room.SetActive(false);
         return room;
@@ -110,6 +116,7 @@ public class SpawnVirtualRoom : MonoBehaviour
             room.GetChild(i).name = "WALL_FACE";
         }
     }
+
 
     private void GenerateDoorways(Transform room)
     {
