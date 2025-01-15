@@ -48,7 +48,7 @@ public class SphereGrow : EncodingMethod
         pin.InitializeDistance(distance);
         if (anchor != null)
         {
-            pin.InitializeLabel(anchor.Label);
+            pin.InitializeLabel(anchor.name);
         }
 
         Destroy(pin.gameObject, _audioPinLifeTime);

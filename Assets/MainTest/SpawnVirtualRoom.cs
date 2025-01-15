@@ -14,25 +14,6 @@ public class SpawnVirtualRoom : MonoBehaviour
         ValidateRoomGenerationParameters();
     }
 
-    // private async void Start() {
-    //     var result = await MRUK.Instance.LoadSceneFromDevice();
-    //     SpawnRoom().SetActive(true);
-    //     if (result == MRUK.LoadDeviceResult.Success) {
-    //         SpawnRoom().SetActive(true);
-    //     }
-    // }
-    private void LoadMRUKRoom() {
-        var room1 = MRUK.Instance.SceneSettings.RoomPrefabs[3];
-        var room2 = MRUK.Instance.SceneSettings.RoomPrefabs[4];
-        MRUK.Instance.LoadSceneFromPrefab(room1, false);
-        //MRUK.Instance.LoadSceneFromPrefab(room2, false);
-        EffectMesh tt = FindObjectOfType<EffectMesh>();
-        tt.CreateMesh();
-    }
-
-    
-    private void Start() {
-    }
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
         {
@@ -45,6 +26,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
+        GenerateGoalNode();
     }
 
     #region Start and End Points
@@ -68,6 +50,8 @@ public class SpawnVirtualRoom : MonoBehaviour
     #endregion
 
     #region Generate Room
+
+    
     
     [Serializable]
     public struct DoorwayData {
@@ -116,7 +100,6 @@ public class SpawnVirtualRoom : MonoBehaviour
         room.SetActive(false);
         return room;
     }
-
 
     private void GenerateFourWalls(Transform room) {
         var top = Instantiate(_data.wallPrefab, room);
@@ -167,13 +150,26 @@ public class SpawnVirtualRoom : MonoBehaviour
             rightWall.localPosition = rightWallPos;
             rightWall.localScale = new(rightWallSize, _data.wallHeight, 1);
 
-            rightWall.name = "OTHER";
-            leftWall.name = "OTHER";
+            rightWall.name = "STORAGE";
+            leftWall.name = "STORAGE";
         }
 
     }
+
+
     #endregion
 
+    #region Generate GoalNode
+    [Header("Goal Node")]
+    [SerializeField] private GameObject _goalNodePrefab;
+
+    private void GenerateGoalNode()
+    {
+        var goalPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.5f, true);
+        var goalNode = Instantiate(_goalNodePrefab, goalPos, Quaternion.identity);
+        goalNode.name = "GOAL";
+    }
+    #endregion
 }
 
 [Serializable]

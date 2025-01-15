@@ -197,12 +197,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
   labelMap:
-  - label: 4
+  - label: WALL_FACE
     audioClip: {fileID: 8300000, guid: e814bc2402ba9524eaeafdb23a418ab7, type: 3}
     volume: 0.05
-  - label: 128
+  - label: STORAGE
     audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
     volume: 1
+  - label: GOAL
+    audioClip: {fileID: 8300000, guid: 5bdb53f068999034dbd08ec452d0751b, type: 3}
+    volume: 0.05
   mode: 0
   distance_frequencyMap:
     serializedVersion: 2

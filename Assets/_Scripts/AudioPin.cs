@@ -25,7 +25,7 @@ public class AudioPin : MonoBehaviour
     {
         m_src = GetComponent<AudioSource>();
     }
-    public void InitializeLabel(MRUKAnchor.SceneLabels label)
+    public void InitializeLabel(string label)
     {
         var target = labelMap.Find(e => e.label == label);
         if (target != null)
@@ -59,7 +59,7 @@ public class AudioPin : MonoBehaviour
 //
 [System.Serializable]
 public class LabelAudioMap {
-    public MRUKAnchor.SceneLabels label;
+    public string label;
     public AudioClip audioClip;
     [Range(0, 1)] public float volume =1f;
 }
