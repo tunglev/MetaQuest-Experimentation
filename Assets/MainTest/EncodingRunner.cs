@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Meta.XR.MRUtilityKit;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class EncodingRunner : MonoBehaviour
     private EncodingMethod _encodingMethod;
 
     private void Awake() {
-        var centereye = FindObjectOfType<OVRCameraRig>().centerEyeAnchor.gameObject;
+        var centereye = Camera.main.gameObject;
         _encodingMethod.InitOnCam(centereye);
     }
 
@@ -20,6 +21,7 @@ public class EncodingRunner : MonoBehaviour
             _encodingMethod.OnDemandTriggered();
             OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
         }
+        FindObjectOfType<SceneDebugger>().logs.text = Camera.main.transform.position.ToString();
     }
 
     #if UNITY_EDITOR

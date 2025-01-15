@@ -20,6 +20,7 @@ public class SphereGrow : EncodingMethod
 
         ResetSphere();
     } 
+
     [SerializeField] private float _maxRadius = 8;
     [SerializeField] private float _initGrowSpd = 0.5f;
     [Header("Audio pin")]
@@ -40,10 +41,10 @@ public class SphereGrow : EncodingMethod
     private void HandleTriggerWithAnAnchor(Collider other)
     {
         if (_curGrowSpd == 0f) return;
-        var contactPoint = other.ClosestPointOnBounds(this.transform.position);
+        var contactPoint = other.ClosestPointOnBounds(_sphereCollider.transform.position);
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(_audioPinPrefab, contactPoint, Quaternion.identity);
-        var distance = (contactPoint - this.transform.position).magnitude;
+        var distance = (contactPoint - _sphereCollider.transform.position).magnitude;
         pin.InitializeDistance(distance);
         if (anchor != null)
         {
