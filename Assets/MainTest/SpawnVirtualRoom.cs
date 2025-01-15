@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Meta.XR.MRUtilityKit;
 using Oculus.Platform;
+using Unity.XR.Oculus;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -31,8 +32,21 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     
     private void Start() {
+        
+    }
+    private void Update() {
+        if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
+        {
+            TEST();
+        }
+    }
+
+    [ContextMenu("TEST")]
+    private void TEST() {
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
+        EffectMesh tt = FindObjectOfType<EffectMesh>();
+        tt.CreateMesh();
         Destroy(room);
     }
 
@@ -87,6 +101,7 @@ public class SpawnVirtualRoom : MonoBehaviour
     }
 
 
+    const float WALLHEIGHT = 2.5f;
     [ContextMenu("Spawn Room")]
     private GameObject SpawnRoom()
     {
@@ -100,8 +115,7 @@ public class SpawnVirtualRoom : MonoBehaviour
             doorwaySpawned++;
         }
         
-
-        room.transform.position += new Vector3(0,MRUK.Instance.GetCurrentRoom().FloorAnchor.transform.position.y,0);
+        room.transform.position += new Vector3(0,WALLHEIGHT * 0.5f, 0);
         room.SetActive(false);
         return room;
     }
