@@ -162,12 +162,14 @@ public class SpawnVirtualRoom : MonoBehaviour
     #region Generate GoalNode
     [Header("Goal Node")]
     [SerializeField] private GameObject _goalNodePrefab;
+    private GameObject _curGoal;
 
     private void GenerateGoalNode()
     {
-        var goalPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.5f, true);
-        var goalNode = Instantiate(_goalNodePrefab, goalPos, Quaternion.identity);
-        goalNode.name = "GOAL";
+        if (_curGoal != null) Destroy(_curGoal.gameObject);
+        var goalPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.5f, avoidVolumes: true);
+        _curGoal = Instantiate(_goalNodePrefab, goalPos, Quaternion.identity);
+        _curGoal.name = "GOAL";
     }
     #endregion
 }
