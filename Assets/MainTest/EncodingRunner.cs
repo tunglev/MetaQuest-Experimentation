@@ -11,8 +11,10 @@ public class EncodingRunner : MonoBehaviour
 
 
     private void Update() {
-        if (OVRInput.GetDown(_OVRButton)) {
+        if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
+        {
             _encodingMethod.OnDemandTriggered();
+            OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
         }
     }
 

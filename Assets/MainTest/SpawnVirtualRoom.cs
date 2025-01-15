@@ -13,7 +13,23 @@ public class SpawnVirtualRoom : MonoBehaviour
         ValidateRoomGenerationParameters();
     }
 
-  
+    // private async void Start() {
+    //     var result = await MRUK.Instance.LoadSceneFromDevice();
+    //     SpawnRoom().SetActive(true);
+    //     if (result == MRUK.LoadDeviceResult.Success) {
+    //         SpawnRoom().SetActive(true);
+    //     }
+    // }
+    private void LoadMRUKRoom() {
+        var room1 = MRUK.Instance.SceneSettings.RoomPrefabs[3];
+        var room2 = MRUK.Instance.SceneSettings.RoomPrefabs[4];
+        MRUK.Instance.LoadSceneFromPrefab(room1, false);
+        //MRUK.Instance.LoadSceneFromPrefab(room2, false);
+        EffectMesh tt = FindObjectOfType<EffectMesh>();
+        tt.CreateMesh();
+    }
+
+    
     private void Start() {
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
@@ -74,6 +90,7 @@ public class SpawnVirtualRoom : MonoBehaviour
     [ContextMenu("Spawn Room")]
     private GameObject SpawnRoom()
     {
+        print("Creating custom room");
         var room = new GameObject("Custom Room");
         GenerateFourWalls(room.transform);
         
@@ -82,7 +99,9 @@ public class SpawnVirtualRoom : MonoBehaviour
             GenerateDoorways(room.transform);
             doorwaySpawned++;
         }
+        
 
+        room.transform.position += new Vector3(0,MRUK.Instance.GetCurrentRoom().FloorAnchor.transform.position.y,0);
         room.SetActive(false);
         return room;
     }
@@ -111,9 +130,9 @@ public class SpawnVirtualRoom : MonoBehaviour
         right.localEulerAngles = new Vector3(0, 90, 0);
         right.localScale = new Vector3(length, _data.wallHeight, 1);
 
-        for (int i = 0; i < room.childCount; i++)
+        for (int i = 0; i < room.transform.childCount; i++)
         {
-            room.GetChild(i).name = "WALL_FACE";
+            room.transform.GetChild(i).name = "WALL_FACE";
         }
     }
 
@@ -136,6 +155,9 @@ public class SpawnVirtualRoom : MonoBehaviour
             var rightWall = Instantiate(_data.wallPrefab, room);
             rightWall.localPosition = rightWallPos;
             rightWall.localScale = new(rightWallSize, _data.wallHeight, 1);
+
+            rightWall.name = "OTHER";
+            leftWall.name = "OTHER";
         }
 
     }
