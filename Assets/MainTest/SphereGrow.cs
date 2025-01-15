@@ -59,7 +59,7 @@ public class SphereGrow : EncodingMethod
         ResetSphere();
         _curGrowSpd = _initGrowSpd;
     }
-    private void ResetSphere()
+    public void ResetSphere()
     {
         _curGrowSpd = 0f;
         _sphereCollider.radius = 0f;

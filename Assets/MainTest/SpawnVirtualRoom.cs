@@ -28,6 +28,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     [ContextMenu("TEST")]
     public void SPAWN() {
+        FindObjectOfType<SphereGrow>().ResetSphere();
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
