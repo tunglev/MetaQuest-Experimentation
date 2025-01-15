@@ -32,7 +32,6 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     
     private void Start() {
-        
     }
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
@@ -45,8 +44,6 @@ public class SpawnVirtualRoom : MonoBehaviour
     private void TEST() {
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
-        EffectMesh tt = FindObjectOfType<EffectMesh>();
-        tt.CreateMesh();
         Destroy(room);
     }
 

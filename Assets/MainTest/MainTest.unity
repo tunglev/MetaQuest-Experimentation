@@ -1246,6 +1246,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1787188692}
   - component: {fileID: 1787188693}
+  - component: {fileID: 1787188695}
+  - component: {fileID: 1787188694}
   m_Layer: 0
   m_Name: Handlers
   m_TagString: Untagged
@@ -1291,6 +1293,35 @@ MonoBehaviour:
     doorWidthGen:
       min: 1
       max: 1.5
+--- !u!114 &1787188694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787188691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2387e5bac57bc428b3f074a474e328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxRadius: 8
+  _initGrowSpd: 0.5
+  _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
+  _audioPinLifeTime: 3
+--- !u!114 &1787188695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787188691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7a41b06b6f3c5f43a499f7236ec3e1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _encodingMethod: {fileID: 1787188694}
 --- !u!1001 &1805702979
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6823,20 +6854,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4673431224053872613}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5039196494003484775
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8756009867610390639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7a41b06b6f3c5f43a499f7236ec3e1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _encodingMethod: {fileID: 5739054208921238426}
-  _OVRButton: 1
 --- !u!1 &5049702984468939613
 GameObject:
   m_ObjectHideFlags: 0
@@ -7648,22 +7665,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 575314970964685958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5739054208921238426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8756009867610390639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c2387e5bac57bc428b3f074a474e328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxRadius: 8
-  _initGrowSpd: 0.5
-  _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
-  _audioPinLifeTime: 3
 --- !u!1 &5775971879222480510
 GameObject:
   m_ObjectHideFlags: 0
@@ -10744,7 +10745,7 @@ MonoBehaviour:
   requestScenePermissionOnStartup: 1
   requestRecordAudioPermissionOnStartup: 0
   _localDimming: 1
-  _trackingOriginType: 1
+  _trackingOriginType: 2
   usePositionTracking: 1
   useRotationTracking: 1
   useIPDInPositionTracking: 1
@@ -10905,8 +10906,6 @@ GameObject:
   - component: {fileID: 8756009867599672715}
   - component: {fileID: 8652866520487486159}
   - component: {fileID: 2577926445157414107}
-  - component: {fileID: 5739054208921238426}
-  - component: {fileID: 5039196494003484775}
   m_Layer: 0
   m_Name: Cam
   m_TagString: Untagged

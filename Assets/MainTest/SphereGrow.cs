@@ -10,7 +10,16 @@ public class SphereGrow : EncodingMethod
     {
         StartSphereGrow();
     }
+    public override void InitOnCam(GameObject centerEye)
+    {
+        var rb = centerEye.AddComponent<Rigidbody>();
+        rb.isKinematic = true;
+        _sphereCollider = centerEye.AddComponent<SphereCollider>();
+        _sphereCollider.isTrigger = true;
+        centerEye.AddComponent<ColliderUtilities>().onTriggerEnter += HandleTriggerWithAnAnchor;
 
+        ResetSphere();
+    } 
     [SerializeField] private float _maxRadius = 8;
     [SerializeField] private float _initGrowSpd = 0.5f;
     [Header("Audio pin")]
@@ -19,14 +28,6 @@ public class SphereGrow : EncodingMethod
     private float _curGrowSpd;
     private SphereCollider _sphereCollider;
 
-    private void Awake()
-    {
-        var rb = gameObject.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
-        _sphereCollider = gameObject.AddComponent<SphereCollider>();
-        _sphereCollider.isTrigger = true;
-        ResetSphere();
-    }
 
     private void FixedUpdate()
     {
@@ -36,7 +37,7 @@ public class SphereGrow : EncodingMethod
             ResetSphere();
         }
     }
-    private void OnTriggerEnter(Collider other)
+    private void HandleTriggerWithAnAnchor(Collider other)
     {
         if (_curGrowSpd == 0f) return;
         var contactPoint = other.ClosestPointOnBounds(this.transform.position);

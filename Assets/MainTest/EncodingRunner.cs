@@ -1,14 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EncodingRunner : MonoBehaviour
 {
-    [SerializeField] private EncodingMethod _encodingMethod;
+    [SerializeField]
+    private EncodingMethod _encodingMethod;
 
-    [Header("Trigger keys")]
-    [SerializeField] private OVRInput.Button _OVRButton;
-
+    private void Awake() {
+        var centereye = FindObjectOfType<OVRCameraRig>().centerEyeAnchor.gameObject;
+        _encodingMethod.InitOnCam(centereye);
+    }
 
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
