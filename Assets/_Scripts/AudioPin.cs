@@ -32,12 +32,12 @@ public class AudioPin : MonoBehaviour
         {
             m_src.clip = target.audioClip;
             m_src.volume = target.volume;
+            m_src.Play();
         }
         else
         {
             m_src.clip = defaultClip;
         }
-        m_src.Play();
     }
     public void InitializeDistance(float distance)
     {

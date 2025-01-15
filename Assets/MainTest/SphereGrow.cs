@@ -38,6 +38,7 @@ public class SphereGrow : EncodingMethod
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (_curGrowSpd == 0f) return;
         var contactPoint = other.ClosestPointOnBounds(this.transform.position);
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(_audioPinPrefab, contactPoint, Quaternion.identity);

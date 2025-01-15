@@ -115,7 +115,7 @@ public class SpawnVirtualRoom : MonoBehaviour
             doorwaySpawned++;
         }
         
-        room.transform.position += new Vector3(0,WALLHEIGHT * 0.5f, 0);
+        room.transform.position += new Vector3(-0.5f * _data.roomSize.width,WALLHEIGHT * 0.5f, 0);
         room.SetActive(false);
         return room;
     }
