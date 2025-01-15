@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3150394075434051723}
   - component: {fileID: 8016744158976768917}
   m_Layer: 0
-  m_Name: CLD
+  m_Name: GOAL_CLD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

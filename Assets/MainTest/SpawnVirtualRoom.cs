@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Meta.XR.MRUtilityKit;
 using Oculus.Platform;
+using Unity.VisualScripting;
 using Unity.XR.Oculus;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,15 +15,19 @@ public class SpawnVirtualRoom : MonoBehaviour
         ValidateRoomGenerationParameters();
     }
 
+    private void Awake() {
+        FindObjectOfType<OVRCameraRig>().rightControllerAnchor.AddComponent<ReachGoalHandler>();
+    }
+
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
         {
-            TEST();
+            SPAWN();
         }
     }
 
     [ContextMenu("TEST")]
-    private void TEST() {
+    public void SPAWN() {
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
