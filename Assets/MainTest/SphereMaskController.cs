@@ -5,7 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class SphereMaskController : MonoBehaviour
 {
-
     public float radius = 0.5f;
     public float softness = 0.5f;
 
