@@ -29,10 +29,22 @@ public class SpawnVirtualRoom : MonoBehaviour
     [ContextMenu("TEST")]
     public void SPAWN() {
         FindObjectOfType<SphereGrow>().ResetSphere();
+        #if UNITY_EDITOR
+            
+        #else
+            AssignPlayAreaDimensions();
+        #endif
         var room = SpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
         GenerateGoalNode();
+    }
+
+    private void AssignPlayAreaDimensions() {
+        var dimension = FindObjectOfType<PlayAreaAligner>().GetPlayAreaDimensions();
+        _data.roomSize.width = dimension.x;
+        _data.roomSize.length = dimension.z;
+        FindObjectOfType<SceneDebugger>().logs.text = dimension.ToString();
     }
 
     #region Start and End Points
