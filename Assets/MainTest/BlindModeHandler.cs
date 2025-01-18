@@ -16,7 +16,8 @@ public class BlindModeHandler : MonoBehaviour
 
     void Start()
     {
-        _roomBoxMaterial = _roomBoxEffectMesh.MeshMaterial;    
+        _roomBoxMaterial = _roomBoxEffectMesh.MeshMaterial;  
+        FindObjectOfType<SphereMaskController>().softness = _visibleRange;  
     }
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.B))
@@ -31,8 +32,13 @@ public class BlindModeHandler : MonoBehaviour
     }
 
     public void SetBlindMode(bool val) {
+        FindObjectOfType<SpawnVirtualRoom>().CurrentGoal.GetComponentInChildren<MeshRenderer>().enabled = !val;
         _roomGuardianEffectMesh.ToggleEffectMeshVisibility(shouldShow: !val);
         _roomBoxEffectMesh.OverrideEffectMaterial(val ? _blindModeMaterial : _roomBoxMaterial);
         _blind = val;
+    }
+
+    public void ReapplyBlindMode() {
+        SetBlindMode(_blind);
     }
 }

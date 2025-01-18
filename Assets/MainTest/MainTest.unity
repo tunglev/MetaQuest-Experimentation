@@ -1214,6 +1214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1787188692}
+  - component: {fileID: 1787188697}
   - component: {fileID: 1787188693}
   - component: {fileID: 1787188695}
   - component: {fileID: 1787188694}
@@ -1252,7 +1253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d7dc86b57d4bc429de458b9cecb7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointVisualize: {fileID: 2097106292441042153, guid: 243b21f4ef5ac5e4f9a064b22c7bc8a6, type: 3}
   _data:
     roomSize:
       width: 4
@@ -1264,6 +1264,7 @@ MonoBehaviour:
       min: 1
       max: 1.5
   _goalNodePrefab: {fileID: 6253314991228221958, guid: 8a292f407d827264ebeaf3f874369dd8, type: 3}
+  CurrentGoal: {fileID: 0}
 --- !u!114 &1787188694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,6 +1310,18 @@ MonoBehaviour:
   _blindModeMaterial: {fileID: 2100000, guid: 4d3c70f3d8ac3c44595b045907974510, type: 2}
   _roomGuardianEffectMesh: {fileID: 1098386306}
   _roomBoxEffectMesh: {fileID: 2296141233440405978}
+--- !u!114 &1787188697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787188691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4729e49639815642a07c36f74120692, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &12310928313444692
 GameObject:
   m_ObjectHideFlags: 0

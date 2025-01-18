@@ -26,7 +26,7 @@ public class EncodingRunner : MonoBehaviour
 
     #if UNITY_EDITOR
     [ContextMenu("Test Trigger")]
-    private void TestTrigger() {
+    public void TestTrigger() {
         _encodingMethod.OnDemandTriggered();
     }
     #endif

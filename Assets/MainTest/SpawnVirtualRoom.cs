@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Meta.XR.MRUtilityKit;
 using Oculus.Platform;
+using Palmmedia.ReportGenerator.Core.Parser.Analysis;
 using Unity.VisualScripting;
 using Unity.XR.Oculus;
 using UnityEngine;
@@ -15,26 +16,14 @@ public class SpawnVirtualRoom : MonoBehaviour
         ValidateRoomGenerationParameters();
     }
 
-    private void Awake() {
-        FindObjectOfType<OVRCameraRig>().rightControllerAnchor.AddComponent<ReachGoalHandler>();
-    }
-
-    private void Update() {
-        if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
-        {
-            SPAWN();
-        }
-    }
-
-    [ContextMenu("TEST")]
-    public void SPAWN() {
-        FindObjectOfType<SphereGrow>().ResetSphere();
+    [ContextMenu("SpawnNewRoomAsMRUKRoom")]
+    public void SpawnNewRoomAsMRUKRoom() {
         #if UNITY_EDITOR
             
         #else
             AssignPlayAreaDimensions();
         #endif
-        var room = SpawnRoom();
+        var room = GenerateAndSpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
         GenerateGoalNode();
@@ -44,33 +33,10 @@ public class SpawnVirtualRoom : MonoBehaviour
         var dimension = FindObjectOfType<PlayAreaAligner>().GetPlayAreaDimensions();
         _data.roomSize.width = dimension.x;
         _data.roomSize.length = dimension.z;
-        FindObjectOfType<SceneDebugger>().logs.text = dimension.ToString();
     }
 
-    #region Start and End Points
-    [SerializeField] private GameObject _pointVisualize;
-
-    private GameObject _startPoint;
-    private GameObject _endPoint;
-
-    [ContextMenu("Spawn Start and End points")]
-    void SpawnStartAndEndPoints()
-    {
-        if (_startPoint != null) Destroy(_startPoint);
-        if (_endPoint != null) Destroy(_endPoint);
-
-        Vector3 startPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(1, true);
-        Vector3 endPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(1, true);
-
-        _startPoint = Instantiate(_pointVisualize, startPos, Quaternion.identity);
-        _endPoint = Instantiate(_pointVisualize, endPos, Quaternion.identity);
-    }
-    #endregion
 
     #region Generate Room
-
-    
-    
     [Serializable]
     public struct DoorwayData {
         public float width;
@@ -102,7 +68,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     const float WALLHEIGHT = 2.5f;
     [ContextMenu("Spawn Room")]
-    private GameObject SpawnRoom()
+    private GameObject GenerateAndSpawnRoom()
     {
         print("Creating custom room");
         var room = new GameObject("Custom Room");
@@ -180,14 +146,18 @@ public class SpawnVirtualRoom : MonoBehaviour
     #region Generate GoalNode
     [Header("Goal Node")]
     [SerializeField] private GameObject _goalNodePrefab;
-    private GameObject _curGoal;
+    [HideInInspector] public GameObject CurrentGoal;
 
     private void GenerateGoalNode()
     {
-        if (_curGoal != null) Destroy(_curGoal.gameObject);
-        var goalPos = (Vector3)MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.5f, avoidVolumes: true);
-        _curGoal = Instantiate(_goalNodePrefab, goalPos, Quaternion.identity);
-        _curGoal.name = "GOAL";
+        if (CurrentGoal != null) Destroy(CurrentGoal);
+        var goalPos = MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.4f, avoidVolumes: true);
+        if (goalPos == null) {
+            GenerateAndSpawnRoom();
+            return;
+        }
+        CurrentGoal = Instantiate(_goalNodePrefab, (Vector3) goalPos, Quaternion.identity);
+        CurrentGoal.name = "GOAL";
     }
     #endregion
 }
