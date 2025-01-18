@@ -41,6 +41,7 @@ public class SphereGrow : EncodingMethod
     private void HandleTriggerWithAnAnchor(Collider other)
     {
         if (_curGrowSpd == 0f) return;
+        if (other.CompareTag("NoSound")) return;
         var contactPoint = other.ClosestPointOnBounds(_sphereCollider.transform.position);
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(_audioPinPrefab, contactPoint, Quaternion.identity);

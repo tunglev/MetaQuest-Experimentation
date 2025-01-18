@@ -10,6 +10,7 @@ public class ReachGoalHandler : MonoBehaviour
         var c = gameObject.AddComponent<SphereCollider>();
         c.radius = 0.08f;
         c.isTrigger = true;
+        tag = "NoSound";
     }
 
     private void OnTriggerEnter(Collider other) {
