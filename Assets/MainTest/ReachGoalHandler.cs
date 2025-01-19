@@ -18,6 +18,7 @@ public class ReachGoalHandler : MonoBehaviour
             FindObjectOfType<SpawnVirtualRoom>().SpawnNewRoomAsMRUKRoom();
             OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
             FindObjectOfType<SphereGrow>().ResetSphere();
+            GlobalAudio.Instance.PlaySound("Success");
         }
     }
 }
