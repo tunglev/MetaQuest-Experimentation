@@ -7,4 +7,5 @@ public abstract class EncodingMethod : MonoBehaviour
     public virtual void InitOnCam(GameObject centerEye) {}
     // trigger on demand
     public virtual void OnDemandTriggered() {}
+    public virtual void OnDemandTriggeredStop() { }
 }

@@ -19,12 +19,6 @@ public class BlindModeHandler : MonoBehaviour
         _roomBoxMaterial = _roomBoxEffectMesh.MeshMaterial;  
         FindObjectOfType<SphereMaskController>().softness = _visibleRange;  
     }
-    private void Update() {
-        if (OVRInput.GetDown(OVRInput.RawButton.B))
-        {
-            ToogleBlindMode();
-        }
-    }
 
     [ContextMenu("Toggle BlindMode")]
     public void ToogleBlindMode() {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,19 @@ using UnityEngine;
 
 public class MainTestHandler : MonoBehaviour
 {
+    public static MainTestHandler Instance {get;private set;}
+
+    public Action OnNewRoomSpanwed;
+    public Action<bool> OnBlindModeToggled;
+    public Action OnGoalReached;
+
     private SpawnVirtualRoom _virtualRoom;
     private BlindModeHandler _blindModeHandler;
 
     private void Awake()
     {
+        if (Instance==null)Instance = this;
+        else Destroy(this);
         _virtualRoom = FindObjectOfType<SpawnVirtualRoom>();
         _blindModeHandler = FindObjectOfType<BlindModeHandler>();
         FindObjectOfType<OVRCameraRig>().rightControllerAnchor.gameObject.AddComponent<ReachGoalHandler>();
@@ -25,11 +34,15 @@ public class MainTestHandler : MonoBehaviour
         {
             SpawnNewRoom();
         }
+        if (OVRInput.GetDown(OVRInput.RawButton.B))
+        {
+            _blindModeHandler.ToogleBlindMode();
+        }
     }
     private void SpawnNewRoom() {
-        FindObjectOfType<SphereGrow>().ResetSphere();
         _virtualRoom.SpawnNewRoomAsMRUKRoom();
         _blindModeHandler.ReapplyBlindMode();
+        OnNewRoomSpanwed?.Invoke();
     }
 
     #if UNITY_EDITOR
@@ -41,7 +54,9 @@ public class MainTestHandler : MonoBehaviour
         
             if (GUILayout.Button("SpawnNewRoom")) SpawnNewRoom();
             if (GUILayout.Button("Trigger")) FindObjectOfType<EncodingRunner>().TestTrigger();
-            if (GUILayout.Button("Toggle BlindMode")) _blindModeHandler.ToogleBlindMode();
+            if (GUILayout.Button("Toggle BlindMode")) {
+                _blindModeHandler.ToogleBlindMode();
+            }
 
         GUILayout.EndArea();
     }

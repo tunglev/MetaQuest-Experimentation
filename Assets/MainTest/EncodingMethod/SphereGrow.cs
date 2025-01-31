@@ -17,6 +17,7 @@ public class SphereGrow : EncodingMethod
         _sphereCollider = centerEye.AddComponent<SphereCollider>();
         _sphereCollider.isTrigger = true;
         centerEye.AddComponent<ColliderUtilities>().onTriggerEnter += HandleTriggerWithAnAnchor;
+        MainTestHandler.Instance.OnNewRoomSpanwed += ResetSphere;
 
         ResetSphere();
     } 

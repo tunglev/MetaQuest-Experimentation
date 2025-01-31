@@ -25,6 +25,7 @@ public class WallAlertHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (MRUK.Instance.GetCurrentRoom() == null) return;
         bool isInRoom = MRUK.Instance.GetCurrentRoom().IsPositionInRoom(_centerEye.position);
         var colliders = Physics.OverlapSphere(_centerEye.position, _alertRadius, _maskIgnoreHumanLayer);
         if (colliders.Length == 0 && isInRoom) {

@@ -11,18 +11,18 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     [ContextMenu("SpawnNewRoomAsMRUKRoom")]
     public void SpawnNewRoomAsMRUKRoom() {
-        #if UNITY_EDITOR
-            
-        #else
-            AssignPlayAreaDimensions();
-        #endif
+#if UNITY_EDITOR
+
+#else
+            DemoPlayAreaDimensionsOnEditor();
+#endif
         var room = GenerateAndSpawnRoom();
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
         GenerateGoalNode();
     }
 
-    private void AssignPlayAreaDimensions() {
+    private void DemoPlayAreaDimensionsOnEditor() {
         var dimension = FindObjectOfType<PlayAreaAligner>().GetPlayAreaDimensions();
         _data.roomSize.width = dimension.x;
         _data.roomSize.length = dimension.z;

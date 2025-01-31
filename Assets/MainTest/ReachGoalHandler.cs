@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,8 +18,8 @@ public class ReachGoalHandler : MonoBehaviour
         if (other.gameObject.name.Equals("GOAL_CLD")) {
             FindObjectOfType<SpawnVirtualRoom>().SpawnNewRoomAsMRUKRoom();
             OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
-            FindObjectOfType<SphereGrow>().ResetSphere();
             GlobalAudio.Instance.PlaySound("Success");
+            MainTestHandler.Instance.OnGoalReached?.Invoke();
         }
     }
 }

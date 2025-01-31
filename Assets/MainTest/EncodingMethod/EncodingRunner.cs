@@ -13,6 +13,11 @@ public class EncodingRunner : MonoBehaviour
     private void Awake() {
         var centereye = Camera.main.gameObject;
         _encodingMethod.InitOnCam(centereye);
+        var allEncodings = GetComponents<EncodingMethod>();
+        foreach (var e in allEncodings) {
+            if (e == _encodingMethod) continue;
+            e.enabled = false;
+        }
     }
 
     private void Update() {
@@ -20,6 +25,10 @@ public class EncodingRunner : MonoBehaviour
         {
             _encodingMethod.OnDemandTriggered();
             OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
+        }
+        if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger)) 
+        {
+            _encodingMethod.OnDemandTriggeredStop();
         }
         FindObjectOfType<SceneDebugger>().logs.text = Camera.main.transform.position.ToString();
     }
