@@ -23,20 +23,19 @@ public class EncodingRunner : MonoBehaviour
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
         {
-            _encodingMethod.OnDemandTriggered();
-            OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
+            TriggerDown();
         }
         if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger)) 
         {
-            _encodingMethod.OnDemandTriggeredStop();
+            TriggerUp();
         }
-        FindObjectOfType<SceneDebugger>().logs.text = Camera.main.transform.position.ToString();
     }
 
-    #if UNITY_EDITOR
-    [ContextMenu("Test Trigger")]
-    public void TestTrigger() {
-        _encodingMethod.OnDemandTriggered();
+    public void TriggerDown() {
+        _encodingMethod.OnDemandTriggeredDown();
+        OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
     }
-    #endif
+    public void TriggerUp() {
+        _encodingMethod.OnDemandTriggeredUp();
+    }
 }

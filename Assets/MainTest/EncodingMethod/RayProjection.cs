@@ -22,11 +22,11 @@ public class RayProjection : EncodingMethod
             src.loop = true;
         }
     }
-    public override void OnDemandTriggered()
+    public override void OnDemandTriggeredDown()
     {
         StartRayProjection();
     }
-    public override void OnDemandTriggeredStop()
+    public override void OnDemandTriggeredUp()
     {
         StopRayProjection();
     }

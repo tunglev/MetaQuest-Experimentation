@@ -53,8 +53,9 @@ public class MainTestHandler : MonoBehaviour
         GUILayout.BeginArea(new Rect(10, 10, 300, 900));
         
             if (GUILayout.Button("SpawnNewRoom")) SpawnNewRoom();
-            if (GUILayout.Button("Trigger")) FindObjectOfType<EncodingRunner>().TestTrigger();
-            if (GUILayout.Button("Toggle BlindMode")) {
+            if (GUILayout.Button("TriggerDown")) FindObjectOfType<EncodingRunner>().TriggerDown();
+            if (GUILayout.Button("TriggerUp")) FindObjectOfType<EncodingRunner>().TriggerUp();
+        if (GUILayout.Button("Toggle BlindMode")) {
                 _blindModeHandler.ToogleBlindMode();
             }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SphereGrow : EncodingMethod
 {
-    public override void OnDemandTriggered()
+    public override void OnDemandTriggeredDown()
     {
         StartSphereGrow();
     }
