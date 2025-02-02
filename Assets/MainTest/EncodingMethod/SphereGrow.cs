@@ -12,6 +12,7 @@ public class SphereGrow : EncodingMethod
     }
     public override void InitOnCam(GameObject centerEye)
     {
+        if (IsInit) return;
         var rb = centerEye.AddComponent<Rigidbody>();
         rb.isKinematic = true;
         _sphereCollider = centerEye.AddComponent<SphereCollider>();

@@ -8,13 +8,28 @@ using UnityEngine;
 public class EncodingRunner : MonoBehaviour
 {
     [SerializeField]
-    private EncodingMethod _encodingMethod;
+    private EncodingMethod[] _encodingArray;
+    private EncodingMethod _currentEncoding;
+    private GameObject _centerEye;
+
+    private void Awake() {
+        _centerEye = Camera.main.gameObject;
+    }
 
     private void Start() {
-        var centereye = Camera.main.gameObject;
-        print(centereye.name);
-        _encodingMethod.InitOnCam(centereye);
-        _encodingMethod.enabled = true;
+        SelectEncodingFromArray(0);
+        MainTestHandler.Instance.OnEncodingChanged += SelectEncodingFromArray;
+    }
+
+    private void SelectEncodingFromArray(int i) {
+        SelectEncodingMethod(_encodingArray[i]);
+    }
+
+    private void SelectEncodingMethod(EncodingMethod encoding) {
+        encoding.InitOnCam(_centerEye);
+        encoding.enabled = true;
+        encoding.IsInit = true;
+        _currentEncoding = encoding;
     }
 
     private void Update() {
@@ -29,10 +44,10 @@ public class EncodingRunner : MonoBehaviour
     }
 
     public void TriggerDown() {
-        _encodingMethod.OnDemandTriggeredDown();
+        _currentEncoding.OnDemandTriggeredDown();
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
     }
     public void TriggerUp() {
-        _encodingMethod.OnDemandTriggeredUp();
+        _currentEncoding.OnDemandTriggeredUp();
     }
 }

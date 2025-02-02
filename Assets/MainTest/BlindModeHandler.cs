@@ -23,6 +23,7 @@ public class BlindModeHandler : MonoBehaviour
     [ContextMenu("Toggle BlindMode")]
     public void ToogleBlindMode() {
         SetBlindMode(!_blind);
+        GlobalAudio.Instance.PlaySound(_blind ? "Blind mode - on" : "Blind mode - off");
     }
 
     public void SetBlindMode(bool val) {
@@ -30,7 +31,6 @@ public class BlindModeHandler : MonoBehaviour
         _roomGuardianEffectMesh.ToggleEffectMeshVisibility(shouldShow: !val);
         _roomBoxEffectMesh.OverrideEffectMaterial(val ? _blindModeMaterial : _roomBoxMaterial);
         _blind = val;
-        GlobalAudio.Instance.PlaySound(val ? "Blind mode - on" : "Blind mode - off");
     }
 
     public void ReapplyBlindMode() {

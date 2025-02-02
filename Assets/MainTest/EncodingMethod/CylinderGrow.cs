@@ -10,6 +10,7 @@ public class CylinderGrow : EncodingMethod
     }
     public override void InitOnCam(GameObject centerEye)
     {
+        if (IsInit) return;
         _cylinder = Instantiate(cylinderPrefab, centerEye.transform);
         int humanlayer = LayerMask.NameToLayer("Human");
         _cylinder.gameObject.layer = humanlayer;
@@ -38,7 +39,7 @@ public class CylinderGrow : EncodingMethod
             ResetCylinder();
         }
     }
-    private void HandleTriggerWithAnAnchor(Collider other)
+    protected virtual void HandleTriggerWithAnAnchor(Collider other)
     {
         if (_curGrowSpd == 0f) return;
         if (other.CompareTag("NoSound")) return;

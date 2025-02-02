@@ -8,6 +8,7 @@ public class RayProjection : EncodingMethod
 {
     public override void InitOnCam(GameObject centerEye)
     {
+        if (IsInit) return;
         _centerEye = centerEye.transform;
         _rightEarAudio = _centerEye.AddComponent<AudioSource>();
         _leftEarAudio = _centerEye.AddComponent<AudioSource>();

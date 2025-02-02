@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Meta.XR.MRUtilityKit;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class MainTestHandler : MonoBehaviour
@@ -11,6 +14,13 @@ public class MainTestHandler : MonoBehaviour
     public Action OnNewRoomSpanwed;
     public Action<bool> OnBlindModeToggled;
     public Action OnGoalReached;
+    public Action<int> OnEncodingChanged;
+
+    [Header("Controller Panel")]
+    [SerializeField] GameObject _controllerPanel;
+    [SerializeField] Button _spawnRoomBtn;
+    [SerializeField] Button _blindModeBtn;
+    [SerializeField] TMP_Dropdown _encodingPicker;
 
     private SpawnVirtualRoom _virtualRoom;
     private BlindModeHandler _blindModeHandler;
@@ -26,17 +36,24 @@ public class MainTestHandler : MonoBehaviour
 
     private void Start() {
         SpawnNewRoom();
+        _controllerPanel.SetActive(false);
+        _spawnRoomBtn.onClick.AddListener(SpawnNewRoom);
+        _blindModeBtn.onClick.AddListener(()=> _blindModeHandler.ToogleBlindMode());
+        _encodingPicker.onValueChanged.AddListener((int i) => OnEncodingChanged?.Invoke(i));
     }
 
     private void Update()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.LIndexTrigger))
+        if (OVRInput.GetDown(OVRInput.RawButton.X))
         {
-            SpawnNewRoom();
+            ToggleControllerPanel();
         }
-        if (OVRInput.GetDown(OVRInput.RawButton.B))
-        {
-            _blindModeHandler.ToogleBlindMode();
+        _controllerPanel.transform.forward = Camera.main.transform.forward;
+    }
+    private void ToggleControllerPanel() {
+        _controllerPanel.SetActive(!_controllerPanel.activeInHierarchy);
+        if (_controllerPanel.activeInHierarchy) {
+            _controllerPanel.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
         }
     }
     private void SpawnNewRoom() {
