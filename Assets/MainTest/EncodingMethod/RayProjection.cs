@@ -51,19 +51,24 @@ public class RayProjection : EncodingMethod
 
     private void Update() {
         if (_isProjecting) {
-            if (Physics.Raycast(_centerEye.position, _centerEye.right, out RaycastHit rightHit, Mathf.Infinity))
-            {
-                _rightEarAudio.pitch = Mathf.Lerp(-3, 3, (float)rightHit.distance / 5f);
-                if (!_rightEarAudio.isPlaying) _rightEarAudio.Play();
-            }
-            else
-            {
-                _rightEarAudio.Stop();
-            }
+            RayProjectionFromCenterEye(_rightEarAudio, Vector3.right);
+            RayProjectionFromCenterEye(_leftEarAudio, Vector3.left);
         }
         else {
             _rightEarAudio.Stop();
             _leftEarAudio.Stop();
+        }
+    }
+
+    void RayProjectionFromCenterEye(AudioSource source, Vector3 direction) {
+        if (Physics.Raycast(_centerEye.position, _centerEye.TransformDirection(direction), out RaycastHit hit, Mathf.Infinity))
+        {
+            source.pitch = Mathf.Lerp(-3, 3, (float)hit.distance / 5f);
+            if (!source.isPlaying) source.Play();
+        }
+        else
+        {
+            source.Stop();
         }
     }
 }
