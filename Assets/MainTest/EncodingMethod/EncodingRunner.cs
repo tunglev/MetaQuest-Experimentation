@@ -10,14 +10,11 @@ public class EncodingRunner : MonoBehaviour
     [SerializeField]
     private EncodingMethod _encodingMethod;
 
-    private void Awake() {
+    private void Start() {
         var centereye = Camera.main.gameObject;
+        print(centereye.name);
         _encodingMethod.InitOnCam(centereye);
-        var allEncodings = GetComponents<EncodingMethod>();
-        foreach (var e in allEncodings) {
-            if (e == _encodingMethod) continue;
-            e.enabled = false;
-        }
+        _encodingMethod.enabled = true;
     }
 
     private void Update() {

@@ -10,16 +10,15 @@ public class GlobalAudio : MonoBehaviour
     private string _currentlyPlaying;
 
     private void Awake() {
-        if (Instance == null) Instance = this;
+        if (Instance == null) {
+            Instance = this;
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            _audioSource.spatialBlend = 0f; // 2D sound
+            _audioSource.playOnAwake = false;
+        }
         else {
             Destroy(this);
         }
-    }
-
-    private void Start() {
-        _audioSource = gameObject.AddComponent<AudioSource>();
-        _audioSource.spatialBlend = 0f; // 2D sound
-        _audioSource.playOnAwake = false;
     }
 
 

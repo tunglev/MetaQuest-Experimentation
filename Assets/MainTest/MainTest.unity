@@ -1366,6 +1366,7 @@ GameObject:
   - component: {fileID: 1787188695}
   - component: {fileID: 1787188694}
   - component: {fileID: 1787188698}
+  - component: {fileID: 1787188699}
   m_Layer: 0
   m_Name: Handlers
   m_TagString: Untagged
@@ -1420,13 +1421,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787188691}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c2387e5bac57bc428b3f074a474e328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _maxRadius: 8
-  _initGrowSpd: 0.5
+  _initGrowSpd: 1
   _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
   _audioPinLifeTime: 3
 --- !u!114 &1787188695
@@ -1441,7 +1442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7a41b06b6f3c5f43a499f7236ec3e1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _encodingMethod: {fileID: 1787188698}
+  _encodingMethod: {fileID: 1787188699}
 --- !u!114 &1787188696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1477,13 +1478,30 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787188691}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88eae24713a4a1346b2917bda71dcad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _clip: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
   _isProjecting: 0
+--- !u!114 &1787188699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787188691}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d63f7493245a634fa4149fb278c5ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
+  _maxRadius: 8
+  _initGrowSpd: 1
+  _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
+  _audioPinLifeTime: 3
 --- !u!1 &2119343398
 GameObject:
   m_ObjectHideFlags: 0
