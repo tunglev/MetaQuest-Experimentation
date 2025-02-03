@@ -1447,9 +1447,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _encodingArray:
   - {fileID: 1787188700}
-  - {fileID: 1787188694}
-  - {fileID: 1787188698}
   - {fileID: 1787188699}
+  - {fileID: 1787188698}
+  - {fileID: 1787188694}
 --- !u!114 &1787188696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1462,6 +1462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f6fd13982f79842b565247395a4fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsBlind: 0
   _visibleRange: 0.1
   _blindModeMaterial: {fileID: 2100000, guid: 4d3c70f3d8ac3c44595b045907974510, type: 2}
   _roomGuardianEffectMesh: {fileID: 1098386306}
@@ -1530,14 +1531,14 @@ MonoBehaviour:
   IsInit: 0
   cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
   _maxRadius: 8
-  _initGrowSpd: 1
+  _initGrowSpd: 1.5
   _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
   _audioPinLifeTime: 3
   _prefab: {fileID: 4113411215545629847, guid: 522267aa1cb0cfa47851db4dde4db8f9, type: 3}
-  _edgeAudioClip: {fileID: 8300000, guid: aba2d019ca4843e4184c43a5f3214a95, type: 3}
+  _edgeAudioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
   spacing: 0.2
   positionTolerance: 0.001
-  durationGap: 0.3
+  durationGap: 0.15
 --- !u!114 &1991804974 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 979469538, guid: 61049dfb4690be642a843757d529ca97, type: 3}

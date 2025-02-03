@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BlindModeHandler : MonoBehaviour
 {
+    public bool IsBlind = false;
     [SerializeField] private float _visibleRange = 0.15f;
     [SerializeField] private Material _blindModeMaterial;
 
@@ -12,7 +13,6 @@ public class BlindModeHandler : MonoBehaviour
     [SerializeField] private EffectMesh _roomBoxEffectMesh;
     private Material _roomBoxMaterial;
 
-    private bool _blind = false;
 
     void Start()
     {
@@ -22,18 +22,18 @@ public class BlindModeHandler : MonoBehaviour
 
     [ContextMenu("Toggle BlindMode")]
     public void ToogleBlindMode() {
-        SetBlindMode(!_blind);
-        GlobalAudio.Instance.PlaySound(_blind ? "Blind mode - on" : "Blind mode - off");
+        SetBlindMode(!IsBlind);
+        GlobalAudio.Instance.PlaySound(IsBlind ? "Blind mode - on" : "Blind mode - off");
     }
 
     public void SetBlindMode(bool val) {
         FindObjectOfType<SpawnVirtualRoom>().CurrentGoal.GetComponentInChildren<MeshRenderer>().enabled = !val;
         _roomGuardianEffectMesh.ToggleEffectMeshVisibility(shouldShow: !val);
         _roomBoxEffectMesh.OverrideEffectMaterial(val ? _blindModeMaterial : _roomBoxMaterial);
-        _blind = val;
+        IsBlind = val;
     }
 
     public void ReapplyBlindMode() {
-        SetBlindMode(_blind);
+        SetBlindMode(IsBlind);
     }
 }

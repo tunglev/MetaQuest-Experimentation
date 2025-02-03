@@ -12,8 +12,11 @@ public class WallSpread : CylinderGrow
     {
         print("Spreading walls...");
         if (anchor.name == "WALL_FACE") return;
-        SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: Vector3.right);
-        SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: Vector3.left);
+        var normalVec = Camera.main.transform.position - contactPoint;
+        var angle = Mathf.Min(Vector3.Angle(normalVec, collider.transform.up), Vector3.Angle(-normalVec, collider.transform.up)); // the infront orientation is the up vector for some reason
+        bool isInfront = angle < 45;
+        SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: isInfront? Vector3.right : Vector3.up);
+        SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: isInfront? Vector3.left : Vector3.down);
     }
 
     public float spacing = 0.5f;       // Distance between objects
@@ -58,6 +61,7 @@ public class WallSpread : CylinderGrow
                     if (_prev != null) _prev.Play();
                     yield return new WaitForSeconds(durationGap);
                     _prev = Instantiate(_prefab, checkPosition, GetSpawnRotation());
+                    _prev.GetComponent<MeshRenderer>().enabled = !FindObjectOfType<BlindModeHandler>().IsBlind;
                     Destroy(_prev.gameObject, durationGap * 10);
                     iteration++;
                 }
@@ -65,6 +69,10 @@ public class WallSpread : CylinderGrow
                 {
                     canSpawn = false;
                     // wall edge
+                    var ren = _prev.GetComponent<MeshRenderer>();
+                    var mat = ren.material;
+                    mat.color = Color.red;
+                    ren.material = mat;
                     _prev.clip = _edgeAudioClip;
                     _prev.Play();
                 }

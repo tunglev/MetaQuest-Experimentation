@@ -205,7 +205,7 @@ MonoBehaviour:
     volume: 1
   - label: GOAL
     audioClip: {fileID: 8300000, guid: 5bdb53f068999034dbd08ec452d0751b, type: 3}
-    volume: 0.2
+    volume: 0.1
   mode: 0
   distance_frequencyMap:
     serializedVersion: 2
