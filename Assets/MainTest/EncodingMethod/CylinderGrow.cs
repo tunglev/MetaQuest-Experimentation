@@ -27,7 +27,7 @@ public class CylinderGrow : EncodingMethod
     [Header("Audio pin")]
     [SerializeField] private AudioPin _audioPinPrefab;
     [SerializeField] private float _audioPinLifeTime = 3;
-    private float _curGrowSpd;
+    protected float _curGrowSpd;
     private Transform _cylinder;
 
 
@@ -39,7 +39,7 @@ public class CylinderGrow : EncodingMethod
             ResetCylinder();
         }
     }
-    protected virtual void HandleTriggerWithAnAnchor(Collider other)
+    private void HandleTriggerWithAnAnchor(Collider other)
     {
         if (_curGrowSpd == 0f) return;
         if (other.CompareTag("NoSound")) return;
@@ -51,10 +51,13 @@ public class CylinderGrow : EncodingMethod
         if (anchor != null)
         {
             pin.InitializeLabel(anchor.name);
+            OnTriggeredWithAnchor(anchor, contactPoint, other);
         }
 
         Destroy(pin.gameObject, _audioPinLifeTime);
     }
+
+    protected virtual void OnTriggeredWithAnchor(MRUKAnchor anchor, Vector3 contactPoint, Collider collider) {}
 
     private void StartCylinderGrow()
     {

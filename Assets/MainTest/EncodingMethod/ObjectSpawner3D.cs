@@ -1,31 +1,19 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
-using Meta.XR.MRUtilityKit;
 using UnityEngine;
 
-public class WallSpread : CylinderGrow
+public class ObjectSpawner3D : MonoBehaviour
 {
-    [SerializeField] private AudioSource _prefab;
-    [SerializeField] private AudioClip _edgeAudioClip;
-
-    protected override void OnTriggeredWithAnchor(MRUKAnchor anchor, Vector3 contactPoint, Collider collider)
-    {
-        print("Spreading walls...");
-        if (anchor.name == "WALL_FACE") return;
-        SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: Vector3.right);
-        SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: Vector3.left);
-    }
-
     public float spacing = 0.5f;       // Distance between objects
     public float positionTolerance = 0.001f; // Precision for position checks
     public float durationGap = 1f;
 
-    private AudioSource _prev;
+    private GameObject _edge;
 
 
-    public void SpawnObjectsAlongWall(Vector3 contactPosition, Collider wallCollider, Vector3 spawnDirection)
+    public void SpawnObjectsAlongWall(Vector3 contactPosition,Collider wallCollider, GameObject objectToSpawn, Vector3 spawnDirection, Action<GameObject> handleEdgeCase)
     {
-        if (wallCollider == null || _prefab == null)
+        if (wallCollider == null || objectToSpawn == null)
         {
             Debug.LogError("Collider or prefab not assigned!");
             return;
@@ -40,9 +28,8 @@ public class WallSpread : CylinderGrow
         }
 
         StartCoroutine(SpawnObjectsAlongWallCoroutine());
-        IEnumerator SpawnObjectsAlongWallCoroutine()
-        {
-
+        IEnumerator SpawnObjectsAlongWallCoroutine() {
+            
             Vector3 direction = wallCollider.transform.TransformDirection(spawnDirection).normalized;
             int iteration = 0;
             bool canSpawn = true;
@@ -55,18 +42,14 @@ public class WallSpread : CylinderGrow
                 // Check if position is still within collider
                 if (Vector3.Distance(wallPoint, checkPosition) <= positionTolerance)
                 {
-                    if (_prev != null) _prev.Play();
                     yield return new WaitForSeconds(durationGap);
-                    _prev = Instantiate(_prefab, checkPosition, GetSpawnRotation());
-                    Destroy(_prev.gameObject, durationGap * 10);
+                    _edge = Instantiate(objectToSpawn, checkPosition, GetSpawnRotation());
                     iteration++;
                 }
                 else
                 {
                     canSpawn = false;
-                    // wall edge
-                    _prev.clip = _edgeAudioClip;
-                    _prev.Play();
+                    handleEdgeCase(_edge);
                 }
 
                 // Safety against infinite loops
@@ -82,5 +65,3 @@ public class WallSpread : CylinderGrow
         return Quaternion.identity;
     }
 }
-
-// Unity C# given a wall with collider and a given point on that wall, how to spawn objects in sequence on a wall from an given point to the right until the wall ends.
