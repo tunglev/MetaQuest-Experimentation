@@ -16,7 +16,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 #else
             DemoPlayAreaDimensionsOnEditor();
 #endif
-        var room = GenerateAndSpawnRoom();
+        var room = _roomprefab == null ? GenerateAndSpawnRoom() : Instantiate(_roomprefab);
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
         GenerateGoalNode();
@@ -51,6 +51,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         public GenerationLimit doorWidthGen;
         internal DoorwayData[] doorwayData;
     }
+    [SerializeField] private GameObject _roomprefab;
     [SerializeField] private RoomGeneratorData _data;
 
     private void ValidateRoomGenerationParameters()
