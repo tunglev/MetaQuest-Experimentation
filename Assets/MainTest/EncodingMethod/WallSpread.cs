@@ -5,18 +5,28 @@ using UnityEngine;
 
 public class WallSpread : CylinderGrow
 {
+    [Header("Spawn Along walls")]
     [SerializeField] private AudioSource _prefab;
     [SerializeField] private AudioClip _edgeAudioClip;
 
+    [Header("Move on walls")]
+    [SerializeField] private MovingAudioPin _movingAudioPinPrefab;
+
     protected override void OnTriggeredWithAnchor(MRUKAnchor anchor, Vector3 contactPoint, Collider collider)
     {
-        print("Spreading walls...");
-        if (anchor.name == "WALL_FACE") return;
         var normalVec = Camera.main.transform.position - contactPoint;
         var angle = Mathf.Min(Vector3.Angle(normalVec, collider.transform.up), Vector3.Angle(-normalVec, collider.transform.up)); // the infront orientation is the up vector for some reason
         bool isInfront = angle < 45;
+        if (anchor.name == "WALL_FACE") {
+            isInfront = true;
+        }
+
+        //SPAWN ALONG WALLS
         SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: isInfront? Vector3.right : Vector3.up);
         SpawnObjectsAlongWall(contactPoint, collider, spawnDirection: isInfront? Vector3.left : Vector3.down);
+
+        //MOVE ON WALLS
+
     }
 
     public float spacing = 0.5f;       // Distance between objects
@@ -42,7 +52,10 @@ public class WallSpread : CylinderGrow
             return;
         }
 
-        StartCoroutine(SpawnObjectsAlongWallCoroutine());
+        Vector3 direction = wallCollider.transform.TransformDirection(spawnDirection).normalized;
+        Instantiate(_movingAudioPinPrefab, contactPosition, Quaternion.identity).Init(direction);
+
+        //StartCoroutine(SpawnObjectsAlongWallCoroutine());
         IEnumerator SpawnObjectsAlongWallCoroutine()
         {
 

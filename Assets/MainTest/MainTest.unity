@@ -1396,7 +1396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d7dc86b57d4bc429de458b9cecb7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomprefab: {fileID: 5618556046422172173, guid: 4b454e8ccd6764ccdbcd91586969863f, type: 3}
+  _roomprefab: {fileID: 0}
   _data:
     roomSize:
       width: 4
@@ -1529,6 +1529,7 @@ MonoBehaviour:
   _audioPinLifeTime: 3
   _prefab: {fileID: 4113411215545629847, guid: 522267aa1cb0cfa47851db4dde4db8f9, type: 3}
   _edgeAudioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
+  _movingAudioPinPrefab: {fileID: 2062386390995073494, guid: 2317d698977d01447bf1ad5a0ac0381d, type: 3}
   spacing: 0.2
   positionTolerance: 0.001
   durationGap: 0.15
