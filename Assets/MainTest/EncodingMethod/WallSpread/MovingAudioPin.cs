@@ -6,16 +6,18 @@ public class MovingAudioPin : MonoBehaviour
     private bool isInit = false;
     private bool isExteriorWall = false;
     private Vector3 moveDirection;
+    private float moveSpeed;
 
-    public void Init(Vector3 moveDirection) {
+    public void Init(Vector3 moveDirection, float moveSpeed) {
         this.moveDirection = moveDirection;
+        this.moveSpeed = moveSpeed;
         isInit = true;
     }
 
     void Update()
     {
         if (!isInit) return;
-        transform.position += this.moveDirection * Time.deltaTime * 0.1f;
+        transform.position += moveSpeed * Time.deltaTime * moveDirection;
     }
 
     private Collider currentCollider;

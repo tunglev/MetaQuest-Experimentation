@@ -5,12 +5,9 @@ using UnityEngine;
 
 public class WallSpread : CylinderGrow
 {
-    [Header("Spawn Along walls")]
-    [SerializeField] private AudioSource _prefab;
-    [SerializeField] private AudioClip _edgeAudioClip;
-
     [Header("Move on walls")]
     [SerializeField] private MovingAudioPin _movingAudioPinPrefab;
+    [SerializeField] private float _audioPinMoveSpeed = 1f;
 
     protected override void OnTriggeredWithAnchor(MRUKAnchor anchor, Vector3 contactPoint, Collider collider)
     {
@@ -29,6 +26,9 @@ public class WallSpread : CylinderGrow
 
     }
 
+    [Header("Spawn Along walls")]
+    [SerializeField] private AudioSource _prefab;
+    [SerializeField] private AudioClip _edgeAudioClip;
     public float spacing = 0.5f;       // Distance between objects
     public float positionTolerance = 0.001f; // Precision for position checks
     public float durationGap = 1f;
@@ -53,7 +53,7 @@ public class WallSpread : CylinderGrow
         }
 
         Vector3 direction = wallCollider.transform.TransformDirection(spawnDirection).normalized;
-        Instantiate(_movingAudioPinPrefab, contactPosition, Quaternion.identity).Init(direction);
+        Instantiate(_movingAudioPinPrefab, contactPosition, Quaternion.identity).Init(direction, _audioPinMoveSpeed);
 
         //StartCoroutine(SpawnObjectsAlongWallCoroutine());
         IEnumerator SpawnObjectsAlongWallCoroutine()

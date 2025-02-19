@@ -1150,10 +1150,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MRUK
       objectReference: {fileID: 0}
-    - target: {fileID: 3613868102660323786, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
-      propertyPath: SceneSettings.LoadSceneOnStartup
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8047981335285221976, guid: c2e00db6d2dfa42ac8d821db8d493a44, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1396,7 +1392,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d7dc86b57d4bc429de458b9cecb7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roomprefab: {fileID: 0}
+  _roomprefab: {fileID: 4833243207006835194, guid: bf8cb931e204df04994d4ed27de26eed, type: 3}
   _data:
     roomSize:
       width: 4
@@ -1527,9 +1523,10 @@ MonoBehaviour:
   _initGrowSpd: 1.5
   _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
   _audioPinLifeTime: 3
+  _movingAudioPinPrefab: {fileID: 2062386390995073494, guid: 2317d698977d01447bf1ad5a0ac0381d, type: 3}
+  _audioPinMoveSpeed: 1
   _prefab: {fileID: 4113411215545629847, guid: 522267aa1cb0cfa47851db4dde4db8f9, type: 3}
   _edgeAudioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
-  _movingAudioPinPrefab: {fileID: 2062386390995073494, guid: 2317d698977d01447bf1ad5a0ac0381d, type: 3}
   spacing: 0.2
   positionTolerance: 0.001
   durationGap: 0.15
