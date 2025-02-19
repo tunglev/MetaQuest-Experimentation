@@ -24,13 +24,15 @@ public class MovingAudioPin : MonoBehaviour
     {
         if (currentCollider == null) currentCollider = other;
         else Destroy(gameObject);
-        print("Trigger entered");
+        //print("Trigger entered");
+        print(other.name);
         isExteriorWall = true;           
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.name != "WALL_FACE_EffectMesh" && other.name != "STORAGE_EffectMesh") return;
-        print(isExteriorWall? "exterior walls" : "into the void");
+        //if (other.name != "WALL_FACE_EffectMesh" && other.name != "STORAGE_EffectMesh") return;
+        //print(isExteriorWall? "exterior walls" : "into the void");
         Destroy(gameObject);
     }
 }
+ 
