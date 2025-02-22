@@ -25,16 +25,25 @@ public class MovingAudioPin : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (currentCollider == null) currentCollider = other;
-        else Destroy(gameObject);
-        //print("Trigger entered");
-        print(other.name);
-        isExteriorWall = true;           
+        else {
+            Destroy(gameObject,1f);
+            print(other.name);
+            isExteriorWall = true;
+            var ren = GetComponent<Renderer>();
+            var mat = ren.material;
+            mat.color = Color.green;
+            ren.material = mat;
+        }
     }
     void OnTriggerExit(Collider other)
     {
         //if (other.name != "WALL_FACE_EffectMesh" && other.name != "STORAGE_EffectMesh") return;
         //print(isExteriorWall? "exterior walls" : "into the void");
-        Destroy(gameObject);
+        Destroy(gameObject,1f);
+        var ren = GetComponent<Renderer>();
+        var mat = ren.material;
+        mat.color = Color.blue;
+        ren.material = mat;
     }
 }
  
