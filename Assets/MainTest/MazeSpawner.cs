@@ -4,30 +4,28 @@ public class MazeSpawner : MonoBehaviour
 {
     [Header("Maze Settings")]
     public int mazeSize = 5;
-    public float roomWidth = 30f;
-    public float roomLength = 30f;
+    private float roomWidth = 4f;
+    private float roomLength = 7f;
 
     [Header("Wall Settings")]
     public GameObject wallPrefab;
-    public float wallHeight = 3f;
-    public float wallThickness = 0.3f;
-    public Material wallMaterial;
+    public float wallHeight = 2.5f;
+    public float wallThickness = 0.15f;
+    public string wallName = "STORAGE";
 
     private MazeGenerator mazeGenerator;
     private float cellWidth;
     private float cellLength;
 
-    void Start()
-    {
-        GenerateAndSpawnMaze();
-    }
+    private Transform parentObj;
+
 
     [ContextMenu("GenerateAndSpawnMaze")]
-    public void GenerateAndSpawnMaze()
+    public void GenerateAndSpawnMaze(Transform roomGameobject, float roomWidth, float roomLength)
     {
-        foreach (Transform child in transform)
-            Destroy(child.gameObject);
-
+        parentObj = roomGameobject;
+        this.roomWidth = roomWidth;
+        this.roomLength = roomLength;
         mazeGenerator = new MazeGenerator();
         var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeSize);
 
@@ -142,11 +140,9 @@ public class MazeSpawner : MonoBehaviour
 
     private void CreateWall(Vector3 position, Vector3 scale)
     {
-        GameObject wall = Instantiate(wallPrefab, transform);
-        wall.transform.localPosition = position;
+        GameObject wall = Instantiate(wallPrefab, parentObj);
+        wall.transform.localPosition = position + new Vector3(0, -wallHeight *0.5f,  -roomLength * 0.5f);
         wall.transform.localScale = scale;
-
-        if (wallMaterial != null)
-            wall.GetComponent<Renderer>().material = wallMaterial;
+        wall.name = wallName;
     }
 }

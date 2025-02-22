@@ -82,6 +82,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         //     GenerateDoorways(room.transform);
         //     doorwaySpawned++;
         // }
+        FindObjectOfType<MazeSpawner>().GenerateAndSpawnMaze(room.transform, _data.roomSize.width, _data.roomSize.length);
 
         
         room.transform.position += new Vector3(-0.5f * _data.roomSize.width,WALLHEIGHT * 0.5f, 0);
