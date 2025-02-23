@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,12 +27,12 @@ public class MovingAudioPin : MonoBehaviour
     {
         if (currentCollider == null) currentCollider = other;
         else {
-            Destroy(gameObject,1f);
-            float disToOther = Vector3.ProjectOnPlane(transform.position - other.transform.position, Vector3.up).magnitude;
-            float otherLongSide = Mathf.Max(other.bounds.size.x, other.bounds.size.z) * 0.5f;
-            print(disToOther);
-            print(otherLongSide);
-            if (disToOther < otherLongSide) {
+            if (!IsAtCurrrentColliderEnd()) return;
+            float projectedDistanceToOtherCollder = Vector3.ProjectOnPlane(transform.position - other.transform.position, Vector3.up).magnitude;
+            float otherColliderLongerSide = Mathf.Max(other.bounds.size.x, other.bounds.size.z) * 0.5f;
+            print(projectedDistanceToOtherCollder);
+            print(otherColliderLongerSide);
+            if (projectedDistanceToOtherCollder < otherColliderLongerSide) {
                 EndWithClosedWall();
             }
             else {
@@ -40,13 +41,24 @@ public class MovingAudioPin : MonoBehaviour
             
             
         }
+
     }
+
+    bool IsAtCurrrentColliderEnd()
+    {
+        float projectedDistanceToCurrentCollider = Vector3.ProjectOnPlane(transform.position - currentCollider.transform.position, Vector3.up).magnitude;
+        float currentColliderLongerSide = Mathf.Max(currentCollider.bounds.size.x, currentCollider.bounds.size.z) * 0.5f;
+        return projectedDistanceToCurrentCollider >= currentColliderLongerSide - 0.5f;
+    }
+
     void OnTriggerExit(Collider other)
     {
+        if (!IsAtCurrrentColliderEnd()) return;
         EndWithOpenWall();
     }
 
     void EndWithClosedWall() {
+        Destroy(gameObject, 1f);
         isExteriorWall = true;
         var ren = GetComponent<Renderer>();
         var mat = ren.material;
