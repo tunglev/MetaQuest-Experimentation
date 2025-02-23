@@ -52,7 +52,6 @@ public class CylinderGrow : EncodingMethod
         Vector3 eyeToContactPoint = contactPoint - camPos;
         if (ONLY_VISIBLE) {
             var hits = Physics.RaycastAll(camPos, eyeToContactPoint, maxDistance: eyeToContactPoint.magnitude + 0.15f, layerMask: DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore);
-            print(hits.Length);
             if (hits.Length != 1) return; //corner in a 3x3
         }
         // RaycastHit hit;
