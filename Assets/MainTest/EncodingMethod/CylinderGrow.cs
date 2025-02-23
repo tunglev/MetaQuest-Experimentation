@@ -50,7 +50,11 @@ public class CylinderGrow : EncodingMethod
         var contactPoint = other.ClosestPointOnBounds(_cylinder.transform.position);
         Vector3 camPos = Camera.main.transform.position;
         Vector3 eyeToContactPoint = contactPoint - camPos;
-        if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToContactPoint, eyeToContactPoint.magnitude - 0.01f, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) return;
+        RaycastHit hit;
+        if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToContactPoint, hitInfo: out hit, eyeToContactPoint.magnitude, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) 
+        {
+            if (hit.collider == other) return;
+        }
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(_audioPinPrefab, contactPoint, Quaternion.identity);
         var distance = (contactPoint - _cylinder.transform.position).magnitude;

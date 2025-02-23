@@ -109,7 +109,7 @@ public class MazeSpawner : MonoBehaviour
         );
 
         Vector3 scale = new Vector3(
-            totalWidth,
+            totalWidth + wallThickness,
             wallHeight,
             wallThickness
         );
@@ -132,7 +132,7 @@ public class MazeSpawner : MonoBehaviour
         Vector3 scale = new Vector3(
             wallThickness,
             wallHeight,
-            totalLength
+            totalLength + wallThickness
         );
 
         CreateWall(position, scale);
