@@ -50,11 +50,21 @@ public class CylinderGrow : EncodingMethod
         var contactPoint = other.ClosestPointOnBounds(_cylinder.transform.position);
         Vector3 camPos = Camera.main.transform.position;
         Vector3 eyeToContactPoint = contactPoint - camPos;
-        RaycastHit hit;
-        if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToContactPoint, hitInfo: out hit, eyeToContactPoint.magnitude, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) 
-        {
-            if (hit.collider == other) return;
+        if (ONLY_VISIBLE) {
+            var hits = Physics.RaycastAll(camPos, eyeToContactPoint, maxDistance: eyeToContactPoint.magnitude + 0.15f, layerMask: DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore);
+            print(hits.Length);
+            if (hits.Length != 1) return; //corner in a 3x3
         }
+        // RaycastHit hit;
+        // if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToContactPoint, hitInfo: out hit, eyeToContactPoint.magnitude, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) 
+        // {
+        //     if (hit.collider != other) return;
+        // }
+        // Vector3 eyeToColliderPos = other.transform.position - camPos;
+        // if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToColliderPos, out hit, eyeToColliderPos.magnitude, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore))
+        // {
+        //     if (hit.collider != other) return; 
+        // }
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(_audioPinPrefab, contactPoint, Quaternion.identity);
         var distance = (contactPoint - _cylinder.transform.position).magnitude;
