@@ -1438,6 +1438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _encodingArray:
+  - {fileID: 0}
   - {fileID: 1787188700}
   - {fileID: 1787188699}
   - {fileID: 1787188698}
@@ -1527,7 +1528,7 @@ MonoBehaviour:
   _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
   _audioPinLifeTime: 3
   _movingAudioPinPrefab: {fileID: 2062386390995073494, guid: 2317d698977d01447bf1ad5a0ac0381d, type: 3}
-  _audioPinMoveSpeed: 0.1
+  _audioPinMoveSpeed: 2.5
   _prefab: {fileID: 4113411215545629847, guid: 522267aa1cb0cfa47851db4dde4db8f9, type: 3}
   _edgeAudioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
   spacing: 0.2
@@ -5102,6 +5103,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 41671820788301741, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 41671820788301741, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 192631176569673232, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_Name
       value: ControllerPanel
@@ -5232,10 +5241,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048124722277481570, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6934774664627301378, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7281976610555122863, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}

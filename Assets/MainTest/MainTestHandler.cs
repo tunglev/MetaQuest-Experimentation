@@ -15,6 +15,11 @@ public class MainTestHandler : MonoBehaviour
     public Action<bool> OnBlindModeToggled;
     public Action OnGoalReached;
     public Action<int> OnEncodingChanged;
+    public bool IsBlind {
+        get {
+            return _blindModeHandler.IsBlind;
+        }
+    }
 
     [Header("Controller Panel")]
     [SerializeField] GameObject _controllerPanel;

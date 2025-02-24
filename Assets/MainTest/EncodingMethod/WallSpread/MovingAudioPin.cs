@@ -1,13 +1,20 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MovingAudioPin : MonoBehaviour
 {
+    const float WALL_THICKNESS = 0.15f;
+    [Serializable]
+    public struct AudioSettings {
+        public AudioClip clip;
+        [Range(0f,1f)] public float volume;
+    }
     [Header("Audio clips")]
-    public AudioClip movingSound;
-    public AudioClip openWallSound;
-    public AudioClip closedWallSound;
+    public AudioSettings movingSound;
+    public AudioSettings openWallSound;
+    public AudioSettings closedWallSound;
 
     private bool isInit = false;
     private Vector3 moveDirection;
@@ -20,8 +27,13 @@ public class MovingAudioPin : MonoBehaviour
         isInit = true;
         audioSrc = GetComponent<AudioSource>();
         audioSrc.loop = true;
-        audioSrc.clip = movingSound;
+        audioSrc.clip = movingSound.clip;
+        audioSrc.volume = movingSound.volume;
         audioSrc.Play();
+
+        if (MainTestHandler.Instance.IsBlind) {
+            GetComponent<Renderer>().enabled = false;
+        }
     }
 
     void Update()
@@ -69,23 +81,31 @@ public class MovingAudioPin : MonoBehaviour
 
     void EndWithClosedWall() {
         Destroy(gameObject, 1f);
+        moveSpeed = 0f;
         var ren = GetComponent<Renderer>();
         var mat = ren.material;
         mat.color = Color.green;
         ren.material = mat;
         audioSrc.Stop();
-        audioSrc.clip = closedWallSound;
+        audioSrc.clip = closedWallSound.clip;
+        audioSrc.volume = closedWallSound.volume;
         audioSrc.loop = false;
         audioSrc.Play();
     }
     void EndWithOpenWall() {
-        Destroy(gameObject, 1f);
+        if (currentCollider.name == "WALL_FACE_EffectMesh") {
+            EndWithClosedWall();
+            return;
+        }
+            Destroy(gameObject, 1f);
+        moveSpeed = 0f;
         var ren = GetComponent<Renderer>();
         var mat = ren.material;
         mat.color = Color.blue;
         ren.material = mat;
         audioSrc.Stop();
-        audioSrc.clip = openWallSound;
+        audioSrc.clip = openWallSound.clip;
+        audioSrc.volume = openWallSound.volume;
         audioSrc.loop = false;
         audioSrc.Play();
     } 

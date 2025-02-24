@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Meta.XR.MRUtilityKit;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -26,6 +27,7 @@ public class EncodingRunner : MonoBehaviour
     }
 
     private void SelectEncodingMethod(EncodingMethod encoding) {
+        if (encoding == null) return;
         encoding.InitOnCam(_centerEye);
         encoding.enabled = true;
         encoding.IsInit = true;
@@ -33,14 +35,15 @@ public class EncodingRunner : MonoBehaviour
     }
 
     private void Update() {
-        if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
-        {
-            TriggerDown();
-        }
-        if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger)) 
-        {
-            TriggerUp();
-        }
+        if (_currentEncoding == null) return;
+            if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
+            {
+                TriggerDown();
+            }
+            if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger)) 
+            {
+                TriggerUp();
+            }
     }
 
     public void TriggerDown() {

@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2884107, y: -0.54433185, z: 1.1011436}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,7 +108,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 2
   MinDistance: 0.1
   MaxDistance: 8
   Pan2D: 0
@@ -145,7 +145,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -233,9 +233,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1cd3a890571884a8394317f2fa2813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movingSound: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
-  openWallSound: {fileID: 0}
-  closedWallSound: {fileID: 8300000, guid: aba2d019ca4843e4184c43a5f3214a95, type: 3}
+  movingSound:
+    clip: {fileID: 8300000, guid: a482e607a0710064da0b38109b445b9a, type: 3}
+    volume: 1
+  openWallSound:
+    clip: {fileID: 0}
+    volume: 0
+  closedWallSound:
+    clip: {fileID: 8300000, guid: aba2d019ca4843e4184c43a5f3214a95, type: 3}
+    volume: 1
 --- !u!135 &-6034827718296927570
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -23,7 +23,7 @@ public class ReachGoalHandler : MonoBehaviour
     private void Update() {
         if (OVRInput.GetDown(OVRInput.RawButton.A))
         {
-            if (!audioSrc.isPlaying) audioSrc.Play();
+            audioSrc.Play();
         }
         if (OVRInput.GetUp(OVRInput.RawButton.A))
         {
