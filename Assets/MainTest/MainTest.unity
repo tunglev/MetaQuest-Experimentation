@@ -1406,7 +1406,7 @@ MonoBehaviour:
     doorWidthGen:
       min: 1
       max: 1.5
-  _goalNodePrefab: {fileID: 6253314991228221958, guid: 8a292f407d827264ebeaf3f874369dd8, type: 3}
+  _goalNodePrefab: {fileID: 8421639419990053866, guid: 8a292f407d827264ebeaf3f874369dd8, type: 3}
   CurrentGoal: {fileID: 0}
 --- !u!114 &1787188694
 MonoBehaviour:
@@ -5114,6 +5114,10 @@ PrefabInstance:
     - target: {fileID: 192631176569673232, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_Name
       value: ControllerPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 192631176569673232, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2234932759862193825, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_AnchorMax.y

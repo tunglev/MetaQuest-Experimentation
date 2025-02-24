@@ -150,8 +150,8 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     #region Generate GoalNode
     [Header("Goal Node")]
-    [SerializeField] private GameObject _goalNodePrefab;
-    [HideInInspector] public GameObject CurrentGoal;
+    [SerializeField] private Goal _goalNodePrefab;
+    [HideInInspector] public Goal CurrentGoal;
 
     private void GenerateGoalNode()
     {
