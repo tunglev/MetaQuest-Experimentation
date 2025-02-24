@@ -99,9 +99,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: aba2d019ca4843e4184c43a5f3214a95, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -233,6 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1cd3a890571884a8394317f2fa2813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movingSound: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
+  openWallSound: {fileID: 0}
+  closedWallSound: {fileID: 8300000, guid: aba2d019ca4843e4184c43a5f3214a95, type: 3}
 --- !u!135 &-6034827718296927570
 SphereCollider:
   m_ObjectHideFlags: 0
