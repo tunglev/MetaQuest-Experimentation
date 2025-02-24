@@ -198,10 +198,13 @@ MonoBehaviour:
   defaultClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
   labelMap:
   - label: WALL_FACE
-    audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
-    volume: 0.05
+    audioClip: {fileID: 8300000, guid: ada4c8514e994e74c909e1bf22b27d69, type: 3}
+    volume: 1
   - label: STORAGE
-    audioClip: {fileID: 8300000, guid: c6845993ee9306c45af6fac82a6dcfde, type: 3}
+    audioClip: {fileID: 8300000, guid: ada4c8514e994e74c909e1bf22b27d69, type: 3}
+    volume: 1
+  - label: CORNER
+    audioClip: {fileID: 8300000, guid: 2e4a4c72289523248957f6375e54c18c, type: 3}
     volume: 1
   - label: GOAL
     audioClip: {fileID: 8300000, guid: 5bdb53f068999034dbd08ec452d0751b, type: 3}
