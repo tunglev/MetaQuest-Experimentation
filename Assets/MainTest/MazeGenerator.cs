@@ -5,19 +5,19 @@ public class MazeGenerator
 {
     private static readonly Random _random = new Random();
 
-    public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int n)
+    public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int width, int length)
     {
-        if (n <= 0)
-            throw new ArgumentException("Size n must be a positive integer.", nameof(n));
+        if (width <= 0 || length <= 0)
+            throw new ArgumentException("Width and length must be positive integers.");
 
         // Initialize wall grids (true = wall present)
-        bool[,] horizontalWalls = new bool[n + 1, n];
-        bool[,] verticalWalls = new bool[n, n + 1];
-        bool[,] visited = new bool[n, n];
-        Stack<(int x, int y)> stack = new Stack<(int x, int y)>();
+        bool[,] horizontalWalls = new bool[length + 1, width];
+        bool[,] verticalWalls = new bool[length, width + 1];
+        bool[,] visited = new bool[length, width];
+        Stack<(int row, int col)> stack = new Stack<(int row, int col)>();
 
         // Initialize all walls (including outer edges)
-        InitializeWalls(horizontalWalls, verticalWalls, n);
+        InitializeWalls(horizontalWalls, verticalWalls, width, length);
 
         // Start from the top-left corner (0,0)
         visited[0, 0] = true;
@@ -25,82 +25,88 @@ public class MazeGenerator
 
         while (stack.Count > 0)
         {
-            var (x, y) = stack.Pop();
-            var neighbors = GetUnvisitedNeighbors(x, y, n, visited);
+            var (row, col) = stack.Pop();
+            var neighbors = GetUnvisitedNeighbors(row, col, width, length, visited);
 
             if (neighbors.Count > 0)
             {
-                stack.Push((x, y));
-                var ((nx, ny), direction) = neighbors[_random.Next(neighbors.Count)];
+                stack.Push((row, col));
+                var ((nRow, nCol), direction) = neighbors[_random.Next(neighbors.Count)];
 
                 // Remove the wall between current cell and neighbor
-                RemoveWall(x, y, nx, ny, direction, horizontalWalls, verticalWalls);
-                visited[nx, ny] = true;
-                stack.Push((nx, ny));
+                RemoveWall(row, col, nRow, nCol, direction, horizontalWalls, verticalWalls);
+                visited[nRow, nCol] = true;
+                stack.Push((nRow, nCol));
             }
         }
 
         return (horizontalWalls, verticalWalls);
     }
 
-    private void InitializeWalls(bool[,] horizontalWalls, bool[,] verticalWalls, int n)
+    private void InitializeWalls(bool[,] horizontalWalls, bool[,] verticalWalls, int width, int length)
     {
         // Set all walls initially to true
-        for (int i = 0; i <= n; i++)
-            for (int j = 0; j < n; j++)
+        for (int i = 0; i <= length; i++)
+            for (int j = 0; j < width; j++)
                 horizontalWalls[i, j] = true;
 
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j <= n; j++)
+        for (int i = 0; i < length; i++)
+            for (int j = 0; j <= width; j++)
                 verticalWalls[i, j] = true;
 
         // Remove outer boundaries
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < width; j++)
         {
             horizontalWalls[0, j] = false;    // Top edge
-            horizontalWalls[n, j] = false;    // Bottom edge
+            horizontalWalls[length, j] = false;    // Bottom edge
         }
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < length; i++)
         {
             verticalWalls[i, 0] = false;      // Left edge
-            verticalWalls[i, n] = false;      // Right edge
+            verticalWalls[i, width] = false;      // Right edge
         }
     }
 
-    private void RemoveWall(int x, int y, int nx, int ny, string direction,
+    private void RemoveWall(int row, int col, int nRow, int nCol, string direction,
                           bool[,] horizontalWalls, bool[,] verticalWalls)
     {
         switch (direction)
         {
             case "North":
-                horizontalWalls[x, y] = false;    // Remove north wall of current cell
+                horizontalWalls[row, col] = false;    // Remove north wall of current cell
                 break;
             case "South":
-                horizontalWalls[x + 1, y] = false; // Remove south wall of current cell
+                horizontalWalls[row + 1, col] = false; // Remove south wall of current cell
                 break;
             case "East":
-                verticalWalls[x, y + 1] = false;  // Remove east wall of current cell
+                verticalWalls[row, col + 1] = false;  // Remove east wall of current cell
                 break;
             case "West":
-                verticalWalls[x, y] = false;      // Remove west wall of current cell
+                verticalWalls[row, col] = false;      // Remove west wall of current cell
                 break;
         }
     }
 
-    private List<((int nx, int ny), string direction)> GetUnvisitedNeighbors(int x, int y, int n, bool[,] visited)
+    private List<((int nRow, int nCol), string direction)> GetUnvisitedNeighbors(int row, int col, int width, int length, bool[,] visited)
     {
         var neighbors = new List<((int, int), string)>();
 
         // North neighbor
-        if (x > 0 && !visited[x - 1, y]) neighbors.Add(((x - 1, y), "North"));
+        if (row > 0 && !visited[row - 1, col]) neighbors.Add(((row - 1, col), "North"));
         // South neighbor
-        if (x < n - 1 && !visited[x + 1, y]) neighbors.Add(((x + 1, y), "South"));
+        if (row < length - 1 && !visited[row + 1, col]) neighbors.Add(((row + 1, col), "South"));
         // East neighbor
-        if (y < n - 1 && !visited[x, y + 1]) neighbors.Add(((x, y + 1), "East"));
+        if (col < width - 1 && !visited[row, col + 1]) neighbors.Add(((row, col + 1), "East"));
         // West neighbor
-        if (y > 0 && !visited[x, y - 1]) neighbors.Add(((x, y - 1), "West"));
+        if (col > 0 && !visited[row, col - 1]) neighbors.Add(((row, col - 1), "West"));
 
         return neighbors;
+    }
+
+    // Keep the original method for backward compatibility
+    public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int n)
+    {
+        return Generate(n, n);
     }
 }

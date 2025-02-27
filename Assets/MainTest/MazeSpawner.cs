@@ -3,7 +3,7 @@ using UnityEngine;
 public class MazeSpawner : MonoBehaviour
 {
     [Header("Maze Settings")]
-    public int mazeSize = 5;
+    public Vector2Int mazeGridSize = new (4,5);
     private float roomWidth = 4f;
     private float roomLength = 7f;
 
@@ -27,10 +27,10 @@ public class MazeSpawner : MonoBehaviour
         this.roomWidth = roomWidth;
         this.roomLength = roomLength;
         mazeGenerator = new MazeGenerator();
-        var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeSize);
+        var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeGridSize.x, mazeGridSize.y);
 
-        cellWidth = roomWidth / mazeSize;
-        cellLength = roomLength / mazeSize;
+        cellWidth = roomWidth / mazeGridSize.x;
+        cellLength = roomLength / mazeGridSize.y;
 
         SpawnCombinedWalls(horizontalWalls, verticalWalls);
     }
