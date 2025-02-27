@@ -5,7 +5,7 @@ public class MazeGenerator
 {
     private static readonly Random _random = new Random();
 
-    public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int width, int length)
+    public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int width, int length, int maxWalls = -1)
     {
         if (width <= 0 || length <= 0)
             throw new ArgumentException("Width and length must be positive integers.");
@@ -14,12 +14,19 @@ public class MazeGenerator
         bool[,] horizontalWalls = new bool[length + 1, width];
         bool[,] verticalWalls = new bool[length, width + 1];
         bool[,] visited = new bool[length, width];
+
+        // First, create a fully connected maze (minimum spanning tree)
+        // Initialize with all walls
+        for (int i = 0; i <= length; i++)
+            for (int j = 0; j < width; j++)
+                horizontalWalls[i, j] = true;
+
+        for (int i = 0; i < length; i++)
+            for (int j = 0; j <= width; j++)
+                verticalWalls[i, j] = true;
+
+        // Generate a fully connected maze using depth-first search
         Stack<(int row, int col)> stack = new Stack<(int row, int col)>();
-
-        // Initialize all walls (including outer edges)
-        InitializeWalls(horizontalWalls, verticalWalls, width, length);
-
-        // Start from the top-left corner (0,0)
         visited[0, 0] = true;
         stack.Push((0, 0));
 
@@ -40,20 +47,78 @@ public class MazeGenerator
             }
         }
 
+        // At this point, we have a minimal maze with the minimum number of walls
+        // for a fully connected maze (each cell is reachable)
+
+        // If maxWalls is -1, return the fully connected maze
+        if (maxWalls == -1)
+        {
+            RemoveOuterBoundaries(horizontalWalls, verticalWalls, width, length);
+            return (horizontalWalls, verticalWalls);
+        }
+
+        // Create a list of all remaining internal walls
+        List<(int row, int col, bool isHorizontal)> remainingWalls = new List<(int row, int col, bool isHorizontal)>();
+
+        // Add all horizontal walls (excluding outer boundaries)
+        for (int i = 1; i < length; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if (horizontalWalls[i, j])
+                {
+                    remainingWalls.Add((i, j, true));
+                }
+            }
+        }
+
+        // Add all vertical walls (excluding outer boundaries)
+        for (int i = 0; i < length; i++)
+        {
+            for (int j = 1; j < width; j++)
+            {
+                if (verticalWalls[i, j])
+                {
+                    remainingWalls.Add((i, j, false));
+                }
+            }
+        }
+
+        // Shuffle the list of walls
+        ShuffleList(remainingWalls);
+
+        // Reset all internal walls to false (remove them)
+        for (int i = 1; i < length; i++)
+            for (int j = 0; j < width; j++)
+                horizontalWalls[i, j] = false;
+
+        for (int i = 0; i < length; i++)
+            for (int j = 1; j < width; j++)
+                verticalWalls[i, j] = false;
+
+        // Add back exactly maxWalls walls
+        int wallsToAdd = Math.Min(maxWalls, remainingWalls.Count);
+        for (int i = 0; i < wallsToAdd; i++)
+        {
+            var (row, col, isHorizontal) = remainingWalls[i];
+            if (isHorizontal)
+            {
+                horizontalWalls[row, col] = true;
+            }
+            else
+            {
+                verticalWalls[row, col] = true;
+            }
+        }
+
+        // Remove outer boundary walls
+        RemoveOuterBoundaries(horizontalWalls, verticalWalls, width, length);
+
         return (horizontalWalls, verticalWalls);
     }
 
-    private void InitializeWalls(bool[,] horizontalWalls, bool[,] verticalWalls, int width, int length)
+    private void RemoveOuterBoundaries(bool[,] horizontalWalls, bool[,] verticalWalls, int width, int length)
     {
-        // Set all walls initially to true
-        for (int i = 0; i <= length; i++)
-            for (int j = 0; j < width; j++)
-                horizontalWalls[i, j] = true;
-
-        for (int i = 0; i < length; i++)
-            for (int j = 0; j <= width; j++)
-                verticalWalls[i, j] = true;
-
         // Remove outer boundaries
         for (int j = 0; j < width; j++)
         {
@@ -65,6 +130,19 @@ public class MazeGenerator
         {
             verticalWalls[i, 0] = false;      // Left edge
             verticalWalls[i, width] = false;      // Right edge
+        }
+    }
+
+    private void ShuffleList<T>(List<T> list)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = _random.Next(n + 1);
+            T value = list[k];
+            list[k] = list[n];
+            list[n] = value;
         }
     }
 
@@ -104,9 +182,15 @@ public class MazeGenerator
         return neighbors;
     }
 
-    // Keep the original method for backward compatibility
+    // Backward compatibility for original method
     public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int n)
     {
         return Generate(n, n);
+    }
+
+    // Backward compatibility for width and length without maxWalls
+    public (bool[,] HorizontalWalls, bool[,] VerticalWalls) Generate(int width, int length)
+    {
+        return Generate(width, length, -1);
     }
 }

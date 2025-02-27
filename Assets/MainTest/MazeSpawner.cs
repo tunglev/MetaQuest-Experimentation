@@ -4,8 +4,8 @@ public class MazeSpawner : MonoBehaviour
 {
     [Header("Maze Settings")]
     public Vector2Int mazeGridSize = new (4,5);
-    private float roomWidth = 4f;
-    private float roomLength = 7f;
+    public int maxNumberOfWalls = 10;
+    private float roomLength;
 
     [Header("Wall Settings")]
     public GameObject wallPrefab;
@@ -24,10 +24,9 @@ public class MazeSpawner : MonoBehaviour
     public void GenerateAndSpawnMaze(Transform roomGameobject, float roomWidth, float roomLength)
     {
         parentObj = roomGameobject;
-        this.roomWidth = roomWidth;
         this.roomLength = roomLength;
         mazeGenerator = new MazeGenerator();
-        var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeGridSize.x, mazeGridSize.y);
+        var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeGridSize.x, mazeGridSize.y, maxNumberOfWalls);
 
         cellWidth = roomWidth / mazeGridSize.x;
         cellLength = roomLength / mazeGridSize.y;

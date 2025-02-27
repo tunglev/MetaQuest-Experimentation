@@ -59,15 +59,6 @@ public class SpawnVirtualRoom : MonoBehaviour
         if (_data.doorWidthGen.max > _data.roomSize.width) throw new Exception("Door width cannot be greater than room width");
     }
 
-    [ContextMenu("Generate Maze")]
-    public void GenerateMaze() {
-        var generator = new MazeGenerator();
-        var (horizontalWalls, verticalWalls) = generator.Generate(3);
-
-
-
-    }
-
 
     const float WALLHEIGHT = 2.5f;
     [ContextMenu("Spawn Room")]
