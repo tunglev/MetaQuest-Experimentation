@@ -24,8 +24,10 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     private void DemoPlayAreaDimensionsOnEditor() {
         var dimension = FindObjectOfType<PlayAreaAligner>().GetPlayAreaDimensions();
-        _data.roomSize.width = dimension.x;
-        _data.roomSize.length = dimension.z;
+        if (!_useFixedRoomSize) {
+            _data.roomSize.width = dimension.x;
+            _data.roomSize.length = dimension.z;
+        }
     }
 
 
@@ -51,6 +53,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         public GenerationLimit doorWidthGen;
         internal DoorwayData[] doorwayData;
     }
+    [SerializeField] private bool _useFixedRoomSize;
     [SerializeField] private GameObject _roomprefab;
     [SerializeField] private RoomGeneratorData _data;
 
@@ -146,7 +149,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     private void GenerateGoalNode()
     {
-        if (CurrentGoal != null) Destroy(CurrentGoal);
+        if (CurrentGoal != null) Destroy(CurrentGoal.gameObject);
         var goalPos = MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.4f, avoidVolumes: true);
         if (goalPos == null) {
             GenerateAndSpawnRoom();

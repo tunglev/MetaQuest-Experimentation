@@ -168,9 +168,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mazeGridSize: {x: 4, y: 5}
+  maxNumberOfWalls: 5
+  _testGO: {fileID: 4372649099091634155, guid: b92ef142bcc80494f916ab77bf3bb7ea, type: 3}
   wallPrefab: {fileID: 6733693931578498445, guid: f585aa7b2a25ab74aaf48061918c2c28, type: 3}
   wallHeight: 2.5
-  wallThickness: 0.15
+  wallThickness: 0.1
   wallName: STORAGE
 --- !u!1 &536047382 stripped
 GameObject:
@@ -1395,11 +1397,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27d7dc86b57d4bc429de458b9cecb7f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _useFixedRoomSize: 1
   _roomprefab: {fileID: 0}
   _data:
     roomSize:
-      width: 4
-      length: 7
+      width: 8
+      length: 10
     wallHeight: 2.5
     wallPrefab: {fileID: 8856134967221130863, guid: c56af40a76127e042bc0ce509de4e2a0, type: 3}
     doorwayCount: 2

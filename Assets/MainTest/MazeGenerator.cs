@@ -117,6 +117,58 @@ public class MazeGenerator
         return (horizontalWalls, verticalWalls);
     }
 
+    public ((int row, int col) start, (int row, int col) end) GetStartAndEndCells(int width, int length)
+    {
+        // Decide whether to use horizontal or vertical opposing sides
+        bool useHorizontalOpposition = width >= length;
+
+        if (useHorizontalOpposition)
+        {
+            // Start from left side (first column), end at right side (last column)
+            int startRow = _random.Next(0, length);
+            int endRow = _random.Next(0, length);
+
+            return ((startRow, 0), (endRow, width - 1));
+        }
+        else
+        {
+            // Start from top side (first row), end at bottom side (last row)
+            int startCol = _random.Next(0, width);
+            int endCol = _random.Next(0, width);
+
+            return ((0, startCol), (length - 1, endCol));
+        }
+    }
+
+    // Overload that automatically selects based on the dimensions of the maze
+    public ((int row, int col) start, (int row, int col) end) GetStartAndEndCells(bool[,] horizontalWalls, bool[,] verticalWalls)
+    {
+        int length = horizontalWalls.GetLength(0) - 1;
+        int width = horizontalWalls.GetLength(1);
+
+        return GetStartAndEndCells(width, length);
+    }
+
+    // Alternative implementation that lets you specify which sides to use
+    public ((int row, int col) start, (int row, int col) end) GetStartAndEndCells(int width, int length, string startSide, string endSide)
+    {
+        if (startSide == endSide)
+            throw new ArgumentException("Start and end sides must be different");
+
+        Dictionary<string, Func<(int row, int col)>> cellSelectors = new Dictionary<string, Func<(int row, int col)>>
+        {
+            ["top"] = () => (0, _random.Next(0, width)),
+            ["bottom"] = () => (length - 1, _random.Next(0, width)),
+            ["left"] = () => (_random.Next(0, length), 0),
+            ["right"] = () => (_random.Next(0, length), width - 1)
+        };
+
+        if (!cellSelectors.ContainsKey(startSide.ToLower()) || !cellSelectors.ContainsKey(endSide.ToLower()))
+            throw new ArgumentException("Sides must be one of: top, bottom, left, right");
+
+        return (cellSelectors[startSide.ToLower()](), cellSelectors[endSide.ToLower()]());
+    }
+
     private void RemoveOuterBoundaries(bool[,] horizontalWalls, bool[,] verticalWalls, int width, int length)
     {
         // Remove outer boundaries

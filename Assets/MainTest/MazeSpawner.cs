@@ -1,11 +1,14 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MazeSpawner : MonoBehaviour
 {
     [Header("Maze Settings")]
     public Vector2Int mazeGridSize = new (4,5);
     public int maxNumberOfWalls = 10;
+    [SerializeField] GameObject _testGO;
     private float roomLength;
+    private float roomWidth;
 
     [Header("Wall Settings")]
     public GameObject wallPrefab;
@@ -25,13 +28,26 @@ public class MazeSpawner : MonoBehaviour
     {
         parentObj = roomGameobject;
         this.roomLength = roomLength;
+        this.roomWidth =roomWidth;
         mazeGenerator = new MazeGenerator();
         var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeGridSize.x, mazeGridSize.y, maxNumberOfWalls);
+        var (startCell, endCell) = mazeGenerator.GetStartAndEndCells(mazeGridSize.x, mazeGridSize.y);
 
         cellWidth = roomWidth / mazeGridSize.x;
         cellLength = roomLength / mazeGridSize.y;
 
+        Instantiate(_testGO, GridPosToWorldPos(startCell), Quaternion.identity);
+        Instantiate(_testGO, GridPosToWorldPos(endCell), Quaternion.identity);
         SpawnCombinedWalls(horizontalWalls, verticalWalls);
+    }
+
+    public Vector3 GridPosToWorldPos((int row, int col) cell) {
+        return GridPosToWorldPos(cell, new(0.5f, 0.5f));
+    }
+
+    public Vector3 GridPosToWorldPos((int row, int col) cell, Vector2 normalizedPositionOnGrid) {
+        // normalizedPositionOnGrid = 0.5, 0.5: center of grid
+        return parentObj.TransformPoint(new Vector3((cell.col + normalizedPositionOnGrid.x) * cellWidth, 0, (cell.row + normalizedPositionOnGrid.y) * cellLength) + new Vector3(-roomWidth * 0.5f, 0, -roomLength * 0.5f));
     }
 
     private void SpawnCombinedWalls(bool[,] horizontalWalls, bool[,] verticalWalls)
