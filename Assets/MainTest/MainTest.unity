@@ -169,7 +169,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeGridSize: {x: 4, y: 5}
   maxNumberOfWalls: 5
-  _testGO: {fileID: 4372649099091634155, guid: b92ef142bcc80494f916ab77bf3bb7ea, type: 3}
   wallPrefab: {fileID: 6733693931578498445, guid: f585aa7b2a25ab74aaf48061918c2c28, type: 3}
   wallHeight: 2.5
   wallThickness: 0.1
@@ -1409,8 +1408,12 @@ MonoBehaviour:
     doorWidthGen:
       min: 1
       max: 1.5
+  m_startObjectPrefab: {fileID: 4372649099091634155, guid: b92ef142bcc80494f916ab77bf3bb7ea, type: 3}
   _goalNodePrefab: {fileID: 8421639419990053866, guid: 8a292f407d827264ebeaf3f874369dd8, type: 3}
-  CurrentGoal: {fileID: 0}
+  m_goalPosType: 1
+  m_goalHeightRange:
+    min: 0.8
+    max: 1.8
 --- !u!114 &1787188694
 MonoBehaviour:
   m_ObjectHideFlags: 0

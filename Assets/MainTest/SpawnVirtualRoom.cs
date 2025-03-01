@@ -1,6 +1,8 @@
 using System;
 using Meta.XR.MRUtilityKit;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 using Random = UnityEngine.Random;
 
 public class SpawnVirtualRoom : MonoBehaviour
@@ -16,9 +18,10 @@ public class SpawnVirtualRoom : MonoBehaviour
 #else
             DemoPlayAreaDimensionsOnEditor();
 #endif
-        var room = _roomprefab == null ? GenerateAndSpawnRoom() : Instantiate(_roomprefab);
+        var room = _roomprefab == null ? SpawnTempRoom() : Instantiate(_roomprefab);
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
+        GenerateStartNode();
         GenerateGoalNode();
     }
 
@@ -31,7 +34,7 @@ public class SpawnVirtualRoom : MonoBehaviour
     }
 
 
-    #region Generate Room
+    #region Generate Temp Room
     [Serializable]
     public struct DoorwayData {
         public float width;
@@ -64,11 +67,9 @@ public class SpawnVirtualRoom : MonoBehaviour
 
 
     const float WALLHEIGHT = 2.5f;
-    [ContextMenu("Spawn Room")]
-    private GameObject GenerateAndSpawnRoom()
+    private GameObject SpawnTempRoom()
     {
-        print("Creating custom room");
-        var room = new GameObject("Custom Room");
+        var room = new GameObject("Temp Room");
         GenerateFourWalls(room.transform);
         
         // int doorwaySpawned = 0;
@@ -76,8 +77,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         //     GenerateDoorways(room.transform);
         //     doorwaySpawned++;
         // }
-        FindObjectOfType<MazeSpawner>().GenerateAndSpawnMaze(room.transform, _data.roomSize.width, _data.roomSize.length);
-
+        (m_gridStartPos, m_gridGoalPos) = FindObjectOfType<MazeSpawner>().GenerateAndSpawnMaze(room.transform, _data.roomSize.width, _data.roomSize.length);
         
         room.transform.position += new Vector3(-0.5f * _data.roomSize.width,WALLHEIGHT * 0.5f, 0);
         room.SetActive(false);
@@ -141,20 +141,52 @@ public class SpawnVirtualRoom : MonoBehaviour
 
 
     #endregion
+    #region Generate StartNode
+    [Header("Start Node")]
+    [SerializeField] private GameObject m_startObjectPrefab;
+    private Vector3 m_gridStartPos;
+    private GameObject m_currentStartGameobject;
 
+    private void GenerateStartNode() {
+        if (m_currentStartGameobject != null) Destroy(m_currentStartGameobject.gameObject);
+        m_currentStartGameobject = Instantiate(m_startObjectPrefab, m_gridStartPos, Quaternion.identity);
+    }
+    #endregion
     #region Generate GoalNode
+    public Goal CurrentGoal {get; private set;}
     [Header("Goal Node")]
     [SerializeField] private Goal _goalNodePrefab;
-    [HideInInspector] public Goal CurrentGoal;
+    [SerializeField] GoalPositionType m_goalPosType;
+    [SerializeField] GenerationLimit m_goalHeightRange;
+    private Vector3 m_gridGoalPos;
+
+    public enum GoalPositionType {
+        Fixed = 0, GridRandom = 1, PositionRandom = 2
+    }
 
     private void GenerateGoalNode()
     {
         if (CurrentGoal != null) Destroy(CurrentGoal.gameObject);
-        var goalPos = MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.4f, avoidVolumes: true);
-        if (goalPos == null) {
-            GenerateAndSpawnRoom();
-            return;
+        Vector3? goalPos = null;
+        switch (m_goalPosType) {
+            case GoalPositionType.Fixed:
+                break;
+            case GoalPositionType.GridRandom:
+                m_gridGoalPos.y = m_goalHeightRange.GetRandomVal();
+                goalPos = m_gridGoalPos;
+                break;
+            case GoalPositionType.PositionRandom:
+                goalPos = MRUK.Instance.GetCurrentRoom().GenerateRandomPositionInRoom(minDistanceToSurface: 0.4f, avoidVolumes: true);
+                if (goalPos == null)
+                { // regenerate room if impossible to get pos in room
+                    SpawnTempRoom();
+                    return;
+                }
+                break;
+            default:
+                throw new Exception("Goal position type not defined");
         }
+        
         CurrentGoal = Instantiate(_goalNodePrefab, (Vector3) goalPos, Quaternion.identity);
         CurrentGoal.name = "GOAL";
     }

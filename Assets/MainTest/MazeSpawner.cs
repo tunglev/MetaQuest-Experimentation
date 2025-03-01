@@ -6,7 +6,6 @@ public class MazeSpawner : MonoBehaviour
     [Header("Maze Settings")]
     public Vector2Int mazeGridSize = new (4,5);
     public int maxNumberOfWalls = 10;
-    [SerializeField] GameObject _testGO;
     private float roomLength;
     private float roomWidth;
 
@@ -24,21 +23,22 @@ public class MazeSpawner : MonoBehaviour
 
 
     [ContextMenu("GenerateAndSpawnMaze")]
-    public void GenerateAndSpawnMaze(Transform roomGameobject, float roomWidth, float roomLength)
+    public (Vector3 startPos, Vector3 endPos) GenerateAndSpawnMaze(Transform roomGameobject, float roomWidth, float roomLength)
     {
         parentObj = roomGameobject;
         this.roomLength = roomLength;
         this.roomWidth =roomWidth;
         mazeGenerator = new MazeGenerator();
         var (horizontalWalls, verticalWalls) = mazeGenerator.Generate(mazeGridSize.x, mazeGridSize.y, maxNumberOfWalls);
-        var (startCell, endCell) = mazeGenerator.GetStartAndEndCells(mazeGridSize.x, mazeGridSize.y);
 
         cellWidth = roomWidth / mazeGridSize.x;
         cellLength = roomLength / mazeGridSize.y;
 
-        Instantiate(_testGO, GridPosToWorldPos(startCell), Quaternion.identity);
-        Instantiate(_testGO, GridPosToWorldPos(endCell), Quaternion.identity);
         SpawnCombinedWalls(horizontalWalls, verticalWalls);
+
+        // start and end pos
+        var (startCell, endCell) = mazeGenerator.GetStartAndEndCells(mazeGridSize.x, mazeGridSize.y);
+        return (GridPosToWorldPos(startCell), GridPosToWorldPos(endCell));
     }
 
     public Vector3 GridPosToWorldPos((int row, int col) cell) {

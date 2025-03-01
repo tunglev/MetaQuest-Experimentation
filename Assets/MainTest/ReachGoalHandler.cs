@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReachGoalHandler : MonoBehaviour
+public class ReachGoalTriggerer : MonoBehaviour
 {
     
     private void Awake() {
@@ -17,7 +17,6 @@ public class ReachGoalHandler : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.name.Equals("GOAL_CLD")) {
-            FindObjectOfType<SpawnVirtualRoom>().SpawnNewRoomAsMRUKRoom();
             OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
             GlobalAudio.Instance.PlaySound("Success");
             MainTestHandler.Instance.OnGoalReached?.Invoke();
