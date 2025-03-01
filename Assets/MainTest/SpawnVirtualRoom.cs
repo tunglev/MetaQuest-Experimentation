@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Meta.XR.MRUtilityKit;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -30,6 +32,17 @@ public class SpawnVirtualRoom : MonoBehaviour
         if (!_useFixedRoomSize) {
             _data.roomSize.width = dimension.x;
             _data.roomSize.length = dimension.z;
+        }
+    }
+
+    [ContextMenu("DeleteAllWalls")]
+    /// <summary>
+    /// Delete all inner walls in the current MRUK roomm
+    /// </summary>
+    public void DeleteAllWalls() {
+        var innerWalls = MRUK.Instance.GetCurrentRoom().GetComponentsInChildren<MRUKAnchor>().Where(x => x.Label == MRUKAnchor.SceneLabels.STORAGE);
+        foreach(var wall in innerWalls) {
+            MRUK.Instance.GetCurrentRoom().RemoveAndDestroyAnchor(wall);
         }
     }
 
