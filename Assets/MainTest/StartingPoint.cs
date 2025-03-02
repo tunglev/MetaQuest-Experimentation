@@ -33,12 +33,16 @@ public class StartingPoint : MonoBehaviour
             }
         }
         else {
-            StopAllCoroutines();
-            isWaiting = false;
+            if (isWaiting) {
+                StopAllCoroutines();
+                m_spriteRen.color = Color.blue;
+                isWaiting = false;
+            }
         }
     }
 
     IEnumerator WaitDurationCoroutine() {
+        m_spriteRen.color = Color.yellow;
         yield return new WaitForSeconds(waitDuration);
         OnReadyToStart?.Invoke();
         m_spriteRen.color = Color.green;

@@ -19,6 +19,7 @@ public class ReachGoalTriggerer : MonoBehaviour
         if (other.gameObject.name.Equals("GOAL_CLD")) {
             OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
             GlobalAudio.Instance.PlaySound("Success");
+            Destroy(other.transform.parent.gameObject);
             MainTestHandler.Instance.OnGoalReached?.Invoke();
         }
     }
