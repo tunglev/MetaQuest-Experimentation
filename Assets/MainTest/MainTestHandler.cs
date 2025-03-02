@@ -37,7 +37,10 @@ public class MainTestHandler : MonoBehaviour
         _virtualRoom = FindObjectOfType<SpawnVirtualRoom>();
         _blindModeHandler = FindObjectOfType<BlindModeHandler>();
         FindObjectOfType<OVRCameraRig>().rightControllerAnchor.gameObject.AddComponent<ReachGoalTriggerer>();
-        OnGoalReached += SpawnNewRoom;
+        OnGoalReached += () => {
+            _virtualRoom.ClearAllInnerWalls();
+            _virtualRoom.ActivateStartPointPanel();
+        };
     }
 
     private void Start() {
@@ -54,7 +57,6 @@ public class MainTestHandler : MonoBehaviour
         {
             ToggleControllerPanel();
         }
-        _controllerPanel.transform.forward = Camera.main.transform.forward;
     }
     private void ToggleControllerPanel() {
         _controllerPanel.SetActive(!_controllerPanel.activeInHierarchy);
@@ -62,7 +64,7 @@ public class MainTestHandler : MonoBehaviour
             _controllerPanel.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1.2f;
         }
     }
-    private void SpawnNewRoom() {
+    public void SpawnNewRoom() {
         _virtualRoom.SpawnNewRoomAsMRUKRoom();
         _blindModeHandler.ReapplyBlindMode();
         OnNewRoomSpanwed?.Invoke();

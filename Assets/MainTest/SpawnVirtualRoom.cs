@@ -23,7 +23,6 @@ public class SpawnVirtualRoom : MonoBehaviour
         var room = _roomprefab == null ? SpawnTempRoom() : Instantiate(_roomprefab);
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
-        GenerateStartNode();
         GenerateGoalNode();
     }
 
@@ -35,14 +34,16 @@ public class SpawnVirtualRoom : MonoBehaviour
         }
     }
 
-    [ContextMenu("DeleteAllWalls")]
+    [ContextMenu("ClearAllInnerWalls")]
     /// <summary>
     /// Delete all inner walls in the current MRUK roomm
     /// </summary>
-    public void DeleteAllWalls() {
-        var innerWalls = MRUK.Instance.GetCurrentRoom().GetComponentsInChildren<MRUKAnchor>().Where(x => x.Label == MRUKAnchor.SceneLabels.STORAGE);
+    public void ClearAllInnerWalls() {
+        MRUKRoom room = MRUK.Instance.GetCurrentRoom();
+        var innerWalls = room.GetComponentsInChildren<MRUKAnchor>().Where(x => x.Label == MRUKAnchor.SceneLabels.STORAGE);
         foreach(var wall in innerWalls) {
-            MRUK.Instance.GetCurrentRoom().RemoveAndDestroyAnchor(wall);
+            room.Anchors.Remove(wall);
+            Destroy(wall.gameObject);
         }
     }
 
@@ -154,15 +155,15 @@ public class SpawnVirtualRoom : MonoBehaviour
 
 
     #endregion
-    #region Generate StartNode
+    #region Starting Point
     [Header("Start Node")]
-    [SerializeField] private GameObject m_startObjectPrefab;
+    [SerializeField] private GameObject m_startPointPanel;
     private Vector3 m_gridStartPos;
-    private GameObject m_currentStartGameobject;
 
-    private void GenerateStartNode() {
-        if (m_currentStartGameobject != null) Destroy(m_currentStartGameobject.gameObject);
-        m_currentStartGameobject = Instantiate(m_startObjectPrefab, m_gridStartPos, Quaternion.identity);
+    public void ActivateStartPointPanel() {
+        m_gridStartPos.y = 1.6f;
+        m_startPointPanel.transform.position = m_gridStartPos;
+        m_startPointPanel.gameObject.SetActive(true);
     }
     #endregion
     #region Generate GoalNode
