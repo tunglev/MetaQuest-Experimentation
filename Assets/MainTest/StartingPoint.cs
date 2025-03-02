@@ -12,7 +12,7 @@ public class StartingPoint : MonoBehaviour
     private SpriteRenderer m_spriteRen;
     void Awake()
     {
-        var detectRadius = transform.lossyScale.x;
+        var detectRadius = transform.lossyScale.x * 0.5f;
         sqrDetectRadius = detectRadius * detectRadius;
         m_camera = Camera.main.transform;
         m_spriteRen = GetComponent<SpriteRenderer>();
