@@ -1472,8 +1472,8 @@ MonoBehaviour:
   _roomprefab: {fileID: 0}
   _data:
     roomSize:
-      width: 8
-      length: 10
+      width: 5.4864
+      length: 7.62
     wallHeight: 2.5
     wallPrefab: {fileID: 8856134967221130863, guid: c56af40a76127e042bc0ce509de4e2a0, type: 3}
     doorwayCount: 2

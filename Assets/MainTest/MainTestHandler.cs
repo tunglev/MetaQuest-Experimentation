@@ -37,9 +37,7 @@ public class MainTestHandler : MonoBehaviour
         _virtualRoom = FindObjectOfType<SpawnVirtualRoom>();
         _blindModeHandler = FindObjectOfType<BlindModeHandler>();
         FindObjectOfType<OVRCameraRig>().rightControllerAnchor.gameObject.AddComponent<ReachGoalTriggerer>();
-        OnGoalReached += () => {
-            SpawnNewRoom();
-        };
+        OnGoalReached += SpawnNewRoom;
     }
 
     private void Start() {

@@ -24,10 +24,10 @@ public class BlindModeHandler : MonoBehaviour
     public void ToogleBlindMode() {
         SetBlindMode(!IsBlind);
         GlobalAudio.Instance.PlaySound(IsBlind ? "Blind mode - on" : "Blind mode - off");
+        MainTestHandler.Instance.OnBlindModeToggled?.Invoke(IsBlind);
     }
 
     public void SetBlindMode(bool val) {
-        FindObjectOfType<SpawnVirtualRoom>().CurrentGoal.GetComponentInChildren<MeshRenderer>().enabled = !val;
         _roomGuardianEffectMesh.ToggleEffectMeshVisibility(shouldShow: !val);
         _roomBoxEffectMesh.OverrideEffectMaterial(val ? _blindModeMaterial : _roomBoxMaterial);
         IsBlind = val;
