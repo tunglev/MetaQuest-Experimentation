@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Meta.XR.MRUtilityKit;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using Random = UnityEngine.Random;
 
 public class SpawnVirtualRoom : MonoBehaviour
@@ -23,7 +20,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         var room = _roomprefab == null ? SpawnTempRoom() : Instantiate(_roomprefab);
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         Destroy(room);
-        GenerateGoalNode();
+        GenerateStartingPoint();
     }
 
     private void DemoPlayAreaDimensionsOnEditor() {
@@ -36,7 +33,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     [ContextMenu("ClearAllInnerWalls")]
     /// <summary>
-    /// Delete all inner walls in the current MRUK roomm
+    /// Delete all inner walls in the current MRUK room
     /// </summary>
     public void ClearAllInnerWalls() {
         MRUKRoom room = MRUK.Instance.GetCurrentRoom();
@@ -44,6 +41,15 @@ public class SpawnVirtualRoom : MonoBehaviour
         foreach(var wall in innerWalls) {
             room.Anchors.Remove(wall);
             Destroy(wall.gameObject);
+        }
+    }
+
+    public void SetActiveInnerWalls(bool val) {
+        MRUKRoom room = MRUK.Instance.GetCurrentRoom();
+        var innerWalls = room.GetComponentsInChildren<MRUKAnchor>(includeInactive: true).Where(x => x.Label == MRUKAnchor.SceneLabels.STORAGE);
+        foreach (var wall in innerWalls)
+        {
+            wall.gameObject.SetActive(val);
         }
     }
 
@@ -157,13 +163,19 @@ public class SpawnVirtualRoom : MonoBehaviour
     #endregion
     #region Starting Point
     [Header("Start Node")]
-    [SerializeField] private GameObject m_startPointPanel;
+    [SerializeField] private StartingPoint m_startingPoint;
     private Vector3 m_gridStartPos;
 
-    public void ActivateStartPointPanel() {
-        m_gridStartPos.y = 1.6f;
-        m_startPointPanel.transform.position = m_gridStartPos;
-        m_startPointPanel.gameObject.SetActive(true);
+    public void GenerateStartingPoint() {
+        m_gridStartPos.y = 0.1f;
+        m_startingPoint.transform.position = m_gridStartPos;
+        m_startingPoint.enabled = true;
+        SetActiveInnerWalls(false);
+        m_startingPoint.OnReadyToStart = () => {
+            m_startingPoint.enabled = false;
+            SetActiveInnerWalls(true);
+            GenerateGoalNode();
+        };
     }
     #endregion
     #region Generate GoalNode

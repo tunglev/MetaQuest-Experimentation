@@ -11,7 +11,7 @@ public class Goal : MonoBehaviour
     void Awake()
     {
         m_audioSrc = GetComponent<AudioSource>();
-        m_renderer = GetComponent<Renderer>();
+        m_renderer = GetComponentInChildren<Renderer>();
         SetInvisibility(MainTestHandler.Instance.IsBlind);
         MainTestHandler.Instance.OnBlindModeToggled += SetInvisibility;
         m_audioSrc.playOnAwake = false;
