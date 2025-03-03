@@ -25,6 +25,7 @@ public class MainTestHandler : MonoBehaviour
     [SerializeField] GameObject _controllerPanel;
     [SerializeField] Button _spawnRoomBtn;
     [SerializeField] Button _blindModeBtn;
+    [SerializeField] Toggle _fixRoomSizeToogle;
     [SerializeField] TMP_Dropdown _encodingPicker;
 
     private SpawnVirtualRoom _virtualRoom;
@@ -45,7 +46,9 @@ public class MainTestHandler : MonoBehaviour
         _controllerPanel.SetActive(false);
         _spawnRoomBtn.onClick.AddListener(SpawnNewRoom);
         _blindModeBtn.onClick.AddListener(()=> _blindModeHandler.ToogleBlindMode());
-        _encodingPicker.onValueChanged.AddListener((int i) => OnEncodingChanged?.Invoke(i));
+        _encodingPicker.onValueChanged.AddListener(i => OnEncodingChanged?.Invoke(i));
+        _fixRoomSizeToogle.isOn = _virtualRoom.UseFixedRoomSize;
+        _fixRoomSizeToogle.onValueChanged.AddListener(b => _virtualRoom.UseFixedRoomSize = b);
     }
 
     private void Update()

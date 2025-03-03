@@ -25,7 +25,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 
     private void DemoPlayAreaDimensionsOnEditor() {
         var dimension = FindObjectOfType<PlayAreaAligner>().GetPlayAreaDimensions();
-        if (!_useFixedRoomSize) {
+        if (!UseFixedRoomSize) {
             _data.roomSize.width = dimension.x;
             _data.roomSize.length = dimension.z;
         }
@@ -76,7 +76,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         public GenerationLimit doorWidthGen;
         internal DoorwayData[] doorwayData;
     }
-    [SerializeField] private bool _useFixedRoomSize;
+    public bool UseFixedRoomSize;
     [SerializeField] private GameObject _roomprefab;
     [SerializeField] private RoomGeneratorData _data;
 
