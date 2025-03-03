@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &320377849 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 582606102655198291, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+  m_PrefabInstance: {fileID: 3392649286020463616}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &529232056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1553,7 +1564,7 @@ MonoBehaviour:
   _controllerPanel: {fileID: 2206815746425023708}
   _spawnRoomBtn: {fileID: 3392649286020463618}
   _blindModeBtn: {fileID: 3392649286020463617}
-  _fixRoomSizeToogle: {fileID: 0}
+  _fixRoomSizeToogle: {fileID: 320377849}
   _encodingPicker: {fileID: 910495291}
 --- !u!114 &1787188698
 MonoBehaviour:

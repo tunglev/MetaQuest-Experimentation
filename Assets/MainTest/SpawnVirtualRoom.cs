@@ -29,6 +29,12 @@ public class SpawnVirtualRoom : MonoBehaviour
             _data.roomSize.width = dimension.x;
             _data.roomSize.length = dimension.z;
         }
+        else {
+            float largerVal = Mathf.Max(_data.roomSize.width, _data.roomSize.length);
+            float smallerVal = Mathf.Min(_data.roomSize.width, _data.roomSize.length);
+            _data.roomSize.width = dimension.x > dimension.z ? largerVal : smallerVal;
+            _data.roomSize.length = dimension.z > dimension.x ? largerVal : smallerVal;
+        }
     }
 
     [ContextMenu("ClearAllInnerWalls")]

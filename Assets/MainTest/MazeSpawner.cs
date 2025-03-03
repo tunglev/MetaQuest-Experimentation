@@ -25,6 +25,12 @@ public class MazeSpawner : MonoBehaviour
     [ContextMenu("GenerateAndSpawnMaze")]
     public (Vector3 startPos, Vector3 endPos) GenerateAndSpawnMaze(Transform roomGameobject, float roomWidth, float roomLength)
     {
+        //divide more on a larger side
+        int largerVal = Mathf.Max(mazeGridSize.x, mazeGridSize.y);
+        int smallerVal = Mathf.Min(mazeGridSize.x, mazeGridSize.y);
+        mazeGridSize.x = roomWidth > roomLength ? largerVal : smallerVal;
+        mazeGridSize.y = roomLength > roomWidth ? largerVal : smallerVal;
+
         parentObj = roomGameobject;
         this.roomLength = roomLength;
         this.roomWidth =roomWidth;
