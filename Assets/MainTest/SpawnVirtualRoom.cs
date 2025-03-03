@@ -9,6 +9,11 @@ public class SpawnVirtualRoom : MonoBehaviour
     private void OnValidate() {
         ValidateRoomGenerationParameters();
     }
+    void Awake()
+    {
+        m_fixedRoomSize.width = _data.roomSize.width;
+        m_fixedRoomSize.length = _data.roomSize.length; // store initial value of fixed room size so that we can change _data.roomSize.width & length
+    }
 
     [ContextMenu("SpawnNewRoomAsMRUKRoom")]
     public void SpawnNewRoomAsMRUKRoom() {
@@ -23,6 +28,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         GenerateStartingPoint();
     }
 
+    private (float width, float length) m_fixedRoomSize;
     private void DemoPlayAreaDimensionsOnEditor() {
         var dimension = FindObjectOfType<PlayAreaAligner>().GetPlayAreaDimensions();
         if (!UseFixedRoomSize) {
@@ -30,8 +36,8 @@ public class SpawnVirtualRoom : MonoBehaviour
             _data.roomSize.length = dimension.z;
         }
         else {
-            float largerVal = Mathf.Max(_data.roomSize.width, _data.roomSize.length);
-            float smallerVal = Mathf.Min(_data.roomSize.width, _data.roomSize.length);
+            float largerVal = Mathf.Max(m_fixedRoomSize.width, m_fixedRoomSize.length);
+            float smallerVal = Mathf.Min(m_fixedRoomSize.width, m_fixedRoomSize.length);
             _data.roomSize.width = dimension.x > dimension.z ? largerVal : smallerVal;
             _data.roomSize.length = dimension.z > dimension.x ? largerVal : smallerVal;
         }
