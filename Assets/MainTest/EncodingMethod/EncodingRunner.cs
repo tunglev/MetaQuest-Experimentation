@@ -18,7 +18,11 @@ public class EncodingRunner : MonoBehaviour
     }
 
     private void Start() {
+#if UNITY_EDITOR
+        SelectEncodingFromArray(1);
+#else
         SelectEncodingFromArray(0);
+#endif
         MainTestHandler.Instance.OnEncodingChanged += SelectEncodingFromArray;
     }
 

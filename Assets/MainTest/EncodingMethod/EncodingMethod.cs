@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class EncodingMethod : MonoBehaviour
 {
-    public bool IsInit = false;
+    [HideInInspector] public bool IsInit = false;
     public virtual void InitOnCam(GameObject centerEye) {
     }
     // trigger on demand
