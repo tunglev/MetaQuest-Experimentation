@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2884107, y: -0.54433185, z: 1.1011436}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -108,7 +108,7 @@ AudioSource:
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 2
+  DopplerLevel: 1
   MinDistance: 0.1
   MaxDistance: 8
   Pan2D: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpatialization: 1
-  gainBoostDb: 0
+  gainBoostDb: 15
   enableAcoustics: 1
   reverbSendDb: 0
 --- !u!114 &2804656850743230958
@@ -234,8 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingSound:
-    clip: {fileID: 8300000, guid: a482e607a0710064da0b38109b445b9a, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: b8fe1de62f6aaca49928897393ad1f7e, type: 3}
+    volume: 0.5
   openWallSound:
     clip: {fileID: 0}
     volume: 0
