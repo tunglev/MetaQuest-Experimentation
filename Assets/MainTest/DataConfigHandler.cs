@@ -8,8 +8,4 @@ using UnityEngine.UI;
 
 public class DataConfigHandler : MonoBehaviour
 {
-   
-
-
-    
 }

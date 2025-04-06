@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+// EncodingMethod: pitch and tempo
 public class RayProjectionHorizontal : EncodingMethod
 {
     [SerializeField] private AudioClip _clip;
@@ -76,6 +78,7 @@ public class RayProjectionHorizontal : EncodingMethod
         }
     }
 
+    // project ray parallel to the floor
     void HorizontalRayProjectionFromCenterEye(AudioSource source, Vector3 normalizedDir) // ray always cast paralel to the floor
     {
         #if UNITY_EDITOR
