@@ -2364,6 +2364,8 @@ MonoBehaviour:
     m_Options:
     - m_Text: None
       m_Image: {fileID: 0}
+    - m_Text: PitchAndTempo
+      m_Image: {fileID: 0}
     - m_Text: WallSpread
       m_Image: {fileID: 0}
     - m_Text: CylinderGrow
