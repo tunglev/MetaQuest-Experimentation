@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableSpatialization: 1
-  gainBoostDb: 0
+  gainBoostDb: 15
   enableAcoustics: 1
   reverbSendDb: 0
 --- !u!114 &5298813618383443224

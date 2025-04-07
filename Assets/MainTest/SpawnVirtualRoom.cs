@@ -24,6 +24,8 @@ public class SpawnVirtualRoom : MonoBehaviour
 #endif
         var room = _roomprefab == null ? SpawnTempRoom() : Instantiate(_roomprefab);
         MRUK.Instance.LoadSceneFromPrefab(room, true);
+        // set room mover target to temp room (temp room is now the main room)
+        RoomMover.Instance.target = GameObject.Find("Temp Room").transform;
         Destroy(room);
         GenerateStartingPoint();
     }
