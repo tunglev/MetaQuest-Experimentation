@@ -15,11 +15,10 @@ public class RoomMover : MonoBehaviour
     private void Awake() {
         Instance = this;
     }
-    void Start()
-    {
-    }
+    
     void Update()
     {
+        if (target == null) return;
         if (OVRInput.GetDown(OVRInput.Button.PrimaryThumbstick)) {
             isMoveMode = !isMoveMode;
         }
