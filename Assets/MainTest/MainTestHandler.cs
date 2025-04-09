@@ -14,19 +14,14 @@ public class MainTestHandler : MonoBehaviour
     public Action OnNewRoomSpanwed;
     public Action<bool> OnBlindModeToggled;
     public Action OnGoalReached;
-    public Action<int> OnEncodingChanged;
+    public Action<int, char> OnEncodingChanged;
     public bool IsBlind {
         get {
             return _blindModeHandler.IsBlind;
         }
     }
 
-    [Header("Controller Panel")]
-    [SerializeField] GameObject _controllerPanel;
-    [SerializeField] Button _spawnRoomBtn;
-    [SerializeField] Button _blindModeBtn;
-    [SerializeField] Toggle _fixRoomSizeToogle;
-    [SerializeField] TMP_Dropdown _encodingPicker;
+    [SerializeField] ControllerPanel _controllerPanel;
 
     private SpawnVirtualRoom _virtualRoom;
     private BlindModeHandler _blindModeHandler;
@@ -43,12 +38,15 @@ public class MainTestHandler : MonoBehaviour
 
     private void Start() {
         SpawnNewRoom();
-        _controllerPanel.SetActive(false);
-        _spawnRoomBtn.onClick.AddListener(SpawnNewRoom);
-        _blindModeBtn.onClick.AddListener(()=> _blindModeHandler.ToogleBlindMode());
-        _encodingPicker.onValueChanged.AddListener(i => OnEncodingChanged?.Invoke(i));
-        _fixRoomSizeToogle.isOn = _virtualRoom.UseFixedRoomSize;
-        _fixRoomSizeToogle.onValueChanged.AddListener(b => _virtualRoom.UseFixedRoomSize = b);
+        _controllerPanel.gameObject.SetActive(false);
+        _controllerPanel.spawnRoomButton.onClick.AddListener(SpawnNewRoom);
+        _controllerPanel.blindModeButton.onClick.AddListener(()=> _blindModeHandler.ToogleBlindMode());
+        _controllerPanel.toogleUseFixRoomSize.isOn = _virtualRoom.UseFixedRoomSize;
+        _controllerPanel.toogleUseFixRoomSize.onValueChanged.AddListener(b => _virtualRoom.UseFixedRoomSize = b);
+
+        //encoding 0 - global, 1 - specialized
+        _controllerPanel.globalEncodingDropdown.onValueChanged.AddListener(i => OnEncodingChanged?.Invoke(i, 'g'));
+        _controllerPanel.specializedEncodingDropdown.onValueChanged.AddListener(i => OnEncodingChanged?.Invoke(i, 's'));
     }
 
     private void Update()
@@ -59,8 +57,8 @@ public class MainTestHandler : MonoBehaviour
         }
     }
     private void ToggleControllerPanel() {
-        _controllerPanel.SetActive(!_controllerPanel.activeInHierarchy);
-        if (_controllerPanel.activeInHierarchy) {
+        _controllerPanel.gameObject.SetActive(!_controllerPanel.gameObject.activeInHierarchy);
+        if (_controllerPanel.gameObject.activeSelf) {
             _controllerPanel.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.7f;
         }
     }
@@ -70,21 +68,24 @@ public class MainTestHandler : MonoBehaviour
         OnNewRoomSpanwed?.Invoke();
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     private void OnGUI()
     {
         var myButtonStyle = new GUIStyle(GUI.skin.button);
         myButtonStyle.fontSize = 50;
         GUILayout.BeginArea(new Rect(10, 10, 300, 900));
-        
-            if (GUILayout.Button("SpawnNewRoom")) SpawnNewRoom();
-            if (GUILayout.Button("TriggerDown")) FindObjectOfType<EncodingRunner>().TriggerDown();
-            if (GUILayout.Button("TriggerUp")) FindObjectOfType<EncodingRunner>().TriggerUp();
-        if (GUILayout.Button("Toggle BlindMode")) {
-                _blindModeHandler.ToogleBlindMode();
-            }
+
+        if (GUILayout.Button("SpawnNewRoom")) SpawnNewRoom();
+        if (GUILayout.Button("trigger global down")) FindObjectOfType<EncodingRunner>().TriggerDownGlobal();
+        if (GUILayout.Button("trigger global up")) FindObjectOfType<EncodingRunner>().TriggerUpGlobal();
+        if (GUILayout.Button("trigger specialized down")) FindObjectOfType<EncodingRunner>().TriggerDownSpecialized();
+        if (GUILayout.Button("trigger specialized up")) FindObjectOfType<EncodingRunner>().TriggerUpSpecialized();
+        if (GUILayout.Button("Toggle BlindMode"))
+        {
+            _blindModeHandler.ToogleBlindMode();
+        }
 
         GUILayout.EndArea();
     }
-    #endif
+#endif
 }

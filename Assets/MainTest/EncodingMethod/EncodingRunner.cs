@@ -1,16 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using Meta.XR.MRUtilityKit;
-using Unity.VisualScripting;
 using UnityEngine;
 
+public struct EncodingMethodPair {
+    public EncodingMethod globalEncoding;
+    public EncodingMethod specializedEncoding;
+}
 public class EncodingRunner : MonoBehaviour
 {
     [SerializeField]
-    private EncodingMethod[] _encodingArray;
-    private EncodingMethod _currentEncoding;
+    private EncodingMethod[] _globalEncodingArray;
+    [SerializeField]
+    private EncodingMethod[] _specializedEncodingArray;
+    private EncodingMethodPair _currentEncodingPair;
     private GameObject _centerEye;
 
     private void Awake() {
@@ -19,42 +19,69 @@ public class EncodingRunner : MonoBehaviour
 
     private void Start() {
 #if UNITY_EDITOR
-        SelectEncodingFromArray(1);
+        UpdateEncodingPair(0, 'g'); // select 0 (none) for global
+        UpdateEncodingPair(0, 's'); // select 0 (none) for specialized
 #else
-        SelectEncodingFromArray(0);
+        UpdateEncodingPair(1, 'g'); // select 1 for global
+        UpdateEncodingPair(1, 's'); // select 1 for specialized
 #endif
-        MainTestHandler.Instance.OnEncodingChanged += SelectEncodingFromArray;
+        MainTestHandler.Instance.OnEncodingChanged += UpdateEncodingPair;
     }
 
-    private void SelectEncodingFromArray(int i) {
-        SelectEncodingMethod(_encodingArray[i]);
+    private void UpdateEncodingPair(int encodingIndex, char encodingType) {
+        if (encodingType == 'g') { // global
+            EncodingMethod newEncoding = _globalEncodingArray[encodingIndex];
+            InitEncodingMethod(newEncoding);
+            _currentEncodingPair.globalEncoding = newEncoding;
+        } else if (encodingType == 's') { // specialized
+            EncodingMethod newEncoding = _specializedEncodingArray[encodingIndex];
+            InitEncodingMethod(newEncoding);
+            _currentEncodingPair.specializedEncoding = newEncoding;
+        }
     }
 
-    private void SelectEncodingMethod(EncodingMethod encoding) {
+    private void InitEncodingMethod(EncodingMethod encoding) {
         if (encoding == null) return;
         encoding.InitOnCam(_centerEye);
         encoding.enabled = true;
         encoding.IsInit = true;
-        _currentEncoding = encoding;
     }
 
     private void Update() {
-        if (_currentEncoding == null) return;
+        if (_currentEncodingPair.specializedEncoding != null) {
             if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
             {
-                TriggerDown();
+                TriggerDownSpecialized();
             }
-            if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger)) 
+            if (OVRInput.GetUp(OVRInput.RawButton.RIndexTrigger))
             {
-                TriggerUp();
+                TriggerUpSpecialized();
             }
+        }
+        if (_currentEncodingPair.globalEncoding != null) {
+            if (OVRInput.GetDown(OVRInput.RawButton.B)) // 
+            {
+                TriggerDownGlobal();
+            }
+            if (OVRInput.GetUp(OVRInput.RawButton.B))
+            {
+                TriggerUpGlobal();
+            }
+        }
+            
     }
 
-    public void TriggerDown() {
-        _currentEncoding.OnDemandTriggeredDown();
+    public void TriggerDownGlobal() {
+        _currentEncodingPair.globalEncoding.OnDemandTriggeredDown();
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
     }
-    public void TriggerUp() {
-        _currentEncoding.OnDemandTriggeredUp();
+    public void TriggerUpGlobal() {
+        _currentEncodingPair.globalEncoding.OnDemandTriggeredUp();
+    }
+    public void TriggerDownSpecialized() {
+        _currentEncodingPair.specializedEncoding.OnDemandTriggeredDown();
+    }
+    public void TriggerUpSpecialized() {
+        _currentEncodingPair.specializedEncoding.OnDemandTriggeredUp();
     }
 }

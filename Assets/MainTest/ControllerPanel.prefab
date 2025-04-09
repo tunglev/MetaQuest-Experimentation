@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 7895823712040961964}
   - component: {fileID: 776545433893342582}
   - component: {fileID: 1024709913860907180}
+  - component: {fileID: 3954982098143766395}
   m_Layer: 5
   m_Name: ControllerPanel
   m_TagString: Untagged
@@ -221,7 +222,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7895823712040961964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +273,23 @@ MonoBehaviour:
   contents:
   - {fileID: 6216504514048001549}
   - {fileID: 5150554163435900023}
+--- !u!114 &3954982098143766395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 192631176569673232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95123d6c7504ace4bb9d6bd675a07f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnRoomButton: {fileID: 6127734170844870241}
+  blindModeButton: {fileID: 5933393650855886756}
+  toogleUseFixRoomSize: {fileID: 582606102655198291}
+  globalEncodingDropdown: {fileID: 6381261794507623455}
+  specializedEncodingDropdown: {fileID: 617987184915263393}
 --- !u!1 &365443005837677194
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2}
+  m_AnchoredPosition: {x: 0, y: -11}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4302571087430321957
@@ -1133,7 +1151,7 @@ GameObject:
   - component: {fileID: 128953738249878850}
   - component: {fileID: 6381261794507623455}
   m_Layer: 5
-  m_Name: EncodingDropDown
+  m_Name: GlobalEncodingDropDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1251,15 +1269,9 @@ MonoBehaviour:
     m_Options:
     - m_Text: None
       m_Image: {fileID: 0}
-    - m_Text: Virtual stick
-      m_Image: {fileID: 0}
-    - m_Text: PitchAndTempo
-      m_Image: {fileID: 0}
     - m_Text: WallSpread
       m_Image: {fileID: 0}
     - m_Text: CylinderGrow
-      m_Image: {fileID: 0}
-    - m_Text: RayProjection
       m_Image: {fileID: 0}
     - m_Text: SphereGrow
       m_Image: {fileID: 0}
@@ -2913,7 +2925,7 @@ GameObject:
   - component: {fileID: 6868878515264469190}
   - component: {fileID: 617987184915263393}
   m_Layer: 5
-  m_Name: EncodingDropDown
+  m_Name: S_EncodingDropDown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3033,15 +3045,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Virtual stick
       m_Image: {fileID: 0}
-    - m_Text: PitchAndTempo
-      m_Image: {fileID: 0}
-    - m_Text: WallSpread
-      m_Image: {fileID: 0}
-    - m_Text: CylinderGrow
+    - m_Text: PitchNTempo
       m_Image: {fileID: 0}
     - m_Text: RayProjection
-      m_Image: {fileID: 0}
-    - m_Text: SphereGrow
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5549,7 +5555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2}
+  m_AnchoredPosition: {x: 0, y: -11}
   m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7376089363180192255
