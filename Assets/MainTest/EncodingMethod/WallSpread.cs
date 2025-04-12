@@ -7,7 +7,7 @@ public class WallSpread : CylinderGrow
 {
     [Header("Move on walls")]
     [SerializeField] private MovingAudioPin _movingAudioPinPrefab;
-    [SerializeField] private float _audioPinMoveSpeed = 1f;
+    public ConfigInput<float> _audioPinMoveSpeed = ConfigInput<float>.FloatConfig.Create("Audio Runner Move Speed", 1f, 0f, 20f);
 
     protected override void OnTriggeredWithAnchor(MRUKAnchor anchor, Vector3 contactPoint, Collider collider)
     {
@@ -53,7 +53,7 @@ public class WallSpread : CylinderGrow
         }
 
         Vector3 direction = wallCollider.transform.TransformDirection(spawnDirection).normalized;
-        Instantiate(_movingAudioPinPrefab, contactPosition, Quaternion.identity).Init(direction, _audioPinMoveSpeed);
+        Instantiate(_movingAudioPinPrefab, contactPosition, Quaternion.identity).Init(direction, _audioPinMoveSpeed.Value);
 
         //StartCoroutine(SpawnObjectsAlongWallCoroutine());
         IEnumerator SpawnObjectsAlongWallCoroutine()

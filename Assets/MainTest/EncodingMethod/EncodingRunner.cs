@@ -10,7 +10,7 @@ public class EncodingRunner : MonoBehaviour
     private EncodingMethod[] _globalEncodingArray;
     [SerializeField]
     private EncodingMethod[] _specializedEncodingArray;
-    private EncodingMethodPair _currentEncodingPair;
+    public static EncodingMethodPair _currentEncodingPair;
     private GameObject _centerEye;
 
     private void Awake() {
