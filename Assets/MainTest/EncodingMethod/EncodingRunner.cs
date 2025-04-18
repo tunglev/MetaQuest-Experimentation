@@ -19,11 +19,11 @@ public class EncodingRunner : MonoBehaviour
 
     private void Start() {
 #if UNITY_EDITOR
-        UpdateEncodingPair(0, 'g'); // select 0 (none) for global
-        UpdateEncodingPair(0, 's'); // select 0 (none) for specialized
-#else
         UpdateEncodingPair(1, 'g'); // select 1 for global
         UpdateEncodingPair(1, 's'); // select 1 for specialized
+#else
+        UpdateEncodingPair(0, 'g'); // select 0 (none) for global
+        UpdateEncodingPair(0, 's'); // select 0 (none) for specialized
 #endif
         MainTestHandler.Instance.OnEncodingChanged += UpdateEncodingPair;
     }
