@@ -59,7 +59,8 @@ public class MainTestHandler : MonoBehaviour
     private void ToggleControllerPanel() {
         _controllerPanel.gameObject.SetActive(!_controllerPanel.gameObject.activeInHierarchy);
         if (_controllerPanel.gameObject.activeSelf) {
-            _controllerPanel.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 0.7f;
+            _controllerPanel.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 1f;
+            _controllerPanel.transform.forward = Camera.main.transform.forward;
         }
     }
     public void SpawnNewRoom() {
