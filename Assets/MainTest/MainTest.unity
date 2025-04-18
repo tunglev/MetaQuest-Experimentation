@@ -920,11 +920,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2387e5bac57bc428b3f074a474e328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tungle:
-    _label: Grow Speed
-    _value: 0.5
-    _minValue: 0
-    _maxValue: 20
   IsInit: 0
   _maxRadius: 8
   _initGrowSpd: 1
@@ -992,11 +987,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88eae24713a4a1346b2917bda71dcad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tungle:
-    _label: Grow Speed
-    _value: 0.5
-    _minValue: 0
-    _maxValue: 20
   IsInit: 0
   _clip: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
   _isProjecting: 0
@@ -1013,12 +1003,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d63f7493245a634fa4149fb278c5ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tungle:
-    _label: Grow Speed
-    _value: 1
-    _minValue: 0
-    _maxValue: 20
   IsInit: 0
+  detectableAngle:
+    _label: Detectable Angle
+    _value: 180
+    _minValue: 0
+    _maxValue: 360
   cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
   _maxRadius: 8
   _initGrowSpd:
@@ -1040,12 +1030,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79d44f9e5fb5d0f438ecd309bec67bb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tungle:
-    _label: Grow Speed
-    _value: 0.5
-    _minValue: 0
-    _maxValue: 20
   IsInit: 0
+  detectableAngle:
+    _label: Detectable Angle
+    _value: 180
+    _minValue: 0
+    _maxValue: 360
   cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
   _maxRadius: 8
   _initGrowSpd:
@@ -1056,7 +1046,11 @@ MonoBehaviour:
   _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
   _audioPinLifeTime: 3
   _movingAudioPinPrefab: {fileID: 2062386390995073494, guid: 2317d698977d01447bf1ad5a0ac0381d, type: 3}
-  _audioPinMoveSpeed: 2.5
+  _audioPinMoveSpeed:
+    _label: Audio Runner Move Speed
+    _value: 1
+    _minValue: 0
+    _maxValue: 20
   _prefab: {fileID: 4113411215545629847, guid: 522267aa1cb0cfa47851db4dde4db8f9, type: 3}
   _edgeAudioClip: {fileID: 8300000, guid: ebfb97bc203aba34eb9ab22662fd5096, type: 3}
   spacing: 0.2
@@ -1074,11 +1068,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45b2981d5a0e27c439539f58f2aa0b65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tungle:
-    _label: Grow Speed
-    _value: 0.5
-    _minValue: 0
-    _maxValue: 20
   IsInit: 0
   _clip: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
   _isProjecting: 0
@@ -1095,11 +1084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 778a834e56801a14e87873eecdf59fa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tungle:
-    _label: Grow Speed
-    _value: 0.5
-    _minValue: 0
-    _maxValue: 20
   IsInit: 0
   audioSrcPrefab: {fileID: 5592695199116423063, guid: c6c8d1b0c8a368b4aadf1267fbe9ce29, type: 3}
 --- !u!114 &1787188703
@@ -5577,6 +5561,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8264203024216017507, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714243665360952709, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714243665360952709, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714243665360952709, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714243665360952709, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

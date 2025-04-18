@@ -23,6 +23,7 @@ public class CylinderGrow : EncodingMethod
         ResetCylinder();
     } 
 
+    public ConfigInput<int> detectableAngle = ConfigInput<int>.IntConfig.Create("Detectable Angle", 180, 0, 360);
     [SerializeField] private Transform cylinderPrefab;
     [SerializeField] private float _maxRadius = 8;
     public ConfigInput<float> _initGrowSpd = ConfigInput<float>.FloatConfig.Create("Grow Speed", 0.5f, 0f, 20f);
@@ -43,7 +44,7 @@ public class CylinderGrow : EncodingMethod
     }
 
     const int DEFAULT_LAYER_ONLY_MASK = 1 << 0; // default layer is 0
-    const bool ONLY_VISIBLE = true;
+    const bool ONLY_VISIBLE = true; // no collider behind walls
     private readonly HashSet<int> usedColliderSet = new();
 
     private void HandleTriggerWithAnAnchor(Collider other)
@@ -51,6 +52,7 @@ public class CylinderGrow : EncodingMethod
         if (_curGrowSpd == 0f) return;
         if (other.CompareTag("NoSound")) return;
         var contactPoint = other.ClosestPointOnBounds(_cylinder.transform.position);
+        if (!IsWithinCameraViewAngle(contactPoint, Camera.main.transform, detectableAngle.Value)) return;
         Vector3 camPos = Camera.main.transform.position;
         Vector3 eyeToContactPoint = contactPoint - camPos;
         bool isCorner = false;
@@ -66,16 +68,7 @@ public class CylinderGrow : EncodingMethod
                 usedColliderSet.Add(hit.colliderInstanceID);
             }
         }
-        // RaycastHit hit;
-        // if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToContactPoint, hitInfo: out hit, eyeToContactPoint.magnitude, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) 
-        // {
-        //     if (hit.collider != other) return;
-        // }
-        // Vector3 eyeToColliderPos = other.transform.position - camPos;
-        // if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToColliderPos, out hit, eyeToColliderPos.magnitude, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore))
-        // {
-        //     if (hit.collider != other) return; 
-        // }
+        
         var anchor = other.GetComponentInParent<MRUKAnchor>();
         AudioPin pin = Instantiate(_audioPinPrefab, contactPoint, Quaternion.identity);
         var distance = (contactPoint - _cylinder.transform.position).magnitude;
@@ -101,6 +94,25 @@ public class CylinderGrow : EncodingMethod
         _curGrowSpd = 0f;
         _cylinder.localScale = new Vector3(0, _cylinder.localScale.y, 0);
         usedColliderSet.Clear();
+    }
+
+    private bool IsWithinCameraViewAngle(Vector3 point, Transform camera, float angleDeg)
+    {
+        if (0f <= angleDeg && angleDeg <= 180f)
+        {
+            Vector3 directionToPoint = point - camera.position;
+            Vector3 projectedDirectionToPoint = Vector3.ProjectOnPlane(directionToPoint, Vector3.up);
+            Vector3 projectedCameraForward = Vector3.ProjectOnPlane(camera.forward, Vector3.up);
+            float angleToPoint = Vector3.Angle(projectedCameraForward, projectedDirectionToPoint);
+            print(angleToPoint);
+            return angleToPoint <= angleDeg / 2f;
+        }
+        else
+        {
+            Debug.LogError("Invalid angle: " + angleDeg + ". Angle must be between 0 and 180 degrees.");
+            return false;
+        }
+
     }
 
 }

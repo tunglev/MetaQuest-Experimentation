@@ -68,4 +68,22 @@ public class SphereGrow : EncodingMethod
         _sphereCollider.radius = 0f;
     }
 
+    private bool IsWithinCameraViewAngle(Vector3 point, Transform camera, float angleDeg)
+    {
+        if (0f <= angleDeg && angleDeg <= 180f)
+        {
+            Vector3 directionToPoint = point - camera.position;
+            Vector3 projectedDirectionToPoint = Vector3.ProjectOnPlane(directionToPoint, Vector3.up);
+            Vector3 projectedCameraForward = Vector3.ProjectOnPlane(camera.forward, Vector3.up);
+            float angleToPoint = Vector3.Angle(projectedCameraForward, projectedDirectionToPoint);
+            return angleToPoint <= angleDeg / 2f;
+        }
+        else
+        {
+            Debug.LogError("Invalid angle: " + angleDeg + ". Angle must be between 0 and 180 degrees.");
+            return false;
+        }
+        
+    }
+
 }
