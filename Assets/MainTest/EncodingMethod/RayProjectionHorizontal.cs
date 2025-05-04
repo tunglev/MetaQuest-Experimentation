@@ -14,7 +14,7 @@ public class RayProjectionHorizontal : EncodingMethod
     private AudioSource m_audioSrc;
     private TriggerEverySeconds _triggerEverySeconds;
     [SerializeField] private bool _isProjecting = false;
-    [SerializeField] private float maxDistance = 7f;
+    [SerializeField] private ConfigInput<int> maxDistance = ConfigInput<int>.IntConfig.Create("Max Distance", 7, 1, 30);
 
     public override void InitOnCam(GameObject centerEye)
     {
@@ -82,16 +82,17 @@ public class RayProjectionHorizontal : EncodingMethod
     void HorizontalRayProjectionFromCenterEye(AudioSource source, Vector3 normalizedDir) // ray always cast paralel to the floor
     {
         #if UNITY_EDITOR
-            Debug.DrawRay(_centerEye.position, Vector3.ProjectOnPlane(_centerEye.TransformDirection(normalizedDir) * maxDistance, Vector3.up), Color.green);
+            Debug.DrawRay(_centerEye.position, Vector3.ProjectOnPlane(_centerEye.TransformDirection(normalizedDir) * maxDistance.Value, Vector3.up), Color.green);
         #endif
-        if (Physics.Raycast(_centerEye.position, Vector3.ProjectOnPlane(_centerEye.TransformDirection(normalizedDir), Vector3.up), out RaycastHit hit, maxDistance))
+        int maxDistanceValue = maxDistance.Value;
+        if (Physics.Raycast(_centerEye.position, Vector3.ProjectOnPlane(_centerEye.TransformDirection(normalizedDir), Vector3.up), out RaycastHit hit, maxDistanceValue))
         {
             Vector3 closestPointOnCollider = hit.collider.ClosestPointOnBounds(_centerEye.position);
-            source.pitch = Mathf.Lerp(3, 0, (float) (closestPointOnCollider - _centerEye.position).magnitude / maxDistance);
+            source.pitch = Mathf.Lerp(3, 0, (float) (closestPointOnCollider - _centerEye.position).magnitude / maxDistanceValue);
             //if (!source.isPlaying) source.Play();
 
             float distanceToHitPoint = (hit.point - _centerEye.position).magnitude;
-            _triggerEverySeconds.SetTempo(Mathf.Lerp(0.1f, 2f, distanceToHitPoint / maxDistance));
+            _triggerEverySeconds.SetTempo(Mathf.Lerp(0.1f, 2f, distanceToHitPoint / maxDistanceValue));
         }
         else
         {

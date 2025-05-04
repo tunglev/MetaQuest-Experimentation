@@ -23,7 +23,7 @@ public class CylinderGrow : EncodingMethod
         ResetCylinder();
     } 
 
-    public ConfigInput<int> detectableAngle = ConfigInput<int>.IntConfig.Create("Detectable Angle", 180, 0, 360);
+    public ConfigInput<int> detectableAngle = ConfigInput<int>.IntConfig.Create("Detectable Angle", 220, 0, 360);
     [SerializeField] private Transform cylinderPrefab;
     [SerializeField] private float _maxRadius = 8;
     public ConfigInput<float> _initGrowSpd = ConfigInput<float>.FloatConfig.Create("Grow Speed", 0.5f, 0f, 20f);
@@ -44,7 +44,7 @@ public class CylinderGrow : EncodingMethod
     }
 
     const int DEFAULT_LAYER_ONLY_MASK = 1 << 0; // default layer is 0
-    const bool ONLY_VISIBLE = true; // no collider behind walls
+    private readonly ConfigInput<bool> IgnoreObstructed = ConfigInput<bool>.BoolConfig.Create("Ignore Obstructed", true); // no collider behind walls
     private readonly HashSet<int> usedColliderSet = new();
 
     private void HandleTriggerWithAnAnchor(Collider other)
@@ -56,11 +56,11 @@ public class CylinderGrow : EncodingMethod
         Vector3 camPos = Camera.main.transform.position;
         Vector3 eyeToContactPoint = contactPoint - camPos;
         bool isCorner = false;
-        if (ONLY_VISIBLE && Physics.Raycast(camPos, eyeToContactPoint, eyeToContactPoint.magnitude - 0.05f, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) 
+        if (IgnoreObstructed.Value && Physics.Raycast(camPos, eyeToContactPoint, eyeToContactPoint.magnitude - 0.05f, DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore)) 
         {
             return;
         }
-        if (ONLY_VISIBLE) {
+        if (IgnoreObstructed.Value) {
             var hits = Physics.RaycastAll(camPos, eyeToContactPoint, maxDistance: eyeToContactPoint.magnitude + 0.15f, layerMask: DEFAULT_LAYER_ONLY_MASK, QueryTriggerInteraction.Ignore);
             if (hits.Length != 1) isCorner = true;
             foreach (var hit in hits) {
@@ -98,7 +98,7 @@ public class CylinderGrow : EncodingMethod
 
     private bool IsWithinCameraViewAngle(Vector3 point, Transform camera, float angleDeg)
     {
-        if (0f <= angleDeg && angleDeg <= 180f)
+        if (0f <= angleDeg && angleDeg <= 360f)
         {
             Vector3 directionToPoint = point - camera.position;
             Vector3 projectedDirectionToPoint = Vector3.ProjectOnPlane(directionToPoint, Vector3.up);
@@ -109,7 +109,7 @@ public class CylinderGrow : EncodingMethod
         }
         else
         {
-            Debug.LogError("Invalid angle: " + angleDeg + ". Angle must be between 0 and 180 degrees.");
+            Debug.LogError("Invalid angle: " + angleDeg + ". Angle must be between 0 and 360 degrees.");
             return false;
         }
 

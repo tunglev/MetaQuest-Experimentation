@@ -87,6 +87,10 @@ public class EncodingConfigPicker : MonoBehaviour
                 {
                     intConfigInput.Value = newValue;
                 }
+                else
+                {
+                    Debug.LogError($"Invalid input for int: {value}");
+                }
             });
         }
         else if (configInput is ConfigInput<float> floatConfigInput) {
@@ -97,6 +101,10 @@ public class EncodingConfigPicker : MonoBehaviour
                 if (float.TryParse(value, out float newValue))
                 {
                     floatConfigInput.Value = newValue;
+                }
+                else
+                {
+                    Debug.LogError($"Invalid input for float: {value}");
                 }
             });
         }

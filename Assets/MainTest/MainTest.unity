@@ -15083,7 +15083,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsInit: 0
   _maxRadius: 8
-  _initGrowSpd: 1
+  _initGrowSpd:
+    _label: Grow Speed
+    _value: 0.5
+    _minValue: 0
+    _maxValue: 20
   _audioPinPrefab: {fileID: 3089789749908069058, guid: e37da1df72ccbbe449d3c8322f4bc145, type: 3}
   _audioPinLifeTime: 3
 --- !u!114 &1787188695
@@ -15196,7 +15200,7 @@ MonoBehaviour:
   IsInit: 0
   detectableAngle:
     _label: Detectable Angle
-    _value: 180
+    _value: 220
     _minValue: 0
     _maxValue: 360
   cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
@@ -15234,7 +15238,11 @@ MonoBehaviour:
   IsInit: 0
   _clip: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
   _isProjecting: 0
-  maxDistance: 7
+  maxDistance:
+    _label: Max Distance
+    _value: 7
+    _minValue: 1
+    _maxValue: 30
 --- !u!114 &1787188702
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,7 +24,7 @@ public class SphereGrow : EncodingMethod
     } 
 
     [SerializeField] private float _maxRadius = 8;
-    [SerializeField] private float _initGrowSpd = 0.5f;
+    [SerializeField] private ConfigInput<float> _initGrowSpd = ConfigInput<float>.FloatConfig.Create("Grow Speed", 0.5f, 0f, 20f);
     [Header("Audio pin")]
     [SerializeField] private AudioPin _audioPinPrefab;
     [SerializeField] private float _audioPinLifeTime = 3;
@@ -60,7 +60,7 @@ public class SphereGrow : EncodingMethod
     private void StartSphereGrow()
     {
         ResetSphere();
-        _curGrowSpd = _initGrowSpd;
+        _curGrowSpd = _initGrowSpd.Value;
     }
     public void ResetSphere()
     {
