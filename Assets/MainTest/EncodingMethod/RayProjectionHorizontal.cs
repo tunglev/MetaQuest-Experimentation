@@ -14,7 +14,7 @@ public class RayProjectionHorizontal : EncodingMethod
     private AudioSource m_audioSrc;
     private TriggerEverySeconds _triggerEverySeconds;
     [SerializeField] private bool _isProjecting = false;
-    [SerializeField] private ConfigInput<int> maxDistance = ConfigInput<int>.IntConfig.Create("Max Distance", 7, 1, 30);
+    public ConfigInput<int> maxDistance = ConfigInput<int>.IntConfig.Create("Max Distance", 7, 1, 30);
 
     public override void InitOnCam(GameObject centerEye)
     {

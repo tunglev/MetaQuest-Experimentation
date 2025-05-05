@@ -28,12 +28,14 @@ public class ControllerPanel : MonoBehaviour
         {
             bool toggledVal = !g_encodingConfigPicker.gameObject.activeSelf;
             g_encodingConfigPicker.gameObject.SetActive(toggledVal);
+            s_encodingConfigButton.gameObject.SetActive(!toggledVal);
             if (toggledVal) g_encodingConfigPicker.SetTarget(EncodingRunner._currentEncodingPair.globalEncoding);
         });
         s_encodingConfigButton.onClick.AddListener(() =>
         {
             bool toggledVal = !s_encodingConfigPicker.gameObject.activeSelf;
             s_encodingConfigPicker.gameObject.SetActive(toggledVal);
+            g_encodingConfigButton.gameObject.SetActive(!toggledVal);
             if (toggledVal) s_encodingConfigPicker.SetTarget(EncodingRunner._currentEncodingPair.specializedEncoding);});
     }
     void OnEnable()

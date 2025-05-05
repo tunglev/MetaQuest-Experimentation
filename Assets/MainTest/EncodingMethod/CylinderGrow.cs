@@ -25,7 +25,7 @@ public class CylinderGrow : EncodingMethod
 
     public ConfigInput<int> detectableAngle = ConfigInput<int>.IntConfig.Create("Detectable Angle", 220, 0, 360);
     [SerializeField] private Transform cylinderPrefab;
-    [SerializeField] private float _maxRadius = 8;
+    public ConfigInput<int> _maxRadius = ConfigInput<int>.IntConfig.Create("Max Radius", 8, 0, 20);
     public ConfigInput<float> _initGrowSpd = ConfigInput<float>.FloatConfig.Create("Grow Speed", 0.5f, 0f, 20f);
     [Header("Audio pin")]
     [SerializeField] private AudioPin _audioPinPrefab;
@@ -37,7 +37,7 @@ public class CylinderGrow : EncodingMethod
     private void FixedUpdate()
     {
         _cylinder.localScale += _curGrowSpd * Time.fixedDeltaTime * new Vector3(1,0,1);
-        if (_cylinder.localScale.x > _maxRadius)
+        if (_cylinder.localScale.x > _maxRadius.Value)
         {
             ResetCylinder();
         }

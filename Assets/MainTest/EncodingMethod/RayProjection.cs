@@ -38,7 +38,7 @@ public class RayProjection : EncodingMethod
     private AudioSource _rightEarAudio;
     private AudioSource _leftEarAudio;
     [SerializeField]private bool _isProjecting = false;
-    [SerializeField] private float maxDistance = 6f;
+    public ConfigInput<float> maxDistance = ConfigInput<float>.FloatConfig.Create("Max Distance", 6f, 0f, 20f);
 
 
     private void StartRayProjection() 
@@ -63,9 +63,9 @@ public class RayProjection : EncodingMethod
     }
 
     void RayProjectionFromCenterEye(AudioSource source, Vector3 direction) {
-        if (Physics.Raycast(_centerEye.position, _centerEye.TransformDirection(direction), out RaycastHit hit, maxDistance))
+        if (Physics.Raycast(_centerEye.position, _centerEye.TransformDirection(direction), out RaycastHit hit, maxDistance.Value))
         {
-            source.pitch = Mathf.Lerp(3, 0, (float)hit.distance / maxDistance);
+            source.pitch = Mathf.Lerp(3, 0, (float)hit.distance / maxDistance.Value);
             if (!source.isPlaying) source.Play();
         }
         else

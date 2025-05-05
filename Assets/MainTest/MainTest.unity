@@ -15157,7 +15157,11 @@ MonoBehaviour:
   IsInit: 0
   _clip: {fileID: 8300000, guid: 4bb58a150a987cb4d8ac3dc8f93d0168, type: 3}
   _isProjecting: 0
-  maxDistance: 6
+  maxDistance:
+    _label: Max Distance
+    _value: 6
+    _minValue: 0
+    _maxValue: 20
 --- !u!114 &1787188699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15177,7 +15181,11 @@ MonoBehaviour:
     _minValue: 0
     _maxValue: 360
   cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
-  _maxRadius: 8
+  _maxRadius:
+    _label: Max Radius
+    _value: 8
+    _minValue: 0
+    _maxValue: 20
   _initGrowSpd:
     _label: Grow Speed
     _value: 1
@@ -15204,7 +15212,11 @@ MonoBehaviour:
     _minValue: 0
     _maxValue: 360
   cylinderPrefab: {fileID: 7771187431601497609, guid: c8dec10401e92e645ac59dc70600b504, type: 3}
-  _maxRadius: 8
+  _maxRadius:
+    _label: Max Radius
+    _value: 8
+    _minValue: 0
+    _maxValue: 20
   _initGrowSpd:
     _label: Grow Speed
     _value: 0.5
@@ -22213,10 +22225,6 @@ PrefabInstance:
     - target: {fileID: 192631176569673232, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_Name
       value: ControllerPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 776545433893342582, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1139382845667817496, guid: 1b218ba3959e5274ea2ea73a16ba288e, type: 3}
       propertyPath: m_AnchorMax.x
