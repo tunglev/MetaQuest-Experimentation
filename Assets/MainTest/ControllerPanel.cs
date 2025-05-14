@@ -19,11 +19,10 @@ public class ControllerPanel : MonoBehaviour
     [SerializeField] private Button g_encodingConfigButton;
     [SerializeField] private Button s_encodingConfigButton;
 
-    [Header("Other")]
-    public GameObject aimLine;
 
     void Awake()
     {
+        // NOTE: Buttons onclick listeners are set in MainTestHandler.cs
         g_encodingConfigButton.onClick.AddListener(() =>
         {
             bool toggledVal = !g_encodingConfigPicker.gameObject.activeSelf;
@@ -40,16 +39,8 @@ public class ControllerPanel : MonoBehaviour
     }
     void OnEnable()
     {
-        aimLine.SetActive(true);
         g_encodingConfigPicker.gameObject.SetActive(false);
         s_encodingConfigPicker.gameObject.SetActive(false);
     }
 
-    void OnDisable()
-    {
-        if (aimLine != null)
-        {
-            aimLine.SetActive(false);
-        }
-    }
 }
