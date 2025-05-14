@@ -23,5 +23,6 @@ public class LogSystem : MonoBehaviour
     public void Log(string message)
     {
         logText.text += message + "\n";
+        Debug.Log(message);
     }
 }

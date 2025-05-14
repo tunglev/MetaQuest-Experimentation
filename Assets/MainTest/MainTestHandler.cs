@@ -10,7 +10,21 @@ using UnityEngine.UI;
 public class MainTestHandler : MonoBehaviour
 {
     public static MainTestHandler Instance {get;private set;}
-
+    
+    private bool _adminMode = true;
+    public bool AdminMode  {
+        get {
+            return _adminMode;
+        }
+        set {
+            _adminMode = value;
+            if (_adminMode) {
+                // admin mode on
+            } else {
+                _controllerPanel.gameObject.SetActive(false);
+            }
+        }
+    }
     public Action OnNewRoomSpanwed;
     public Action<bool> OnBlindModeToggled;
     public Action OnGoalReached;
@@ -33,7 +47,7 @@ public class MainTestHandler : MonoBehaviour
         _virtualRoom = FindObjectOfType<SpawnVirtualRoom>();
         _blindModeHandler = FindObjectOfType<BlindModeHandler>();
         FindObjectOfType<OVRCameraRig>().rightControllerAnchor.gameObject.AddComponent<ReachGoalTriggerer>();
-        OnGoalReached += SpawnNewRoom;
+        OnGoalReached += TestSubjectHandler.Instance.SpawnNextPanel;
     }
 
     private void Start() {
@@ -51,6 +65,7 @@ public class MainTestHandler : MonoBehaviour
 
     private void Update()
     {
+        if (!AdminMode) return;
         if (OVRInput.GetDown(OVRInput.RawButton.X))
         {
             ToggleControllerPanel();
@@ -67,6 +82,11 @@ public class MainTestHandler : MonoBehaviour
         _virtualRoom.SpawnNewRoomAsMRUKRoom();
         _blindModeHandler.ReapplyBlindMode();
         OnNewRoomSpanwed?.Invoke();
+    }
+    public bool ToggleBlindMode() {
+        _blindModeHandler.ToogleBlindMode();
+        OnBlindModeToggled?.Invoke(_blindModeHandler.IsBlind);
+        return _blindModeHandler.IsBlind;
     }
 
 #if UNITY_EDITOR

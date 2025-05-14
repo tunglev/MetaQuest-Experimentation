@@ -15,6 +15,7 @@ public class EncodingRunner : MonoBehaviour
 
     private void Awake() {
         _centerEye = Camera.main.gameObject;
+        IsOn = true;
     }
 
     private void Start() {
@@ -46,8 +47,11 @@ public class EncodingRunner : MonoBehaviour
         encoding.enabled = true;
         encoding.IsInit = true;
     }
+    
+    public bool IsOn = true;
 
     private void Update() {
+        if (!IsOn) return;
         if (_currentEncodingPair.specializedEncoding != null) {
             if (OVRInput.GetDown(OVRInput.RawButton.RIndexTrigger)) // right hand trigger (left hand is PrimaryIndexTrigger)
             {
@@ -72,16 +76,20 @@ public class EncodingRunner : MonoBehaviour
     }
 
     public void TriggerDownGlobal() {
+        if (!IsOn) return;
         _currentEncodingPair.globalEncoding.OnDemandTriggeredDown();
         OVRInput.SetControllerVibration(0.1f, 0.1f, OVRInput.Controller.RTouch);
     }
     public void TriggerUpGlobal() {
+        if (!IsOn) return;
         _currentEncodingPair.globalEncoding.OnDemandTriggeredUp();
     }
     public void TriggerDownSpecialized() {
+        if (!IsOn) return;
         _currentEncodingPair.specializedEncoding.OnDemandTriggeredDown();
     }
     public void TriggerUpSpecialized() {
+        if (!IsOn) return;
         _currentEncodingPair.specializedEncoding.OnDemandTriggeredUp();
     }
 }
