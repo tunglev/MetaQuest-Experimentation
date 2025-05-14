@@ -22,6 +22,7 @@ public class SpawnVirtualRoom : MonoBehaviour
 #else
             DemoPlayAreaDimensionsOnEditor();
 #endif
+        if (CurrentGoal != null) Destroy(CurrentGoal.gameObject);
         var room = _roomprefab == null ? SpawnTempRoom() : Instantiate(_roomprefab);
         MRUK.Instance.LoadSceneFromPrefab(room, true);
         // set room mover target to temp room (temp room is now the main room)
@@ -36,6 +37,7 @@ public class SpawnVirtualRoom : MonoBehaviour
         if (!UseFixedRoomSize) {
             _data.roomSize.width = dimension.x;
             _data.roomSize.length = dimension.z;
+            LogSystem.Instance.Log($"Play area dimensions: {dimension.x} x {dimension.z}");
         }
         else {
             float largerVal = Mathf.Max(m_fixedRoomSize.width, m_fixedRoomSize.length);
