@@ -9,18 +9,24 @@ public class ReachGoalTriggerer : MonoBehaviour
     private Transform cylinderTransform;
     private void Awake() {
         handTransform = transform;
-        GameObject temp = new ("Hand Cylinder");
-        temp.layer = LayerMask.NameToLayer("Human");
+        GameObject temp = new("Hand Cylinder")
+        {
+            layer = LayerMask.NameToLayer("Human"),
+            tag = "NoSound"
+        };
         cylinderTransform = temp.transform;
         var rb = temp.AddComponent<Rigidbody>();
         rb.isKinematic = true;
         var c = temp.AddComponent<CapsuleCollider>();
+        var cylinderUtils = temp.AddComponent<ColliderUtilities>();
+        cylinderUtils.onTriggerEnter += OnTriggerEnter;
         c.radius = 0.08f;
         c.height = 5;
         c.isTrigger = true;
-        tag = "NoSound";
         
     }
+
+
     private void Update()
     {
         cylinderTransform.position = handTransform.position;
