@@ -71,10 +71,14 @@ public class TestSubjectHandler : MonoBehaviour
     }
 
     private void StartTestSubjectSession() {
+        if (EncodingRunner._currentEncodingPair.globalEncoding == null && EncodingRunner._currentEncodingPair.specializedEncoding == null) {
+            LogSystem.Instance.Log("Cannot start tester session. No encoding method selected");
+            return;
+        }
         StartCoroutine(StartTestSubjectSessionCoroutine(_currentConfig));
     }
     private int i = 0;
-    private string currentSessionName = "";
+    private string currentSessionName = "Admin Session";
     public IEnumerator StartTestSubjectSessionCoroutine(TestSubjectSessionConfig config)
     {
         i=0;
@@ -98,6 +102,7 @@ public class TestSubjectHandler : MonoBehaviour
         yield return new WaitWhile(() => i < config.blindSessionLoopCount);
         LogSystem.Instance.Log(i+" Blind Session Loop completed: ");
         i = 0;
+        currentSessionName = "Admin Session";
         MainTestHandler.Instance.AdminMode = true;
     }
 
