@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class WallAlertHandler : MonoBehaviour
 {
+    public static int HitWallCount = 0;
     [SerializeField] private float _alertRadius;
 
     private Transform _centerEye;
@@ -22,6 +23,7 @@ public class WallAlertHandler : MonoBehaviour
         _maskIgnoreHumanLayer =  ~(1 << layer);
     }
 
+    private bool isHittingWall = false;
     // Update is called once per frame
     void Update()
     {
@@ -30,9 +32,17 @@ public class WallAlertHandler : MonoBehaviour
         var colliders = Physics.OverlapSphere(_centerEye.position, _alertRadius, _maskIgnoreHumanLayer);
         if (colliders.Length == 0 && isInRoom) {
             _audioSource.Stop();
+            isHittingWall = false;
         }
         else {
-            if (!_audioSource.isPlaying) _audioSource.Play();
+            if (!isHittingWall) {
+                HitWallCount++;
+                LogSystem.Instance.Log("HitWallCount: " + HitWallCount);
+            }
+            isHittingWall = true;
+            if (!_audioSource.isPlaying) {
+                _audioSource.Play();
+            }
         }
     }
 }
